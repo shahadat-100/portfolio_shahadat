@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#f9f9f9",
+        "on-surface": "#1a1c1c",
+        "primary": "#bc0100",
+        "secondary": "#5e5e5e",
+        "surface-container": "#eeeeee",
+        "surface-dim": "#dadada",
+        "on-primary": "#ffffff",
+      },
+      borderRadius: {
+        "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"
+      },
+      spacing: {
+        "unit-xs": "4px", "unit-sm": "8px", "unit-md": "16px",
+        "unit-lg": "32px", "unit-xl": "64px", "unit-xxl": "128px",
+        "grid-margin": "64px", "grid-gutter": "32px"
+      },
+      fontFamily: {
+        "sans": ["Inter"], "mono": ["DM Mono"]
+      },
+      fontSize: {
+        "display-xl": ["120px", {"lineHeight": "110px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+        "display-lg": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "label-bold": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+        "mono-sm": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+      }
+    }
+  }
+}
+</script>
+<title>YOUR.DEV — iOS Developer Portfolio</title>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { background-color: #f9f9f9; color: #1a1c1c; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  ::selection { background-color: #bc0100; color: #fff; }
+  html { scroll-behavior: smooth; }
+
+  .cursor-blink::after { content: '_'; color: #bc0100; animation: blink 1s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .skill-fill { height: 2px; background: #bc0100; transition: width 1.2s ease; }
+
+  /* Chat widget */
+  #chat-window { display: none; flex-direction: column; }
+  #chat-window.open { display: flex; }
+  #chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .msg-bot { align-self: flex-start; background: #eeeeee; color: #1a1c1c; padding: 10px 14px; max-width: 80%; font-size: 14px; line-height: 1.5; border-radius: 2px; }
+  .msg-user { align-self: flex-end; background: #bc0100; color: #fff; padding: 10px 14px; max-width: 80%; font-size: 14px; line-height: 1.5; border-radius: 2px; }
+  .typing-indicator { align-self: flex-start; background: #eeeeee; padding: 10px 14px; }
+  .typing-indicator span { display: inline-block; width: 6px; height: 6px; background: #5e5e5e; border-radius: 50%; animation: typing 1s infinite; margin: 0 2px; }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+  .nav-active { color: #bc0100; border-bottom: 4px solid #bc0100; }
+  .proj-card:hover { border-left: 4px solid #bc0100; }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  #mobile-menu { display: none; }
+  #mobile-menu.open { display: flex; }
+
+  /* Gemini badge */
+  .gemini-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #5e5e5e;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding: 4px 8px;
+    border-top: 1px solid #e2e2e2;
+    background: #f9f9f9;
+  }
+  .gemini-badge span { color: #1a73e8; font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .text-display-xl { font-size: 52px !important; line-height: 52px !important; }
+    .text-display-lg { font-size: 40px !important; line-height: 44px !important; }
+    .px-grid-margin { padding-left: 20px !important; padding-right: 20px !important; }
+    #chat-window { width: calc(100vw - 32px) !important; right: 16px !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════ -->
+<nav id="navbar" class="sticky top-0 z-50 bg-background border-b-2 border-on-surface flex justify-between items-center w-full px-grid-margin h-unit-xl">
+  <div class="font-sans font-black tracking-tighter text-on-surface uppercase" style="font-size:22px;">YOUR.DEV</div>
+  <div class="hidden md:flex gap-unit-lg items-center">
+    <a href="#hero"         class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface pb-2 hover:text-primary transition-all duration-75" data-section="hero">Home</a>
+    <a href="#projects"     class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface pb-2 hover:text-primary transition-all duration-75" data-section="projects">Projects</a>
+    <a href="#about"        class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface pb-2 hover:text-primary transition-all duration-75" data-section="about">About</a>
+    <a href="#skills"       class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface pb-2 hover:text-primary transition-all duration-75" data-section="skills">Skills</a>
+    <a href="#contact"      class="nav-link font-label-bold text-label-bold uppercase tracking-wider text-on-surface pb-2 hover:text-primary transition-all duration-75" data-section="contact">Contact</a>
+  </div>
+  <div class="flex items-center gap-unit-sm">
+    <button class="bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-md py-unit-sm hover:bg-primary transition-colors hidden md:block" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me</button>
+    <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Toggle menu">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed top-[64px] left-0 w-full bg-background border-b-2 border-on-surface z-40 flex-col px-5 py-unit-md gap-unit-sm">
+  <a href="#hero"     class="font-label-bold text-label-bold uppercase py-unit-sm border-b border-surface-dim block" onclick="document.getElementById('mobile-menu').classList.remove('open')">Home</a>
+  <a href="#projects" class="font-label-bold text-label-bold uppercase py-unit-sm border-b border-surface-dim block" onclick="document.getElementById('mobile-menu').classList.remove('open')">Projects</a>
+  <a href="#about"    class="font-label-bold text-label-bold uppercase py-unit-sm border-b border-surface-dim block" onclick="document.getElementById('mobile-menu').classList.remove('open')">About</a>
+  <a href="#skills"   class="font-label-bold text-label-bold uppercase py-unit-sm border-b border-surface-dim block" onclick="document.getElementById('mobile-menu').classList.remove('open')">Skills</a>
+  <a href="#contact"  class="font-label-bold text-label-bold uppercase py-unit-sm block" onclick="document.getElementById('mobile-menu').classList.remove('open')">Contact</a>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section id="hero" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface">
+  <div class="max-w-[1440px] mx-auto">
+    <p class="font-mono text-mono-sm uppercase text-primary mb-unit-md tracking-widest">iOS Developer · Swift · SwiftUI · UIKit</p>
+    <h1 class="text-display-xl font-sans font-black tracking-tighter text-on-surface mb-unit-xl max-w-5xl cursor-blink">
+      BUILDING APPS<br/>PEOPLE LOVE.
+    </h1>
+    <div class="flex flex-col md:flex-row gap-unit-xl items-start md:items-end">
+      <div class="md:w-2/5">
+        <p class="font-sans text-body-lg text-secondary mb-unit-lg">
+          iOS developer with 3+ years crafting pixel-perfect, App Store-ready applications. Clean Swift code, intuitive UX, shipped products.
+        </p>
+        <div class="flex gap-unit-md flex-wrap">
+          <button class="bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-primary transition-colors" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Work</button>
+          <button class="border-2 border-on-surface text-on-surface font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-on-surface hover:text-background transition-colors">Download CV</button>
+        </div>
+      </div>
+      <div class="flex-grow flex justify-end items-center gap-unit-xl">
+        <div class="hidden md:block relative" style="width:160px;height:320px;border:3px solid #1a1c1c;border-radius:32px;background:#f9f9f9;padding:12px;">
+          <div style="width:60px;height:6px;background:#1a1c1c;border-radius:3px;margin:0 auto 10px;"></div>
+          <div style="background:#1a1c1c;height:100%;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px;">
+            <div style="width:40px;height:40px;background:#bc0100;border-radius:10px;"></div>
+            <div style="width:80px;height:6px;background:#333;border-radius:2px;"></div>
+            <div style="width:60px;height:6px;background:#222;border-radius:2px;"></div>
+            <div style="width:80px;height:6px;background:#333;border-radius:2px;margin-top:8px;"></div>
+            <div style="width:80px;height:6px;background:#333;border-radius:2px;"></div>
+            <div style="width:60px;height:6px;background:#333;border-radius:2px;"></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-unit-md">
+          <div class="border-l-4 border-primary pl-unit-sm">
+            <div class="text-display-lg font-black text-on-surface leading-none">3+</div>
+            <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Years Exp.</div>
+          </div>
+          <div class="border-l-4 border-primary pl-unit-sm">
+            <div class="text-display-lg font-black text-on-surface leading-none">12</div>
+            <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Apps Built</div>
+          </div>
+          <div class="border-l-4 border-primary pl-unit-sm">
+            <div class="text-display-lg font-black text-on-surface leading-none">50K</div>
+            <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Downloads</div>
+          </div>
+          <div class="border-l-4 border-primary pl-unit-sm">
+            <div class="text-display-lg font-black text-on-surface leading-none">8</div>
+            <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Countries</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PROJECTS
+═══════════════════════════════════════════ -->
+<section id="projects" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface bg-surface-container fade-in">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="flex justify-between items-end border-b-4 border-on-surface pb-unit-md mb-unit-xl">
+      <div>
+        <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Selected Work</p>
+        <h2 class="text-display-lg font-black tracking-tighter uppercase">PROJECTS.</h2>
+      </div>
+      <p class="font-label-bold text-label-bold uppercase text-secondary hidden md:block">01 — 04</p>
+    </div>
+    <div class="flex gap-unit-sm mb-unit-xl flex-wrap">
+      <button onclick="filterProj('all',this)" class="proj-filter active-filter bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-primary hover:border-primary transition-all">All</button>
+      <button onclick="filterProj('swift',this)" class="proj-filter bg-background text-on-surface font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-on-surface hover:text-background transition-all">Swift</button>
+      <button onclick="filterProj('swiftui',this)" class="proj-filter bg-background text-on-surface font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-on-surface hover:text-background transition-all">SwiftUI</button>
+      <button onclick="filterProj('uikit',this)" class="proj-filter bg-background text-on-surface font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-on-surface hover:text-background transition-all">UIKit</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter" id="proj-grid">
+      <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group" data-tags="swift swiftui">
+        <div class="flex justify-between items-start mb-unit-md">
+          <div style="width:48px;height:48px;background:#bc0100;border-radius:12px;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined text-white" style="font-size:24px;">fitness_center</span></div>
+          <span class="font-label-sm text-label-sm uppercase text-secondary">2024</span>
+        </div>
+        <h3 class="font-sans font-black uppercase text-headline-md mb-unit-sm">FitTrack Pro</h3>
+        <p class="font-sans text-body-md text-secondary mb-unit-md">AI-powered workout tracker with real-time form analysis using Vision framework.</p>
+        <div class="flex flex-wrap gap-unit-xs mb-unit-lg">
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">SwiftUI</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">CoreML</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Vision</span>
+        </div>
+        <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md">
+          <a href="#" class="font-label-bold text-label-bold uppercase text-primary flex items-center gap-1 hover:gap-2 transition-all">App Store <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+          <a href="#" class="font-label-bold text-label-bold uppercase text-on-surface flex items-center gap-1 hover:text-primary transition-colors">GitHub <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+        </div>
+      </div>
+      <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group" data-tags="swift uikit">
+        <div class="flex justify-between items-start mb-unit-md">
+          <div style="width:48px;height:48px;background:#1a1c1c;border-radius:12px;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined text-white" style="font-size:24px;">account_balance_wallet</span></div>
+          <span class="font-label-sm text-label-sm uppercase text-secondary">2024</span>
+        </div>
+        <h3 class="font-sans font-black uppercase text-headline-md mb-unit-sm">Spendly</h3>
+        <p class="font-sans text-body-md text-secondary mb-unit-md">Personal finance manager with smart categorization and monthly budget alerts.</p>
+        <div class="flex flex-wrap gap-unit-xs mb-unit-lg">
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">UIKit</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">CoreData</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Charts</span>
+        </div>
+        <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md">
+          <a href="#" class="font-label-bold text-label-bold uppercase text-primary flex items-center gap-1 hover:gap-2 transition-all">App Store <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+          <a href="#" class="font-label-bold text-label-bold uppercase text-on-surface flex items-center gap-1 hover:text-primary transition-colors">GitHub <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+        </div>
+      </div>
+      <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group" data-tags="swiftui">
+        <div class="flex justify-between items-start mb-unit-md">
+          <div style="width:48px;height:48px;background:#bc0100;border-radius:12px;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined text-white" style="font-size:24px;">headphones</span></div>
+          <span class="font-label-sm text-label-sm uppercase text-secondary">2023</span>
+        </div>
+        <h3 class="font-sans font-black uppercase text-headline-md mb-unit-sm">SoundBox</h3>
+        <p class="font-sans text-body-md text-secondary mb-unit-md">Minimalist music player with custom audio visualizer and offline playlist support.</p>
+        <div class="flex flex-wrap gap-unit-xs mb-unit-lg">
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">SwiftUI</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">AVFoundation</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Combine</span>
+        </div>
+        <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md">
+          <a href="#" class="font-label-bold text-label-bold uppercase text-primary flex items-center gap-1 hover:gap-2 transition-all">App Store <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+          <a href="#" class="font-label-bold text-label-bold uppercase text-on-surface flex items-center gap-1 hover:text-primary transition-colors">GitHub <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+        </div>
+      </div>
+      <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group" data-tags="swift swiftui uikit">
+        <div class="flex justify-between items-start mb-unit-md">
+          <div style="width:48px;height:48px;background:#1a1c1c;border-radius:12px;display:flex;align-items:center;justify-content:center;"><span class="material-symbols-outlined text-white" style="font-size:24px;">map</span></div>
+          <span class="font-label-sm text-label-sm uppercase text-secondary">2023</span>
+        </div>
+        <h3 class="font-sans font-black uppercase text-headline-md mb-unit-sm">TripSync</h3>
+        <p class="font-sans text-body-md text-secondary mb-unit-md">Collaborative travel planner with real-time sync, maps, and itinerary sharing.</p>
+        <div class="flex flex-wrap gap-unit-xs mb-unit-lg">
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">MapKit</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Firebase</span>
+          <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">SwiftUI</span>
+        </div>
+        <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md">
+          <a href="#" class="font-label-bold text-label-bold uppercase text-primary flex items-center gap-1 hover:gap-2 transition-all">App Store <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+          <a href="#" class="font-label-bold text-label-bold uppercase text-on-surface flex items-center gap-1 hover:text-primary transition-colors">GitHub <span class="material-symbols-outlined" style="font-size:16px;">north_east</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════ -->
+<section id="about" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface fade-in">
+  <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
+    <div class="md:col-span-5">
+      <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-sm">About</p>
+      <h2 class="text-display-lg font-black tracking-tighter uppercase mb-unit-lg">WHO<br/>I AM.</h2>
+      <div style="width:100%;aspect-ratio:4/5;background:#1a1c1c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+        <div style="width:80px;height:80px;border-radius:50%;background:#bc0100;"></div>
+        <div style="width:120px;height:4px;background:#333;border-radius:2px;"></div>
+        <div style="width:80px;height:4px;background:#222;border-radius:2px;"></div>
+      </div>
+    </div>
+    <div class="md:col-span-7 flex flex-col justify-center">
+      <p class="font-sans text-body-lg text-secondary mb-unit-lg">
+        I'm an iOS developer based in Dhaka, Bangladesh. I specialize in building native iOS applications using Swift, SwiftUI, and UIKit — from concept to App Store launch.
+      </p>
+      <p class="font-sans text-body-lg text-secondary mb-unit-xl">
+        I believe great apps are built on three pillars: clean architecture, intuitive design, and performance. Every line of code I write serves a purpose.
+      </p>
+      <div class="space-y-unit-lg border-t-2 border-on-surface pt-unit-lg">
+        <p class="font-label-bold text-label-bold uppercase text-primary">Experience</p>
+        <div class="group border-b border-surface-dim pb-unit-lg flex justify-between items-end">
+          <div>
+            <h3 class="font-sans font-bold uppercase text-headline-md">iOS Developer</h3>
+            <p class="font-label-bold uppercase text-secondary">Freelance / 2022 — Present</p>
+          </div>
+          <span class="material-symbols-outlined group-hover:text-primary transition-colors">north_east</span>
+        </div>
+        <div class="group border-b border-surface-dim pb-unit-lg flex justify-between items-end">
+          <div>
+            <h3 class="font-sans font-bold uppercase text-headline-md">Junior iOS Dev</h3>
+            <p class="font-label-bold uppercase text-secondary">Tech Studio / 2021 — 2022</p>
+          </div>
+          <span class="material-symbols-outlined group-hover:text-primary transition-colors">north_east</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SKILLS
+═══════════════════════════════════════════ -->
+<section id="skills" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface bg-on-surface text-background fade-in">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="flex justify-between items-end border-b-2 border-white border-opacity-20 pb-unit-md mb-unit-xl">
+      <div>
+        <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Expertise</p>
+        <h2 class="text-display-lg font-black tracking-tighter uppercase">SKILLS.</h2>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-unit-xl">
+      <div>
+        <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-lg">Languages</p>
+        <div class="space-y-unit-md" id="skills-lang">
+          <div><div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">Swift</span><span class="font-mono text-mono-sm text-secondary">95%</span></div><div style="background:#333;height:2px;"><div class="skill-fill" style="width:0%" data-w="95%"></div></div></div>
+          <div><div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">Objective-C</span><span class="font-mono text-mono-sm text-secondary">70%</span></div><div style="background:#333;height:2px;"><div class="skill-fill" style="width:0%" data-w="70%"></div></div></div>
+          <div><div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">Python</span><span class="font-mono text-mono-sm text-secondary">60%</span></div><div style="background:#333;height:2px;"><div class="skill-fill" style="width:0%" data-w="60%"></div></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-lg">Frameworks</p>
+        <div class="space-y-unit-md">
+          <div><div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">SwiftUI</span><span class="font-mono text-mono-sm text-secondary">90%</span></div><div style="background:#333;height:2px;"><div class="skill-fill" style="width:0%" data-w="90%"></div></div></div>
+          <div><div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">UIKit</span><span class="font-mono text-mono-sm text-secondary">85%</span></div><div style="background:#333;height:2px;"><div class="skill-fill" style="width:0%" data-w="85%"></div></div></div>
+          <div><div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">Combine</span><span class="font-mono text-mono-sm text-secondary">80%</span></div><div style="background:#333;height:2px;"><div class="skill-fill" style="width:0%" data-w="80%"></div></div></div>
+          <div><div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">CoreData</span><span class="font-mono text-mono-sm text-secondary">75%</span></div><div style="background:#333;height:2px;"><div class="skill-fill" style="width:0%" data-w="75%"></div></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-lg">Tools</p>
+        <div class="grid grid-cols-2 gap-0 border-2 border-white border-opacity-10">
+          <div class="p-unit-md border-b border-r border-white border-opacity-10 hover:bg-primary transition-colors cursor-default"><span class="font-label-bold uppercase">Xcode</span></div>
+          <div class="p-unit-md border-b border-white border-opacity-10 hover:bg-primary transition-colors cursor-default"><span class="font-label-bold uppercase">Git</span></div>
+          <div class="p-unit-md border-b border-r border-white border-opacity-10 hover:bg-primary transition-colors cursor-default"><span class="font-label-bold uppercase">Figma</span></div>
+          <div class="p-unit-md border-b border-white border-opacity-10 hover:bg-primary transition-colors cursor-default"><span class="font-label-bold uppercase">Firebase</span></div>
+          <div class="p-unit-md border-r border-white border-opacity-10 hover:bg-primary transition-colors cursor-default"><span class="font-label-bold uppercase">TestFlight</span></div>
+          <div class="p-unit-md hover:bg-primary transition-colors cursor-default"><span class="font-label-bold uppercase">Instruments</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════ -->
+<section id="contact" class="px-grid-margin py-unit-xxl fade-in">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="border-b-4 border-on-surface pb-unit-md mb-unit-xl">
+      <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Get In Touch</p>
+      <h2 class="text-display-xl font-black tracking-tighter uppercase">LET'S<br/>WORK.</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
+      <div class="md:col-span-7">
+        <div class="space-y-unit-lg">
+          <div class="space-y-unit-xs">
+            <label class="font-label-bold text-label-bold uppercase text-on-surface">Full Name</label>
+            <input class="w-full bg-transparent border-b-2 border-on-surface focus:border-primary focus:ring-0 px-0 py-unit-sm font-sans text-body-lg placeholder:text-surface-dim transition-colors outline-none" placeholder="Your name" type="text"/>
+          </div>
+          <div class="space-y-unit-xs">
+            <label class="font-label-bold text-label-bold uppercase text-on-surface">Email Address</label>
+            <input class="w-full bg-transparent border-b-2 border-on-surface focus:border-primary focus:ring-0 px-0 py-unit-sm font-sans text-body-lg placeholder:text-surface-dim transition-colors outline-none" placeholder="email@example.com" type="email"/>
+          </div>
+          <div class="space-y-unit-xs">
+            <label class="font-label-bold text-label-bold uppercase text-on-surface">Message</label>
+            <textarea class="w-full bg-transparent border-b-2 border-on-surface focus:border-primary focus:ring-0 px-0 py-unit-sm font-sans text-body-lg placeholder:text-surface-dim transition-colors outline-none resize-none" placeholder="Tell me about your project..." rows="5"></textarea>
+          </div>
+          <button class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-on-surface transition-colors w-full md:w-auto">Send Message</button>
+        </div>
+      </div>
+      <div class="md:col-span-4 md:col-start-9 space-y-unit-xl">
+        <div>
+          <h3 class="font-label-bold text-label-bold uppercase text-primary mb-unit-md">Contact</h3>
+          <ul class="divide-y-2 divide-on-surface">
+            <li class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-surface-container transition-colors px-1">
+              <span class="font-sans text-body-md">hello@yourname.dev</span>
+              <span class="material-symbols-outlined group-hover:text-primary">arrow_outward</span>
+            </li>
+            <li class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-surface-container transition-colors px-1">
+              <span class="font-sans text-body-md">Dhaka, Bangladesh</span>
+              <span class="material-symbols-outlined group-hover:text-primary">location_on</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-label-bold text-label-bold uppercase text-primary mb-unit-md">Social</h3>
+          <ul class="divide-y-2 divide-on-surface">
+            <li class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-on-surface hover:text-background transition-all px-1">
+              <span class="font-sans text-body-md">GitHub</span>
+              <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+            </li>
+            <li class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-on-surface hover:text-background transition-all px-1">
+              <span class="font-sans text-body-md">LinkedIn</span>
+              <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+            </li>
+            <li class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-on-surface hover:text-background transition-all px-1">
+              <span class="font-sans text-body-md">Twitter / X</span>
+              <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="bg-on-surface border-t-4 border-primary flex flex-col md:flex-row justify-between items-start md:items-center w-full px-grid-margin py-unit-xl gap-unit-md text-background">
+  <div class="font-sans font-black text-background uppercase" style="font-size:22px;">YOUR.DEV</div>
+  <div class="flex gap-unit-lg flex-wrap">
+    <a href="#projects" class="font-label-sm text-label-sm uppercase text-background hover:text-primary transition-colors">Projects</a>
+    <a href="#about"    class="font-label-sm text-label-sm uppercase text-background hover:text-primary transition-colors">About</a>
+    <a href="#skills"   class="font-label-sm text-label-sm uppercase text-background hover:text-primary transition-colors">Skills</a>
+    <a href="#contact"  class="font-label-sm text-label-sm uppercase text-background hover:text-primary transition-colors">Contact</a>
+  </div>
+  <div class="font-label-sm text-label-sm uppercase text-background opacity-50">© 2025 YOUR.DEV — iOS DEVELOPER</div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     AI CHATBOT WIDGET  (Powered by Gemini)
+═══════════════════════════════════════════ -->
+<div style="position:fixed;bottom:24px;right:24px;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+
+  <!-- Chat Window -->
+  <div id="chat-window" style="width:360px;height:540px;background:#f9f9f9;border:2px solid #1a1c1c;flex-direction:column;overflow:hidden;">
+    <!-- Header -->
+    <div style="background:#1a1c1c;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+      <div>
+        <div style="font-family:Inter;font-size:14px;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase;">Ask About Me</div>
+        <div style="font-family:'DM Mono';font-size:11px;color:#bc0100;margin-top:2px;">Powered by Gemini AI</div>
+      </div>
+      <button onclick="toggleChat()" style="background:none;border:none;cursor:pointer;color:#bc0100;display:flex;align-items:center;">
+        <span class="material-symbols-outlined" style="font-size:20px;">close</span>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages">
+      <div class="msg-bot">Hi! I'm an AI assistant for this portfolio. Ask me anything about skills, projects, or availability! 👋</div>
+    </div>
+
+    <!-- Quick Pills -->
+    <div style="padding:8px 16px;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;border-top:1px solid #e2e2e2;background:#f9f9f9;">
+      <button onclick="sendQuick('What projects have you built?')" class="quick-pill">Projects?</button>
+      <button onclick="sendQuick('What are your skills?')" class="quick-pill">Skills?</button>
+      <button onclick="sendQuick('Are you available to hire?')" class="quick-pill">Hire?</button>
+    </div>
+
+    <!-- Gemini Badge -->
+    <div class="gemini-badge">Powered by <span>Google Gemini</span> · Free API</div>
+
+    <!-- Input -->
+    <div style="display:flex;border-top:2px solid #1a1c1c;flex-shrink:0;">
+      <input id="chat-input" type="text" placeholder="Ask me anything..." style="flex:1;border:none;outline:none;padding:14px 16px;font-family:Inter;font-size:14px;background:#f9f9f9;min-height:52px;" onkeydown="if(event.key==='Enter')sendMessage()"/>
+      <button onclick="sendMessage()" id="send-btn" style="background:#bc0100;border:none;cursor:pointer;padding:0 16px;display:flex;align-items:center;" onmouseover="this.style.background='#1a1c1c'" onmouseout="this.style.background='#bc0100'">
+        <span class="material-symbols-outlined" style="color:#fff;font-size:20px;">send</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Trigger Button -->
+  <button id="chat-btn" onclick="toggleChat()" style="width:56px;height:56px;border-radius:50%;background:#1a1c1c;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='#bc0100'" onmouseout="this.style.background='#1a1c1c'">
+    <span class="material-symbols-outlined" style="color:#fff;font-size:24px;" id="chat-icon">chat</span>
+  </button>
+</div>
+
+<!-- Quick pill styles -->
+<style>
+.quick-pill {
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid #1a1c1c;
+  background: transparent;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  color: #1a1c1c;
+}
+.quick-pill:hover { background: #bc0100; color: #fff; border-color: #bc0100; }
+</style>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────────────────────────────
+//  CONFIGURATION — paste your Gemini API key here
+//  Get a FREE key at: https://aistudio.google.com/app/apikey
+// ─────────────────────────────────────────────────────────────────
+const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
+
+// Gemini endpoint (free tier: gemini-1.5-flash)
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+// ── Developer context for AI ────────────────────────────────────
+const SYSTEM_PROMPT = `You are an AI assistant for an iOS developer's portfolio website.
+Answer ONLY questions about this developer. Be concise, friendly, and professional.
+Keep answers under 3 sentences. Use ONLY the facts listed below.
+
+DEVELOPER FACTS:
+- Name: [Your Name] — iOS Developer based in Dhaka, Bangladesh
+- Experience: 3+ years iOS development
+- Skills: Swift (95%), SwiftUI (90%), UIKit (85%), Combine (80%), CoreData (75%), Objective-C (70%)
+- Tools: Xcode, Git, Firebase, Figma, TestFlight, Instruments
+- Projects: FitTrack Pro (AI workout tracker, SwiftUI + CoreML), Spendly (finance app, UIKit + CoreData), SoundBox (music player, SwiftUI + AVFoundation), TripSync (travel planner, Swift + MapKit + Firebase)
+- All apps on the App Store
+- Education: Computer Science background
+- Availability: Open to freelance and full-time opportunities
+- Contact: hello@yourname.dev
+- Specialties: SwiftUI animations, CoreML integration, MVVM architecture, App Store optimization
+- Languages: Bengali (native), English (fluent)
+
+If asked anything unrelated, say: "I can only answer questions about this developer's portfolio."`;
+
+// ── Conversation history (for multi-turn context) ───────────────
+let chatHistory = [];
+
+// ── Chat Toggle ─────────────────────────────────────────────────
+function toggleChat() {
+  const win = document.getElementById('chat-window');
+  const icon = document.getElementById('chat-icon');
+  win.classList.toggle('open');
+  icon.textContent = win.classList.contains('open') ? 'close' : 'chat';
+}
+
+// ── Send from input ─────────────────────────────────────────────
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  await processMessage(text);
+}
+
+function sendQuick(text) {
+  processMessage(text);
+}
+
+async function processMessage(text) {
+  appendMessage(text, 'user');
+  chatHistory.push({ role: 'user', parts: [{ text }] });
+  await getBotReply();
+}
+
+// ── Append a message bubble ─────────────────────────────────────
+function appendMessage(text, type) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = type === 'user' ? 'msg-user' : 'msg-bot';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── Typing indicator ────────────────────────────────────────────
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'typing-indicator';
+  div.id = 'typing';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping() {
+  const t = document.getElementById('typing');
+  if (t) t.remove();
+}
+
+// ── Gemini API Call ─────────────────────────────────────────────
+async function getBotReply() {
+  showTyping();
+
+  // Disable send button while loading
+  document.getElementById('send-btn').disabled = true;
+
+  try {
+    const payload = {
+      // Inject system context as the first user turn (Gemini free tier workaround)
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: SYSTEM_PROMPT }]
+        },
+        {
+          role: 'model',
+          parts: [{ text: 'Understood! I am ready to answer questions about this iOS developer portfolio.' }]
+        },
+        // Append real conversation history
+        ...chatHistory
+      ],
+      generationConfig: {
+        maxOutputTokens: 256,
+        temperature: 0.7,
+        topP: 0.9,
+      },
+      safetySettings: [
+        { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+      ]
+    };
+
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    removeTyping();
+
+    // Handle API errors
+    if (!res.ok) {
+      const errMsg = data?.error?.message || 'API error. Check your key.';
+      appendMessage(`⚠️ ${errMsg}`, 'bot');
+      return;
+    }
+
+    // Parse response
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text
+      || "Sorry, I couldn't generate a response right now.";
+
+    // Add assistant reply to history for multi-turn context
+    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+
+    appendMessage(reply, 'bot');
+
+  } catch (err) {
+    removeTyping();
+    appendMessage("Connection error. Check your API key and internet connection.", 'bot');
+    console.error('Gemini API error:', err);
+  } finally {
+    document.getElementById('send-btn').disabled = false;
+  }
+}
+
+// ── Project Filter ──────────────────────────────────────────────
+function filterProj(tag, btn) {
+  document.querySelectorAll('.proj-filter').forEach(b => {
+    b.classList.remove('bg-on-surface','text-background','active-filter');
+    b.classList.add('bg-background','text-on-surface');
+  });
+  btn.classList.add('bg-on-surface','text-background','active-filter');
+  btn.classList.remove('bg-background','text-on-surface');
+  document.querySelectorAll('#proj-grid > div').forEach(card => {
+    const tags = card.dataset.tags || '';
+    card.style.display = (tag === 'all' || tags.includes(tag)) ? 'block' : 'none';
+  });
+}
+
+// ── Scroll Animations ───────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.w;
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── Active Nav ──────────────────────────────────────────────────
+const sections = ['hero','projects','about','skills','contact'];
+window.addEventListener('scroll', () => {
+  let current = 'hero';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('text-primary','border-b-4','border-primary','pb-2');
+    if (link.dataset.section === current) {
+      link.classList.add('text-primary','border-b-4','border-primary');
+    }
+  });
+});
+</script>
+</body>
+</html>
