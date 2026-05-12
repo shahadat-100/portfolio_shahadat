@@ -507,10 +507,7 @@
             <div class="group border-b border-surface-dim pb-unit-lg">
               <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
               <p class="font-label-bold uppercase text-secondary">CIBL &mdash; Feb 2025 &ndash; Present</p>
-              <p class="font-sans text-body-md text-secondary mt-1">
-                Developing secure and scalable mobile banking solutions at CIBL, focusing on performance and user
-                experience.
-              </p>
+              <p class="font-sans text-body-md text-secondary mt-1">Working on NBLiPower &amp; Trust Money banking apps.
               </p>
             </div>
             <div class="group border-b border-surface-dim pb-unit-lg">
@@ -611,32 +608,25 @@
             <div class="grid grid-cols-2 gap-0 border-2 border-white border-opacity-10">
               <div
                 class="p-unit-md border-b border-r border-white border-opacity-10 hover:bg-primary transition-colors cursor-default">
-                <span class="font-label-bold uppercase">Alamofire</span>
-              </div>
+                <span class="font-label-bold uppercase">Alamofire</span></div>
               <div
                 class="p-unit-md border-b border-white border-opacity-10 hover:bg-primary transition-colors cursor-default">
-                <span class="font-label-bold uppercase">CoreData</span>
-              </div>
+                <span class="font-label-bold uppercase">CoreData</span></div>
               <div
                 class="p-unit-md border-b border-r border-white border-opacity-10 hover:bg-primary transition-colors cursor-default">
-                <span class="font-label-bold uppercase">Firebase</span>
-              </div>
+                <span class="font-label-bold uppercase">Firebase</span></div>
               <div
                 class="p-unit-md border-b border-white border-opacity-10 hover:bg-primary transition-colors cursor-default">
-                <span class="font-label-bold uppercase">Firestore</span>
-              </div>
+                <span class="font-label-bold uppercase">Firestore</span></div>
               <div
                 class="p-unit-md border-b border-r border-white border-opacity-10 hover:bg-primary transition-colors cursor-default">
-                <span class="font-label-bold uppercase">Cloudinary</span>
-              </div>
+                <span class="font-label-bold uppercase">Cloudinary</span></div>
               <div
                 class="p-unit-md border-b border-white border-opacity-10 hover:bg-primary transition-colors cursor-default">
-                <span class="font-label-bold uppercase">Cocoapods</span>
-              </div>
+                <span class="font-label-bold uppercase">Cocoapods</span></div>
               <div
                 class="p-unit-md border-r border-white border-opacity-10 hover:bg-primary transition-colors cursor-default">
-                <span class="font-label-bold uppercase">AVFoundation</span>
-              </div>
+                <span class="font-label-bold uppercase">AVFoundation</span></div>
               <div class="p-unit-md hover:bg-primary transition-colors cursor-default"><span
                   class="font-label-bold uppercase">VisionKit</span></div>
             </div>
@@ -904,11 +894,9 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
         const data = await res.json();
         removeTyping();
         if (!res.ok) {
-          let errMsg = data?.error || 'API error. Check your backend.';
-          if (errMsg.toLowerCase().includes('leaked')) {
-            errMsg = "The Gemini API key is reported as leaked. Please replace it in the .env file with a fresh key from Google AI Studio.";
-          }
+          const errMsg = data?.error || 'API error. Check your backend.';
           appendMessage('⚠️ ' + errMsg, 'bot');
+          chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
           return;
         }
         const reply = data?.text || "Sorry, I couldn't generate a response right now.";
