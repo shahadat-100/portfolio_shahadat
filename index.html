@@ -249,14 +249,120 @@
         right: 16px !important;
       }
     }
+
+    /* Staggered Scroll Animation */
+    .stagger-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .stagger-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Delay driven by a CSS custom property --i set inline on each element */
+    .stagger-item.visible {
+      transition-delay: calc(var(--i) * 120ms);
+    }
+
+    /* Custom Cursor Styles */
+    @media (min-width: 769px) {
+      body { cursor: none; }
+      a, button, input, textarea, select, .proj-card, .quick-pill, .nav-link, #chat-btn { cursor: none !important; }
+    }
+    .cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: #bc0100;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transition: transform 0.1s ease;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(188,1,0,0.6);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, transform 0.15s ease;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring.hover {
+      width: 64px;
+      height: 64px;
+      border-color: rgba(188,1,0,0.9);
+      background-color: rgba(188,1,0,0.08);
+    }
+    @media (max-width: 768px) {
+      .cursor-dot, .cursor-ring { display: none; }
+      body { cursor: auto; }
+    }
+
+    /* 3D Tilt Card Styles */
+    .tilt-card { transform-style: preserve-3d; transition: transform 0.1s ease; }
+    .tilt-inner { transform: translateZ(30px); }
+
+    /* Subtle Hover Lift */
+    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 30px rgba(188,1,0,0.12); }
+
+    /* B&W to Color reveal on hover */
+    #lottie-avatar {
+      filter: grayscale(100%) contrast(1.1) brightness(0.9);
+      transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #lottie-avatar:hover {
+      filter: grayscale(0%) contrast(1) brightness(1);
+      transform: scale(1.02);
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
   </style>
 </head>
 
 <body>
 
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
   <!-- NAVBAR -->
   <nav id="navbar"
-    class="sticky top-0 z-50 bg-background border-b-2 border-on-surface flex justify-between items-center w-full px-grid-margin h-unit-xl">
+    class="sticky top-0 z-50 bg-background border-b-2 border-on-surface flex justify-between items-center w-full px-grid-margin h-unit-xl transition-all duration-300">
     <div class="font-sans font-black tracking-tighter text-on-surface uppercase" style="font-size:22px;">SHAHADAT.DEV
     </div>
     <div class="hidden md:flex gap-unit-lg items-center">
@@ -278,7 +384,7 @@
     </div>
     <div class="flex items-center gap-unit-sm">
       <button
-        class="bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-md py-unit-sm hover:bg-primary transition-colors hidden md:block"
+        class="magnetic-btn bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-md py-unit-sm hover:bg-primary transition-colors hidden md:block"
         onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me</button>
       <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('open')"
         aria-label="Toggle menu">
@@ -308,7 +414,7 @@
     <section id="hero" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface">
       <div class="max-w-[1440px] mx-auto">
         <p class="font-mono text-mono-sm uppercase text-primary mb-unit-md tracking-widest">iOS Developer · Swift ·
-          UIKit · CIBL</p>
+          UIKit · Fintech</p>
         <h1
           class="text-display-xl font-sans font-black tracking-tighter text-on-surface mb-unit-xl max-w-5xl cursor-blink">
           BUILDING APPS<br />PEOPLE LOVE.
@@ -321,32 +427,32 @@
             </p>
             <div class="flex gap-unit-md flex-wrap">
               <button
-                class="bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-primary transition-colors"
+                class="magnetic-btn bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-primary transition-colors"
                 onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Work</button>
               <button
-                class="border-2 border-on-surface text-on-surface font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-on-surface hover:text-background transition-colors">Download
+                class="magnetic-btn border-2 border-on-surface text-on-surface font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-on-surface hover:text-background transition-colors">Download
                 CV</button>
             </div>
           </div>
           <div class="md:w-5/12 flex justify-end items-center">
             <div class="grid grid-cols-2 gap-unit-lg w-full">
 
-              <div class="border-l-4 border-primary pl-unit-sm min-w-[120px]">
+              <div class="stagger-item border-l-4 border-primary pl-unit-sm min-w-[120px]" style="--i:0">
                 <div class="text-display-lg font-black text-on-surface leading-none whitespace-nowrap">iOS</div>
                 <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Platform</div>
               </div>
 
-              <div class="border-l-4 border-primary pl-unit-sm min-w-[120px]">
+              <div class="stagger-item border-l-4 border-primary pl-unit-sm min-w-[120px]" style="--i:1">
                 <div class="text-display-lg font-black text-on-surface leading-none whitespace-nowrap">UIKit</div>
                 <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Framework</div>
               </div>
 
-              <div class="border-l-4 border-primary pl-unit-sm min-w-[120px]">
+              <div class="stagger-item border-l-4 border-primary pl-unit-sm min-w-[120px]" style="--i:2">
                 <div class="text-display-lg font-black text-on-surface leading-none whitespace-nowrap">MVC</div>
                 <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Architecture</div>
               </div>
 
-              <div class="border-l-4 border-primary pl-unit-sm min-w-[120px]">
+              <div class="stagger-item border-l-4 border-primary pl-unit-sm min-w-[120px]" style="--i:3">
                 <div class="text-display-lg font-black text-on-surface leading-none whitespace-nowrap">CP</div>
                 <div class="font-label-bold text-label-bold uppercase text-secondary mt-1">Background</div>
               </div>
@@ -379,8 +485,9 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter" id="proj-grid">
           <!-- NBLiPower -->
-          <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
-            data-tags="swift uikit banking">
+          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+            data-tags="swift uikit banking" style="--i:0">
+            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#bc0100;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -404,8 +511,9 @@
             </div>
           </div>
           <!-- Trust Money -->
-          <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
-            data-tags="swift uikit banking">
+          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+            data-tags="swift uikit banking" style="--i:1">
+            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#1a1c1c;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -431,8 +539,9 @@
             </div>
           </div>
           <!-- AIVideoGencut -->
-          <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
-            data-tags="swift uikit">
+          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+            data-tags="swift uikit" style="--i:2">
+            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#bc0100;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -457,8 +566,9 @@
             </div>
           </div>
           <!-- Collage Studio -->
-          <div class="proj-card border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
-            data-tags="swift uikit">
+          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+            data-tags="swift uikit" style="--i:3">
+            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#1a1c1c;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -485,14 +595,14 @@
 ═══════════════════════════════════════════ -->
     <section id="about" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface fade-in">
       <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
-        <div class="md:col-span-5">
+        <div class="reveal-left md:col-span-5">
           <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-sm">About</p>
           <h2 class="text-display-lg font-black tracking-tighter uppercase mb-unit-lg">WHO<br />I AM.</h2>
 
           <div id="lottie-avatar" aria-label="Animated avatar"></div>
         </div>
 
-        <div class="md:col-span-7 flex flex-col justify-center">
+        <div class="reveal-right md:col-span-7 flex flex-col justify-center">
           <p class="font-sans text-body-lg text-secondary mb-unit-lg">
             I'm <strong>Shahadat Hossen</strong>, a Junior iOS Developer at CIBL, Dhaka Cantonment. I specialize in
             building large-scale native iOS applications using Swift and UIKit, with a focus on banking security and
@@ -504,7 +614,7 @@
           </p>
           <div class="space-y-unit-lg border-t-2 border-on-surface pt-unit-lg">
             <p class="font-label-bold text-label-bold uppercase text-primary">Experience</p>
-            <div class="group border-b border-surface-dim pb-unit-lg">
+            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:0">
               <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
               <p class="font-label-bold uppercase text-secondary">CIBL &mdash; Feb 2025 &ndash; Present</p>
               <p class="font-sans text-body-md text-secondary mt-1">
@@ -513,24 +623,24 @@
               </p>
               </p>
             </div>
-            <div class="group border-b border-surface-dim pb-unit-lg">
+            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:1">
               <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
               <p class="font-label-bold uppercase text-secondary">AppExits &mdash; Jan 2025 &ndash; Jan 2026</p>
               <p class="font-sans text-body-md text-secondary mt-1">AIVideoGencut, Math Solver, Momo, Summarise AI,
                 Collage Studio.</p>
             </div>
-            <div class="group border-b border-surface-dim pb-unit-lg">
+            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:2">
               <h3 class="font-sans font-bold uppercase text-headline-sm">iOS Intern</h3>
               <p class="font-label-bold uppercase text-secondary">AppExits &mdash; Jul 2024 &ndash; Dec 2024</p>
               <p class="font-sans text-body-md text-secondary mt-1">Demo apps: ChatBuddy, ExpanseX.</p>
             </div>
-            <p class="font-label-bold text-label-bold uppercase text-primary mt-unit-lg">Education</p>
-            <div class="group border-b border-surface-dim pb-unit-md">
+            <p class="font-label-bold text-label-bold uppercase text-primary mt-unit-lg">Experience</p>
+            <div class="stagger-item group border-b border-surface-dim pb-unit-md" style="--i:3">
               <h3 class="font-sans font-bold uppercase text-body-md">BSc in CSE</h3>
               <p class="font-label-bold uppercase text-secondary">Northern University of Bangladesh &mdash; June 2025
                 &ndash; Present</p>
             </div>
-            <div class="group">
+            <div class="stagger-item group" style="--i:4">
               <h3 class="font-sans font-bold uppercase text-body-md">Diploma in CST (CGPA: 3.62)</h3>
               <p class="font-label-bold uppercase text-secondary">Brahmanbaria Polytechnic Institute &mdash; 2020
                 &ndash; 2025</p>
@@ -544,54 +654,54 @@
     <section id="skills"
       class="px-grid-margin py-unit-xxl border-b-2 border-on-surface bg-on-surface text-background fade-in">
       <div class="max-w-[1440px] mx-auto">
-        <div class="flex justify-between items-end border-b-2 border-white border-opacity-20 pb-unit-md mb-unit-xl">
+        <div class="reveal-left flex justify-between items-end border-b-2 border-white border-opacity-20 pb-unit-md mb-unit-xl">
           <div>
             <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Expertise</p>
             <h2 class="text-display-lg font-black tracking-tighter uppercase">SKILLS.</h2>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-unit-xl">
-          <div>
+          <div class="reveal-left">
             <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-lg">Languages</p>
             <div class="space-y-unit-md" id="skills-lang">
               <div>
                 <div class="flex justify-between mb-1"><span
                     class="font-label-bold uppercase text-background">Swift</span><span
-                    class="font-mono text-mono-sm text-secondary">90%</span></div>
+                    class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="90">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
                   <div class="skill-fill" style="width:0%" data-w="90%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">C /
-                    C++</span><span class="font-mono text-mono-sm text-secondary">75%</span></div>
+                    C++</span><span class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="75">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
                   <div class="skill-fill" style="width:0%" data-w="75%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">OOP /
-                    DSA</span><span class="font-mono text-mono-sm text-secondary">80%</span></div>
+                    DSA</span><span class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="80">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
                   <div class="skill-fill" style="width:0%" data-w="80%"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div>
+          <div class="reveal-right">
             <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-lg">Frameworks</p>
             <div class="space-y-unit-md">
               <div>
                 <div class="flex justify-between mb-1"><span
                     class="font-label-bold uppercase text-background">UIKit</span><span
-                    class="font-mono text-mono-sm text-secondary">90%</span></div>
+                    class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="90">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
                   <div class="skill-fill" style="width:0%" data-w="90%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">Rest
-                    API</span><span class="font-mono text-mono-sm text-secondary">85%</span></div>
+                    API</span><span class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="85">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
                   <div class="skill-fill" style="width:0%" data-w="85%"></div>
                 </div>
@@ -599,7 +709,7 @@
               <div>
                 <div class="flex justify-between mb-1"><span
                     class="font-label-bold uppercase text-background">CoreData</span><span
-                    class="font-mono text-mono-sm text-secondary">85%</span></div>
+                    class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="85">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
                   <div class="skill-fill" style="width:0%" data-w="85%"></div>
                 </div>
@@ -648,74 +758,93 @@
     <!-- CONTACT -->
     <section id="contact" class="px-grid-margin py-unit-xxl fade-in">
       <div class="max-w-[1440px] mx-auto">
-        <div class="border-b-4 border-on-surface pb-unit-md mb-unit-xl">
+        <div class="reveal-left border-b-4 border-on-surface pb-unit-md mb-unit-xl">
           <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Get In Touch</p>
           <h2 class="text-display-xl font-black tracking-tighter uppercase">LET'S<br />WORK.</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
-          <div class="md:col-span-7">
+          <div class="reveal-left md:col-span-7">
             <div class="space-y-unit-lg">
               <div class="space-y-unit-xs">
                 <label class="font-label-bold text-label-bold uppercase text-on-surface">Full Name</label>
-                <input
+                <input id="contact-name"
                   class="w-full bg-transparent border-b-2 border-on-surface focus:border-primary focus:ring-0 px-0 py-unit-sm font-sans text-body-lg placeholder:text-surface-dim transition-colors outline-none"
-                  placeholder=" Your name" type="text" />
+                  placeholder=" Your name" type="text" required />
               </div>
               <div class="space-y-unit-xs">
                 <label class="font-label-bold text-label-bold uppercase text-on-surface">Email Address</label>
-                <input
+                <input id="contact-email"
                   class="w-full bg-transparent border-b-2 border-on-surface focus:border-primary focus:ring-0 px-0 py-unit-sm font-sans text-body-lg placeholder:text-surface-dim transition-colors outline-none"
-                  placeholder=" email@example.com" type="email" />
+                  placeholder=" email@example.com" type="email" required />
               </div>
               <div class="space-y-unit-xs">
                 <label class="font-label-bold text-label-bold uppercase text-on-surface">Message</label>
-                <textarea
+                <textarea id="contact-message"
                   class="w-full bg-transparent border-b-2 border-on-surface focus:border-primary focus:ring-0 px-0 py-unit-sm font-sans text-body-lg placeholder:text-surface-dim transition-colors outline-none resize-none"
-                  placeholder=" Tell me about your project..." rows="5"></textarea>
+                  placeholder=" Tell me about your project..." rows="5" required></textarea>
               </div>
-              <button
-                class="bg-primary text-on-primary font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-on-surface transition-colors w-full md:w-auto">Send
+              <button id="contact-submit-btn"
+                class="magnetic-btn bg-primary text-on-primary font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-on-surface transition-colors w-full md:w-auto">Send
                 Message</button>
             </div>
           </div>
-          <div class="md:col-span-4 md:col-start-9 space-y-unit-xl">
+          <div class="reveal-right md:col-span-4 md:col-start-9 space-y-unit-xl">
             <div>
               <h3 class="font-label-bold text-label-bold uppercase text-primary mb-unit-md">Contact</h3>
               <ul class="divide-y-2 divide-on-surface">
-                <li
-                  class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-surface-container transition-colors px-1">
-                  <span class="font-sans text-body-md">ios.shahadathossen@gmail.com</span>
-                  <span class="material-symbols-outlined group-hover:text-primary">arrow_outward</span>
+                <li>
+                  <a href="mailto:ios.shahadathossen@gmail.com"
+                    class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-surface-container transition-colors px-1">
+                    <span class="font-sans text-body-md">ios.shahadathossen@gmail.com</span>
+                    <span class="material-symbols-outlined group-hover:text-primary">arrow_outward</span>
+                  </a>
                 </li>
-                <li
-                  class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-surface-container transition-colors px-1">
-                  <span class="font-sans text-body-md">01815-933780</span>
-                  <span class="material-symbols-outlined group-hover:text-primary">call</span>
+                <li>
+                  <a href="tel:+8801815933780"
+                    class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-surface-container transition-colors px-1">
+                    <span class="font-sans text-body-md">01815-933780</span>
+                    <span class="material-symbols-outlined group-hover:text-primary">call</span>
+                  </a>
                 </li>
-                <li
-                  class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-surface-container transition-colors px-1">
-                  <span class="font-sans text-body-md">Dhaka Cantonment, BD</span>
-                  <span class="material-symbols-outlined group-hover:text-primary">location_on</span>
+                <li>
+                  <a href="https://maps.google.com/?q=Dhaka+Cantonment,+Bangladesh" target="_blank" rel="noopener noreferrer"
+                    class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-surface-container transition-colors px-1">
+                    <span class="font-sans text-body-md">Dhaka Cantonment, BD</span>
+                    <span class="material-symbols-outlined group-hover:text-primary">location_on</span>
+                  </a>
                 </li>
               </ul>
             </div>
             <div>
               <h3 class="font-label-bold text-label-bold uppercase text-primary mb-unit-md">Social</h3>
               <ul class="divide-y-2 divide-on-surface">
-                <li
-                  class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-on-surface hover:text-background transition-all px-1">
-                  <span class="font-sans text-body-md">GitHub</span>
-                  <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+                <li>
+                  <a href="https://github.com/shahadat-100" target="_blank" rel="noopener noreferrer"
+                    class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-on-surface hover:text-background transition-all px-1">
+                    <span class="font-sans text-body-md">GitHub</span>
+                    <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+                  </a>
                 </li>
-                <li
-                  class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-on-surface hover:text-background transition-all px-1">
-                  <span class="font-sans text-body-md">LinkedIn</span>
-                  <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+                <li>
+                  <a href="https://www.linkedin.com/in/shahadat-hossen-25bb59331/" target="_blank" rel="noopener noreferrer"
+                    class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-on-surface hover:text-background transition-all px-1">
+                    <span class="font-sans text-body-md">LinkedIn</span>
+                    <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+                  </a>
                 </li>
-                <li
-                  class="py-unit-sm flex justify-between items-center group cursor-pointer hover:bg-on-surface hover:text-background transition-all px-1">
-                  <span class="font-sans text-body-md">Twitter / X</span>
-                  <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+                <li>
+                  <a href="https://leetcode.com/u/itsmearyan10/" target="_blank" rel="noopener noreferrer"
+                    class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-on-surface hover:text-background transition-all px-1">
+                    <span class="font-sans text-body-md">LeetCode</span>
+                    <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://codeforces.com/profile/itsmearyan10" target="_blank" rel="noopener noreferrer"
+                    class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-on-surface hover:text-background transition-all px-1">
+                    <span class="font-sans text-body-md">Codeforces</span>
+                    <span class="material-symbols-outlined group-hover:text-background">north_east</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -755,7 +884,7 @@
           <div
             style="font-family:Inter;font-size:14px;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase;">
             Ask About Me</div>
-          <div style="font-family:'DM Mono';font-size:11px;color:#bc0100;margin-top:2px;">Powered by Gemini AI</div>
+          <div style="font-family:'DM Mono';font-size:11px;color:#bc0100;margin-top:2px;">Offline Portfolio Assistant</div>
         </div>
         <button onclick="toggleChat()"
           style="background:none;border:none;cursor:pointer;color:#bc0100;display:flex;align-items:center;">
@@ -772,7 +901,7 @@
         <button onclick="sendQuick('What are your skills?')" class="quick-pill">Skills?</button>
         <button onclick="sendQuick('Are you available to hire?')" class="quick-pill">Hire?</button>
       </div>
-      <div class="gemini-badge">Powered by <span>Google Gemini</span> · Free API</div>
+      <div class="gemini-badge">Instant <span>Offline Assistant</span> · No Network Delay</div>
       <div style="display:flex;border-top:2px solid #1a1c1c;flex-shrink:0;">
         <input id="chat-input" type="text" placeholder="Ask me anything..."
           style="flex:1;border:none;outline:none;padding:14px 16px;font-family:Inter;font-size:14px;background:#f9f9f9;min-height:52px;"
@@ -784,7 +913,7 @@
         </button>
       </div>
     </div>
-    <button id="chat-btn" onclick="toggleChat()"
+    <button id="chat-btn" onclick="toggleChat()" class="magnetic-btn"
       style="width:56px;height:56px;border-radius:50%;background:#1a1c1c;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;"
       onmouseover="this.style.background='#bc0100'" onmouseout="this.style.background='#1a1c1c'">
       <span class="material-symbols-outlined" style="color:#fff;font-size:24px;" id="chat-icon">chat</span>
@@ -891,37 +1020,40 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
     async function getBotReply(userMessage) {
       showTyping();
       document.getElementById('send-btn').disabled = true;
-      try {
-        const payload = {
-          history: [
-            { role: 'user', parts: [{ text: SYSTEM_PROMPT }] },
-            { role: 'model', parts: [{ text: 'Understood! I am ready to answer questions about this iOS developer portfolio.' }] },
-            ...chatHistory
-          ],
-          message: userMessage
-        };
-        const res = await fetch('http://localhost:3001/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        const data = await res.json();
-        removeTyping();
-        if (!res.ok) {
-          let errMsg = data?.error || 'API error. Check your backend.';
-          if (errMsg.toLowerCase().includes('leaked')) {
-            errMsg = "The Gemini API key is reported as leaked. Please replace it in the .env file with a fresh key from Google AI Studio.";
-          }
-          appendMessage('⚠️ ' + errMsg, 'bot');
-          return;
-        }
-        const reply = data?.text || "Sorry, I couldn't generate a response right now.";
-        chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
-        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
-        appendMessage(reply, 'bot');
-      } catch (err) {
-        removeTyping();
-        appendMessage("Connection error. Ensure the local server is running.", 'bot');
-        console.error('API error:', err);
-      } finally {
-        document.getElementById('send-btn').disabled = false;
+      
+      // Simulate natural thinking delay
+      await new Promise(resolve => setTimeout(resolve, 600));
+      
+      removeTyping();
+      
+      const msg = userMessage.toLowerCase().trim();
+      let reply = "";
+      
+      // Offline Keywords/Rules Matching Engine
+      if (msg.includes("project") || msg.includes("work") || msg.includes("build") || msg.includes("shipped") || msg.includes("nblipower") || msg.includes("trust money")) {
+        reply = "Shahadat has built several premium iOS apps including NBLiPower (a banking app for National Bank Ltd. with fund transfers, NPSB, and bill pay) and Trust Money (a banking app for Trust Bank with FDR/DPS & wallet integration). He also shipped AIVideoGencut, Collage Studio, and others during his time at AppExits!";
+      } else if (msg.includes("skill") || msg.includes("expert") || msg.includes("language") || msg.includes("framework") || msg.includes("database") || msg.includes("swift") || msg.includes("uikit")) {
+        reply = "Shahadat is highly skilled in Swift, C/C++, and OOP/DSA. His framework expertise includes UIKit, Alamofire, CoreData, Firebase, AVFoundation, and VisionKit. He standardizes on clean MVC architecture.";
+      } else if (msg.includes("hire") || msg.includes("available") || msg.includes("opportunity") || msg.includes("job") || msg.includes("offer")) {
+        reply = "Yes, Shahadat is open to new opportunities! He is ready to bring his native iOS expertise to secure banking or creative consumer apps. You can hire him by emailing ios.shahadathossen@gmail.com or calling 01815-933780.";
+      } else if (msg.includes("contact") || msg.includes("email") || msg.includes("phone") || msg.includes("call") || msg.includes("address") || msg.includes("location")) {
+        reply = "You can contact Shahadat Hossen directly via email at ios.shahadathossen@gmail.com or call him at 01815-933780. He is located in Dhaka Cantonment, Bangladesh.";
+      } else if (msg.includes("experience") || msg.includes("role") || msg.includes("current") || msg.includes("cibl") || msg.includes("appexits")) {
+        reply = "Shahadat is currently a Junior iOS Developer at CIBL (Feb 2025 – Present) building secure banking solutions. Previously, he was a Junior iOS Developer and Intern at AppExits (Jul 2024 – Jan 2026), shipping multiple AI, utility, and creative apps.";
+      } else if (msg.includes("education") || msg.includes("study") || msg.includes("college") || msg.includes("university") || msg.includes("degree") || msg.includes("diploma")) {
+        reply = "Shahadat is studying BSc in CSE at Northern University of Bangladesh (June 2025 – Present). He also holds a Diploma in Computer Science and Technology (CGPA 3.62) from Brahmanbaria Polytechnic Institute.";
+      } else if (msg.includes("who") || msg.includes("about") || msg.includes("name") || msg.includes("yourself")) {
+        reply = "I am the local offline assistant representing Shahadat Hossen! Shahadat is a talented Junior iOS Developer specializing in UIKit, Swift, clean MVC codebases, and production-grade secure applications.";
+      } else if (msg.includes("hi") || msg.includes("hello") || msg.includes("hey") || msg.includes("welcome")) {
+        reply = "Hello! I am Shahadat's offline portfolio assistant. Ask me anything about his projects, skills, education, experience, or hire availability! 👋";
+      } else {
+        reply = "I can only answer questions related to Shahadat Hossen's iOS developer portfolio, projects, skills, and availability. Try asking about 'Projects', 'Skills', or how to 'Contact' him!";
       }
+
+      chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+      chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+      appendMessage(reply, 'bot');
+      document.getElementById('send-btn').disabled = false;
     }
 
     function filterProj(tag, btn) {
@@ -947,6 +1079,30 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+    // Staggered scroll items animation
+    const staggerItems = document.querySelectorAll('.stagger-item');
+    const staggerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            staggerObserver.unobserve(entry.target); // fire once
+          }
+        });
+      },
+      {
+        threshold: 0.15,   // 15% visible triggers it
+        rootMargin: '0px', // no offset
+      }
+    );
+    staggerItems.forEach((item) => staggerObserver.observe(item));
+
+    /* Accessibility: skip animation if user prefers reduced motion */
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) {
+      staggerItems.forEach((el) => el.classList.add('visible'));
+    }
+
     const sections = ['hero', 'projects', 'about', 'skills', 'contact'];
     window.addEventListener('scroll', () => {
       let current = 'hero';
@@ -959,6 +1115,285 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
         if (link.dataset.section === current) link.classList.add('text-primary', 'border-b-4', 'border-primary');
       });
     });
+
+    // ========== PREMIUM ANIMATIONS & INTERACTIONS ==========
+
+    // 1. Custom Trailing Cursor
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (dot) {
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+      }
+    });
+
+    function animateCursor() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      if (ring) {
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+      }
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    const refreshInteractiveElements = () => {
+      const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .proj-card, .quick-pill, .nav-link, #chat-btn');
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (ring) ring.classList.add('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          if (ring) ring.classList.remove('hover');
+        });
+      });
+    };
+    refreshInteractiveElements();
+
+    // 2. 3D Tilt Cards
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / centerY * -8;
+        const rotateY = (x - centerX) / centerX * 8;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+        const glare = card.querySelector('.tilt-glare');
+        if (glare) {
+          glare.style.opacity = '1';
+          glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(188, 1, 0, 0.12), transparent 60%)`;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        const glare = card.querySelector('.tilt-glare');
+        if (glare) glare.style.opacity = '0';
+        card.style.transition = 'transform 0.5s ease';
+        setTimeout(() => card.style.transition = 'transform 0.1s ease', 500);
+      });
+
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'transform 0.1s ease';
+      });
+    });
+
+    // 3. Magnetic Buttons
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    // 4. Scroll Reveal Animations
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // 5. Counter Animation
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = 'true';
+          const target = parseInt(entry.target.dataset.target);
+          const duration = 1800;
+          const startTime = performance.now();
+
+          function updateCounter(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            entry.target.textContent = Math.round(target * eased);
+            if (progress < 1) requestAnimationFrame(updateCounter);
+          }
+          requestAnimationFrame(updateCounter);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    // 6. Hero Title Parallax
+    const heroTitle = document.querySelector('.cursor-blink');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset;
+      if (heroTitle && scrollY < window.innerHeight) {
+        heroTitle.style.transform = `translateY(${scrollY * 0.15}px)`;
+      }
+    });
+
+    // 7. Navbar Scroll Transition
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (navbar) {
+        if (currentScroll > 100) {
+          navbar.style.background = 'rgba(249, 249, 249, 0.95)';
+          navbar.style.backdropFilter = 'blur(12px)';
+          navbar.style.borderBottomColor = '#bc0100';
+        } else {
+          navbar.style.background = '#f9f9f9';
+          navbar.style.backdropFilter = 'none';
+          navbar.style.borderBottomColor = '#1a1c1c';
+        }
+      }
+    });
+
+    // ========== 8. DEADPOOL EYE TRACKING INTERACTION ==========
+    let targetEyeX = 0;
+    let targetEyeY = 0;
+    let currentEyeX = 0;
+    let currentEyeY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      const avatarEl = document.getElementById('lottie-avatar');
+      if (!avatarEl) return;
+
+      const rect = avatarEl.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      const dist = Math.hypot(dx, dy);
+
+      const maxLimit = 5.5; // maximum pixel movement of the eyes
+      const angle = Math.atan2(dy, dx);
+      // scale movement based on distance to mouse
+      const strength = Math.min(maxLimit, dist * 0.015);
+
+      targetEyeX = Math.cos(angle) * strength;
+      targetEyeY = Math.sin(angle) * strength;
+    });
+
+    function updateEyeTracking() {
+      requestAnimationFrame(updateEyeTracking);
+
+      // Lerp for butter-smooth transition
+      currentEyeX += (targetEyeX - currentEyeX) * 0.15;
+      currentEyeY += (targetEyeY - currentEyeY) * 0.15;
+
+      const leftEyePath = document.querySelector('g[aria-label="Ellipse 28"] path');
+      const rightEyePath = document.querySelector('g[aria-label="Ellipse 30"] path');
+
+      if (leftEyePath) {
+        leftEyePath.style.transform = `translate(${currentEyeX}px, ${currentEyeY}px)`;
+        leftEyePath.style.transformBox = 'fill-box';
+        leftEyePath.style.transformOrigin = 'center';
+      }
+      if (rightEyePath) {
+        rightEyePath.style.transform = `translate(${currentEyeX}px, ${currentEyeY}px)`;
+        rightEyePath.style.transformBox = 'fill-box';
+        rightEyePath.style.transformOrigin = 'center';
+      }
+    }
+    // Initialize eye tracking loop
+    updateEyeTracking();
+    // ========== 9. FORM EMAIL DISPATCH & VALIDATION ==========
+    const contactBtn = document.getElementById('contact-submit-btn');
+    if (contactBtn) {
+      contactBtn.addEventListener('click', () => {
+        const nameEl = document.getElementById('contact-name');
+        const emailEl = document.getElementById('contact-email');
+        const msgEl = document.getElementById('contact-message');
+
+        const name = nameEl ? nameEl.value.trim() : '';
+        const email = emailEl ? emailEl.value.trim() : '';
+        const msg = msgEl ? msgEl.value.trim() : '';
+
+        if (!name || !email || !msg) {
+          showFormAlert('Please fill in all fields before sending!', '#bc0100');
+          return;
+        }
+
+        const subject = `Portfolio Contact from ${name}`;
+        const body = `Hi Shahadat,\n\nYou received a new message from your portfolio contact form:\n\n--------------------------------------------------\nName: ${name}\nEmail: ${email}\nMessage:\n${msg}\n--------------------------------------------------\n\nBest regards,\n${name}`;
+
+        const mailtoLink = `mailto:ios.shahadathossen@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        // Industry-grade hidden iframe dispatch to avoid page navigation disruption
+        const mailIframe = document.createElement('iframe');
+        mailIframe.style.display = 'none';
+        mailIframe.src = mailtoLink;
+        document.body.appendChild(mailIframe);
+        setTimeout(() => mailIframe.remove(), 1000);
+
+        // Visual success card popup
+        showFormAlert('Opening your mail client with pre-filled message details! Just hit send! 🚀', '#4caf50');
+
+        // Reset inputs
+        if (nameEl) nameEl.value = '';
+        if (emailEl) emailEl.value = '';
+        if (msgEl) msgEl.value = '';
+      });
+    }
+
+    function showFormAlert(message, bgColor) {
+      const oldAlert = document.getElementById('form-custom-alert');
+      if (oldAlert) oldAlert.remove();
+
+      const alertContainer = document.createElement('div');
+      alertContainer.id = 'form-custom-alert';
+      alertContainer.style.position = 'fixed';
+      alertContainer.style.bottom = '24px';
+      alertContainer.style.left = '50%';
+      alertContainer.style.transform = 'translateX(-50%) translateY(100px)';
+      alertContainer.style.backgroundColor = '#1a1c1c';
+      alertContainer.style.color = '#fff';
+      alertContainer.style.padding = '14px 24px';
+      alertContainer.style.fontFamily = 'Inter';
+      alertContainer.style.fontSize = '14px';
+      alertContainer.style.fontWeight = '600';
+      alertContainer.style.borderLeft = `6px solid ${bgColor}`;
+      alertContainer.style.borderTop = `2px solid #1a1c1c`;
+      alertContainer.style.borderRight = `2px solid #1a1c1c`;
+      alertContainer.style.borderBottom = `2px solid #1a1c1c`;
+      alertContainer.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)';
+      alertContainer.style.zIndex = '99999';
+      alertContainer.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      alertContainer.style.letterSpacing = '0.03em';
+      alertContainer.style.textTransform = 'uppercase';
+
+      alertContainer.innerText = message;
+      document.body.appendChild(alertContainer);
+
+      requestAnimationFrame(() => {
+        alertContainer.style.transform = 'translateX(-50%) translateY(0)';
+      });
+
+      setTimeout(() => {
+        alertContainer.style.transform = 'translateX(-50%) translateY(120px)';
+        setTimeout(() => {
+          alertContainer.remove();
+        }, 400);
+      }, 5000);
+    }
 
     // Initialize Lottie
     lottie.loadAnimation({
