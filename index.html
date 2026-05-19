@@ -11,6 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init("Ik_cPwTLCWk7VOyfN");</script>
+
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -94,7 +97,56 @@
     .skill-fill {
       height: 2px;
       background: #bc0100;
-      transition: width 1.2s ease;
+    }
+
+    /* Marquee Ticker Styles */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      width: 100%;
+      background-color: #1a1c1c;
+      padding: 16px 0;
+      border-top: 2px solid #1a1c1c;
+      border-bottom: 2px solid #1a1c1c;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .marquee-row {
+      display: flex;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .animate-marquee-left {
+      display: flex;
+      animation: marquee-l 25s linear infinite;
+    }
+
+    .animate-marquee-right {
+      display: flex;
+      animation: marquee-r 25s linear infinite;
+    }
+
+    @keyframes marquee-l {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    @keyframes marquee-r {
+      0% {
+        transform: translate3d(-50%, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
     }
 
     /* Avatar GIF */
@@ -267,57 +319,206 @@
       transition-delay: calc(var(--i) * 120ms);
     }
 
-    /* Custom Cursor Styles */
-    @media (min-width: 769px) {
-      body { cursor: none; }
-      a, button, input, textarea, select, .proj-card, .quick-pill, .nav-link, #chat-btn { cursor: none !important; }
+    /* ═══ PREMIUM CURSOR SYSTEM ═══ */
+    @media (pointer: fine) {
+
+      *,
+      *::before,
+      *::after {
+        cursor: none !important;
+      }
     }
-    .cursor-dot {
+
+    @media (pointer: coarse) {
+
+      #cursor-dot,
+      #cursor-ring,
+      #cursor-glow,
+      #cursor-ripple {
+        display: none !important;
+      }
+    }
+
+    /* Layer 1 — Instant Red Dot */
+    #cursor-dot {
       position: fixed;
+      top: 0;
+      left: 0;
       width: 8px;
       height: 8px;
       background: #bc0100;
       border-radius: 50%;
       pointer-events: none;
-      z-index: 99999;
-      transition: transform 0.1s ease;
+      z-index: 100000;
       transform: translate(-50%, -50%);
+      will-change: transform, left, top;
+      transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.2s ease,
+        opacity 0.2s ease;
+      display: none;
     }
-    .cursor-ring {
+
+    @media (pointer: fine) {
+      #cursor-dot {
+        display: block;
+      }
+    }
+
+    #cursor-dot.hover {
+      width: 12px;
+      height: 12px;
+      background: #bc0100;
+    }
+
+    #cursor-dot.clicking {
+      width: 5px;
+      height: 5px;
+      background: #fff;
+    }
+
+    #cursor-dot.typing {
+      width: 3px;
+      height: 22px;
+      border-radius: 2px;
+      background: #bc0100;
+      animation: cursor-blink-bar 1s step-end infinite;
+    }
+
+    @keyframes cursor-blink-bar {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Layer 2 — Lagging Ring */
+    #cursor-ring {
       position: fixed;
-      width: 40px;
-      height: 40px;
-      border: 2px solid rgba(188,1,0,0.6);
+      top: 0;
+      left: 0;
+      width: 38px;
+      height: 38px;
+      border: 1.5px solid rgba(188, 1, 0, 0.55);
       border-radius: 50%;
       pointer-events: none;
-      z-index: 99998;
-      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, transform 0.15s ease;
+      z-index: 99999;
       transform: translate(-50%, -50%);
+      will-change: left, top, width, height;
+      transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.35s ease,
+        background-color 0.35s ease,
+        opacity 0.3s ease;
+      display: none;
     }
-    .cursor-ring.hover {
+
+    @media (pointer: fine) {
+      #cursor-ring {
+        display: block;
+      }
+    }
+
+    #cursor-ring.hover {
       width: 64px;
       height: 64px;
-      border-color: rgba(188,1,0,0.9);
-      background-color: rgba(188,1,0,0.08);
+      border-color: rgba(188, 1, 0, 0.9);
+      background-color: rgba(188, 1, 0, 0.07);
     }
-    @media (max-width: 768px) {
-      .cursor-dot, .cursor-ring { display: none; }
-      body { cursor: auto; }
+
+    #cursor-ring.clicking {
+      width: 28px;
+      height: 28px;
+      background-color: rgba(188, 1, 0, 0.15);
+    }
+
+    /* Layer 3 — Glow Spotlight */
+    #cursor-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99996;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(188, 1, 0, 0.08) 0%, transparent 70%);
+      transition: opacity 0.4s ease;
+      will-change: left, top;
+      display: none;
+    }
+
+    @media (pointer: fine) {
+      #cursor-glow {
+        display: block;
+      }
+    }
+
+    #cursor-glow.hover {
+      background: radial-gradient(circle, rgba(188, 1, 0, 0.15) 0%, transparent 70%);
+    }
+
+
+
+    /* Click ripple burst */
+    .cursor-ripple {
+      position: fixed;
+      border-radius: 50%;
+      border: 1.5px solid rgba(188, 1, 0, 0.6);
+      pointer-events: none;
+      z-index: 99997;
+      transform: translate(-50%, -50%) scale(0);
+      animation: ripple-burst 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes ripple-burst {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.9;
+        width: 8px;
+        height: 8px;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        width: 90px;
+        height: 90px;
+      }
     }
 
     /* 3D Tilt Card Styles */
-    .tilt-card { transform-style: preserve-3d; transition: transform 0.1s ease; }
-    .tilt-inner { transform: translateZ(30px); }
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease;
+    }
+
+    .tilt-inner {
+      transform: translateZ(30px);
+    }
 
     /* Subtle Hover Lift */
-    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .hover-lift:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 30px rgba(188,1,0,0.12); }
+    .hover-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-lift:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(188, 1, 0, 0.12);
+    }
 
     /* B&W to Color reveal on hover */
     #lottie-avatar {
       filter: grayscale(100%) contrast(1.1) brightness(0.9);
       transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     #lottie-avatar:hover {
       filter: grayscale(0%) contrast(1) brightness(1);
       transform: scale(1.02);
@@ -329,36 +530,71 @@
       transform: translateY(30px);
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
+
     .reveal-left {
       opacity: 0;
       transform: translateX(-40px);
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .reveal-left.visible {
       opacity: 1;
       transform: translateX(0);
     }
+
     .reveal-right {
       opacity: 0;
       transform: translateX(40px);
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .reveal-right.visible {
       opacity: 1;
       transform: translateX(0);
+    }
+
+    /* ═══ HERO SCRAMBLE ANIMATION ═══ */
+    #hero-scramble {
+      min-height: 220px;   /* 2 lines × 110px line-height — prevents height reflow */
+      overflow: visible;   /* was: hidden — caused repaint/reflow on char inject */
+    }
+    #hero-scramble .sc-char {
+      display: inline;     /* stay inline throughout — no display switch = no layout jump */
+      position: relative;
+    }
+    #hero-scramble .sc-char.scrambling {
+      color: #bc0100;
+      text-shadow:
+        0 0 12px rgba(188, 1, 0, 0.9),
+        0 0 30px rgba(188, 1, 0, 0.5),
+        0 0 60px rgba(188, 1, 0, 0.2);
+    }
+    #hero-scramble .sc-char.resolving {
+      display: inline;     /* no display change = no layout shift */
+      animation: sc-resolve 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes sc-resolve {
+      0%   { color: #bc0100; text-shadow: 0 0 20px rgba(188,1,0,0.9), 0 0 40px rgba(188,1,0,0.4); filter: blur(3px); }
+      60%  { filter: blur(0.5px); }
+      100% { color: inherit; text-shadow: none; filter: blur(0); }
+    }
+    @media (max-width: 768px) {
+      #hero-scramble { min-height: auto; } /* mobile: let it flow naturally */
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Custom Cursor -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+  <!-- ═══ PREMIUM CURSOR LAYERS ═══ -->
+  <div id="cursor-glow"></div>
+  <div id="cursor-ring"></div>
+  <div id="cursor-dot"></div>
 
   <!-- NAVBAR -->
   <nav id="navbar"
@@ -416,8 +652,10 @@
         <p class="font-mono text-mono-sm uppercase text-primary mb-unit-md tracking-widest">iOS Developer · Swift ·
           UIKit · Fintech</p>
         <h1
-          class="text-display-xl font-sans font-black tracking-tighter text-on-surface mb-unit-xl max-w-5xl cursor-blink">
-          BUILDING APPS<br />PEOPLE LOVE.
+          id="hero-scramble"
+          data-no-reveal="true"
+          class="text-display-xl font-sans font-black tracking-tighter text-on-surface mb-unit-xl max-w-5xl"
+          style="line-height:110px;letter-spacing:-0.04em;">BUILDING APPS<br>PEOPLE LOVE.
         </h1>
         <div class="flex flex-col md:flex-row gap-unit-xl items-start md:items-end">
           <div class="md:w-7/12">
@@ -463,6 +701,44 @@
       </div>
     </section>
 
+    <!-- MARQUEE TICKER -->
+    <div class="marquee-container select-none">
+      <!-- Row 1: Left to Right -->
+      <div class="marquee-row">
+        <div class="animate-marquee-left">
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <!-- Row 2: Right to Left -->
+      <div class="marquee-row">
+        <div class="animate-marquee-right">
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
+            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; MVC &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
+            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+      </div>
+    </div>
+
     <!-- PROJECTS -->
     <section id="projects" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface bg-surface-container fade-in">
       <div class="max-w-[1440px] mx-auto">
@@ -485,9 +761,12 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter" id="proj-grid">
           <!-- NBLiPower -->
-          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+          <div
+            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
             data-tags="swift uikit banking" style="--i:0">
-            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
+            <div
+              class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300">
+            </div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#bc0100;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -511,9 +790,12 @@
             </div>
           </div>
           <!-- Trust Money -->
-          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+          <div
+            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
             data-tags="swift uikit banking" style="--i:1">
-            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
+            <div
+              class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300">
+            </div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#1a1c1c;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -539,9 +821,12 @@
             </div>
           </div>
           <!-- AIVideoGencut -->
-          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+          <div
+            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
             data-tags="swift uikit" style="--i:2">
-            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
+            <div
+              class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300">
+            </div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#bc0100;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -566,9 +851,12 @@
             </div>
           </div>
           <!-- Collage Studio -->
-          <div class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
+          <div
+            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background p-unit-lg transition-all cursor-pointer group"
             data-tags="swift uikit" style="--i:3">
-            <div class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300"></div>
+            <div
+              class="tilt-glare absolute inset-0 rounded-sm pointer-events-none opacity-0 transition-opacity duration-300">
+            </div>
             <div class="flex justify-between items-start mb-unit-md">
               <div
                 style="width:48px;height:48px;background:#1a1c1c;border-radius:12px;display:flex;align-items:center;justify-content:center;">
@@ -616,7 +904,7 @@
             <p class="font-label-bold text-label-bold uppercase text-primary">Experience</p>
             <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:0">
               <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
-              <p class="font-label-bold uppercase text-secondary">CIBL &mdash; Feb 2025 &ndash; Present</p>
+              <p class="font-label-bold uppercase text-secondary">CIBL &mdash; Feb 2026 &ndash; Present</p>
               <p class="font-sans text-body-md text-secondary mt-1">
                 Developing secure and scalable mobile banking solutions at CIBL, focusing on performance and user
                 experience.
@@ -654,7 +942,8 @@
     <section id="skills"
       class="px-grid-margin py-unit-xxl border-b-2 border-on-surface bg-on-surface text-background fade-in">
       <div class="max-w-[1440px] mx-auto">
-        <div class="reveal-left flex justify-between items-end border-b-2 border-white border-opacity-20 pb-unit-md mb-unit-xl">
+        <div
+          class="reveal-left flex justify-between items-end border-b-2 border-white border-opacity-20 pb-unit-md mb-unit-xl">
           <div>
             <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Expertise</p>
             <h2 class="text-display-lg font-black tracking-tighter uppercase">SKILLS.</h2>
@@ -667,23 +956,26 @@
               <div>
                 <div class="flex justify-between mb-1"><span
                     class="font-label-bold uppercase text-background">Swift</span><span
-                    class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="90">0</span>%</span></div>
+                    class="font-mono text-mono-sm text-secondary"><span class="counter"
+                      data-target="85">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
-                  <div class="skill-fill" style="width:0%" data-w="90%"></div>
+                  <div class="skill-fill" style="width:0%" data-w="85%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">C /
-                    C++</span><span class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="75">0</span>%</span></div>
+                    C++</span><span class="font-mono text-mono-sm text-secondary"><span class="counter"
+                      data-target="60">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
-                  <div class="skill-fill" style="width:0%" data-w="75%"></div>
+                  <div class="skill-fill" style="width:0%" data-w="60%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">OOP /
-                    DSA</span><span class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="80">0</span>%</span></div>
+                    DSA</span><span class="font-mono text-mono-sm text-secondary"><span class="counter"
+                      data-target="65">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
-                  <div class="skill-fill" style="width:0%" data-w="80%"></div>
+                  <div class="skill-fill" style="width:0%" data-w="65%"></div>
                 </div>
               </div>
             </div>
@@ -694,24 +986,27 @@
               <div>
                 <div class="flex justify-between mb-1"><span
                     class="font-label-bold uppercase text-background">UIKit</span><span
-                    class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="90">0</span>%</span></div>
+                    class="font-mono text-mono-sm text-secondary"><span class="counter"
+                      data-target="80">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
-                  <div class="skill-fill" style="width:0%" data-w="90%"></div>
+                  <div class="skill-fill" style="width:0%" data-w="80%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between mb-1"><span class="font-label-bold uppercase text-background">Rest
-                    API</span><span class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="85">0</span>%</span></div>
+                    API</span><span class="font-mono text-mono-sm text-secondary"><span class="counter"
+                      data-target="75">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
-                  <div class="skill-fill" style="width:0%" data-w="85%"></div>
+                  <div class="skill-fill" style="width:0%" data-w="75%"></div>
                 </div>
               </div>
               <div>
                 <div class="flex justify-between mb-1"><span
                     class="font-label-bold uppercase text-background">CoreData</span><span
-                    class="font-mono text-mono-sm text-secondary"><span class="counter" data-target="85">0</span>%</span></div>
+                    class="font-mono text-mono-sm text-secondary"><span class="counter"
+                      data-target="70">0</span>%</span></div>
                 <div style="background:#333;height:2px;">
-                  <div class="skill-fill" style="width:0%" data-w="85%"></div>
+                  <div class="skill-fill" style="width:0%" data-w="70%"></div>
                 </div>
               </div>
             </div>
@@ -764,7 +1059,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
           <div class="reveal-left md:col-span-7">
-            <div class="space-y-unit-lg">
+            <form id="contact-form" class="space-y-unit-lg">
               <div class="space-y-unit-xs">
                 <label class="font-label-bold text-label-bold uppercase text-on-surface">Full Name</label>
                 <input id="contact-name"
@@ -783,10 +1078,10 @@
                   class="w-full bg-transparent border-b-2 border-on-surface focus:border-primary focus:ring-0 px-0 py-unit-sm font-sans text-body-lg placeholder:text-surface-dim transition-colors outline-none resize-none"
                   placeholder=" Tell me about your project..." rows="5" required></textarea>
               </div>
-              <button id="contact-submit-btn"
+              <button id="contact-submit-btn" type="submit"
                 class="magnetic-btn bg-primary text-on-primary font-label-bold text-label-bold uppercase px-unit-xl py-unit-md hover:bg-on-surface transition-colors w-full md:w-auto">Send
                 Message</button>
-            </div>
+            </form>
           </div>
           <div class="reveal-right md:col-span-4 md:col-start-9 space-y-unit-xl">
             <div>
@@ -807,7 +1102,8 @@
                   </a>
                 </li>
                 <li>
-                  <a href="https://maps.google.com/?q=Dhaka+Cantonment,+Bangladesh" target="_blank" rel="noopener noreferrer"
+                  <a href="https://maps.google.com/?q=Dhaka+Cantonment,+Bangladesh" target="_blank"
+                    rel="noopener noreferrer"
                     class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-surface-container transition-colors px-1">
                     <span class="font-sans text-body-md">Dhaka Cantonment, BD</span>
                     <span class="material-symbols-outlined group-hover:text-primary">location_on</span>
@@ -826,7 +1122,8 @@
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/in/shahadat-hossen-25bb59331/" target="_blank" rel="noopener noreferrer"
+                  <a href="https://www.linkedin.com/in/shahadat-hossen-25bb59331/" target="_blank"
+                    rel="noopener noreferrer"
                     class="hover-lift py-unit-sm flex justify-between items-center group hover:bg-on-surface hover:text-background transition-all px-1">
                     <span class="font-sans text-body-md">LinkedIn</span>
                     <span class="material-symbols-outlined group-hover:text-background">north_east</span>
@@ -884,7 +1181,8 @@
           <div
             style="font-family:Inter;font-size:14px;font-weight:700;color:#fff;letter-spacing:0.05em;text-transform:uppercase;">
             Ask About Me</div>
-          <div style="font-family:'DM Mono';font-size:11px;color:#bc0100;margin-top:2px;">Offline Portfolio Assistant</div>
+          <div style="font-family:'DM Mono';font-size:11px;color:#bc0100;margin-top:2px;">Offline Portfolio Assistant
+          </div>
         </div>
         <button onclick="toggleChat()"
           style="background:none;border:none;cursor:pointer;color:#bc0100;display:flex;align-items:center;">
@@ -1020,15 +1318,15 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
     async function getBotReply(userMessage) {
       showTyping();
       document.getElementById('send-btn').disabled = true;
-      
+
       // Simulate natural thinking delay
       await new Promise(resolve => setTimeout(resolve, 600));
-      
+
       removeTyping();
-      
+
       const msg = userMessage.toLowerCase().trim();
       let reply = "";
-      
+
       // Offline Keywords/Rules Matching Engine
       if (msg.includes("project") || msg.includes("work") || msg.includes("build") || msg.includes("shipped") || msg.includes("nblipower") || msg.includes("trust money")) {
         reply = "Shahadat has built several premium iOS apps including NBLiPower (a banking app for National Bank Ltd. with fund transfers, NPSB, and bill pay) and Trust Money (a banking app for Trust Bank with FDR/DPS & wallet integration). He also shipped AIVideoGencut, Collage Studio, and others during his time at AppExits!";
@@ -1073,7 +1371,6 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          e.target.querySelectorAll('.skill-fill').forEach(bar => { bar.style.width = bar.dataset.w; });
         }
       });
     }, { threshold: 0.1 });
@@ -1118,45 +1415,216 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
 
     // ========== PREMIUM ANIMATIONS & INTERACTIONS ==========
 
-    // 1. Custom Trailing Cursor
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      if (dot) {
-        dot.style.left = mouseX + 'px';
-        dot.style.top = mouseY + 'px';
-      }
+    // 1. Native Anchor Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
     });
 
-    function animateCursor() {
-      ringX += (mouseX - ringX) * 0.15;
-      ringY += (mouseY - ringY) * 0.15;
-      if (ring) {
-        ring.style.left = ringX + 'px';
-        ring.style.top = ringY + 'px';
-      }
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
+    // 2. Scroll Text Reveal
+    function splitTextForReveal(element) {
+      const childNodes = Array.from(element.childNodes);
+      element.innerHTML = '';
 
-    const refreshInteractiveElements = () => {
-      const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .proj-card, .quick-pill, .nav-link, #chat-btn');
-      interactiveElements.forEach(el => {
+      let wordIndex = 0;
+
+      childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const words = node.textContent.split(/(\s+)/);
+          words.forEach(word => {
+            if (word.trim() === '') {
+              element.appendChild(document.createTextNode(word));
+            } else {
+              const wrapper = document.createElement('span');
+              wrapper.className = 'reveal-word-wrapper';
+              wrapper.style.display = 'inline-block';
+              wrapper.style.overflow = 'hidden';
+              wrapper.style.verticalAlign = 'bottom';
+
+              const innerSpan = document.createElement('span');
+              innerSpan.className = 'reveal-word';
+              innerSpan.style.display = 'inline-block';
+              innerSpan.style.transform = 'translateY(40px)';
+              innerSpan.style.opacity = '0';
+              innerSpan.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+              innerSpan.style.transitionDelay = `${wordIndex * 0.08}s`;
+              innerSpan.textContent = word;
+
+              wrapper.appendChild(innerSpan);
+              element.appendChild(wrapper);
+              wordIndex++;
+            }
+          });
+        } else {
+          element.appendChild(node.cloneNode(true));
+        }
+      });
+    }
+
+    const revealHeadings = document.querySelectorAll('h1:not([data-no-reveal]), h2');
+    revealHeadings.forEach(heading => {
+      splitTextForReveal(heading);
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.reveal-word').forEach(word => {
+              word.style.transform = 'translateY(0)';
+              word.style.opacity = '1';
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      observer.observe(heading);
+    });
+
+    // ═══ HERO SCRAMBLE → REVEAL ANIMATION ═══
+    (function initHeroScramble() {
+      const el = document.getElementById('hero-scramble');
+      if (!el) return;
+
+      const GLYPHS = '!@#$%^&*()_+-=[]{}|;:<>?/~\\0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const LINE1  = 'BUILDING APPS';
+      const LINE2  = 'PEOPLE LOVE.';
+
+      // Build character spans, preserving BR and spaces
+      function buildLine(text, startIdx) {
+        return text.split('').map((ch, i) => {
+          if (ch === ' ') {
+            return `<span class="sc-char" data-idx="${startIdx + i}">&nbsp;</span>`;
+          }
+          return `<span class="sc-char" data-final="${ch}" data-idx="${startIdx + i}">${ch}</span>`;
+        }).join('');
+      }
+
+      // Inject spans
+      el.innerHTML = buildLine(LINE1, 0) + '<br>' + buildLine(LINE2, LINE1.length);
+
+      const spans = Array.from(el.querySelectorAll('.sc-char[data-final]'));
+
+      // — Phase 1: flicker random glyphs every 45ms for 1400ms —
+      const flickerTimer = setInterval(() => {
+        spans.forEach(span => {
+          if (!span.dataset.resolved) {
+            span.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            span.classList.add('scrambling');
+          }
+        });
+      }, 45);
+
+      // — Phase 2: resolve char-by-char after 1400ms —
+      setTimeout(() => {
+        clearInterval(flickerTimer);
+        spans.forEach((span, i) => {
+          setTimeout(() => {
+            span.textContent = span.dataset.final;
+            span.classList.remove('scrambling');
+            span.classList.add('resolving');
+            span.dataset.resolved = 'true';
+            setTimeout(() => span.classList.remove('resolving'), 500);
+          }, i * 48); // 48ms stagger per character
+        });
+      }, 1400);
+    })();
+
+    // 3. ═══ PREMIUM 3-LAYER CURSOR ═══
+    (function () {
+      // Skip on touch devices
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+
+      const dot = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      const glow = document.getElementById('cursor-glow');
+
+      let mX = 0, mY = 0;
+      let rX = 0, rY = 0;
+      let gX = 0, gY = 0;
+
+      // ── Track mouse ──
+      document.addEventListener('mousemove', (e) => {
+        mX = e.clientX;
+        mY = e.clientY;
+        dot.style.left = mX + 'px';
+        dot.style.top = mY + 'px';
+      });
+
+      // ── RAF loop for ring + glow lag ──
+      (function animate() {
+        rX += (mX - rX) * 0.10;
+        rY += (mY - rY) * 0.10;
+        gX += (mX - gX) * 0.06;
+        gY += (mY - gY) * 0.06;
+
+        ring.style.left = rX + 'px';
+        ring.style.top = rY + 'px';
+        glow.style.left = gX + 'px';
+        glow.style.top = gY + 'px';
+        requestAnimationFrame(animate);
+      })();
+
+      // ── Click ripple burst ──
+      document.addEventListener('pointerdown', (e) => {
+        dot.classList.add('clicking');
+        ring.classList.add('clicking');
+        const ripple = document.createElement('div');
+        ripple.className = 'cursor-ripple';
+        ripple.style.left = e.clientX + 'px';
+        ripple.style.top = e.clientY + 'px';
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+      document.addEventListener('pointerup', () => {
+        dot.classList.remove('clicking');
+        ring.classList.remove('clicking');
+      });
+
+      // ── Hide when leaving window ──
+      document.addEventListener('mouseleave', () => {
+        dot.style.opacity = '0';
+        ring.style.opacity = '0';
+        glow.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', () => {
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
+        glow.style.opacity = '1';
+      });
+
+      // ── Interactive element hover states ──
+      const btnEls = document.querySelectorAll('a, button, .proj-card, .quick-pill, .nav-link, #chat-btn');
+      btnEls.forEach(el => {
         el.addEventListener('mouseenter', () => {
-          if (ring) ring.classList.add('hover');
+          dot.classList.add('hover');
+          ring.classList.add('hover');
+          glow.classList.add('hover');
         });
         el.addEventListener('mouseleave', () => {
-          if (ring) ring.classList.remove('hover');
+          dot.classList.remove('hover');
+          ring.classList.remove('hover');
+          glow.classList.remove('hover');
         });
       });
-    };
-    refreshInteractiveElements();
 
-    // 2. 3D Tilt Cards
+      // ── Input / textarea: typing cursor mode ──
+      const inputEls = document.querySelectorAll('input, textarea');
+      inputEls.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          dot.classList.add('typing');
+          ring.style.opacity = '0.3';
+        });
+        el.addEventListener('mouseleave', () => {
+          dot.classList.remove('typing');
+          ring.style.opacity = '1';
+        });
+      });
+    })();
+
+    // 4. 3D Tilt Cards
     const tiltCards = document.querySelectorAll('.tilt-card');
     tiltCards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
@@ -1190,7 +1658,7 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       });
     });
 
-    // 3. Magnetic Buttons
+    // 5. Magnetic Buttons
     document.querySelectorAll('.magnetic-btn').forEach(btn => {
       btn.addEventListener('mousemove', (e) => {
         const rect = btn.getBoundingClientRect();
@@ -1203,7 +1671,7 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       });
     });
 
-    // 4. Scroll Reveal Animations
+    // 6. Scroll Reveal Animations
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1216,26 +1684,35 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       revealObserver.observe(el);
     });
 
-    // 5. Counter Animation
+    // 7. Counter & Skill Bar Animation
     const counterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !entry.target.dataset.counted) {
           entry.target.dataset.counted = 'true';
           const target = parseInt(entry.target.dataset.target);
-          const duration = 1800;
+          const fillBar = entry.target.closest('div').nextElementSibling.querySelector('.skill-fill');
+          const duration = 1500;
           const startTime = performance.now();
 
-          function updateCounter(currentTime) {
+          function animate(currentTime) {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            const eased = progress * (2 - progress); // easeOutQuad
+
             entry.target.textContent = Math.round(target * eased);
-            if (progress < 1) requestAnimationFrame(updateCounter);
+
+            if (fillBar) {
+              fillBar.style.width = (target * eased) + '%';
+            }
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
           }
-          requestAnimationFrame(updateCounter);
+          requestAnimationFrame(animate);
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
 
@@ -1316,41 +1793,32 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
     // Initialize eye tracking loop
     updateEyeTracking();
     // ========== 9. FORM EMAIL DISPATCH & VALIDATION ==========
-    const contactBtn = document.getElementById('contact-submit-btn');
-    if (contactBtn) {
-      contactBtn.addEventListener('click', () => {
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
         const nameEl = document.getElementById('contact-name');
         const emailEl = document.getElementById('contact-email');
         const msgEl = document.getElementById('contact-message');
 
-        const name = nameEl ? nameEl.value.trim() : '';
-        const email = emailEl ? emailEl.value.trim() : '';
-        const msg = msgEl ? msgEl.value.trim() : '';
+        const params = {
+          from_name: nameEl ? nameEl.value.trim() : '',
+          from_email: emailEl ? emailEl.value.trim() : '',
+          message: msgEl ? msgEl.value.trim() : '',
+        };
 
-        if (!name || !email || !msg) {
-          showFormAlert('Please fill in all fields before sending!', '#bc0100');
-          return;
-        }
-
-        const subject = `Portfolio Contact from ${name}`;
-        const body = `Hi Shahadat,\n\nYou received a new message from your portfolio contact form:\n\n--------------------------------------------------\nName: ${name}\nEmail: ${email}\nMessage:\n${msg}\n--------------------------------------------------\n\nBest regards,\n${name}`;
-
-        const mailtoLink = `mailto:ios.shahadathossen@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        
-        // Industry-grade hidden iframe dispatch to avoid page navigation disruption
-        const mailIframe = document.createElement('iframe');
-        mailIframe.style.display = 'none';
-        mailIframe.src = mailtoLink;
-        document.body.appendChild(mailIframe);
-        setTimeout(() => mailIframe.remove(), 1000);
-
-        // Visual success card popup
-        showFormAlert('Opening your mail client with pre-filled message details! Just hit send! 🚀', '#4caf50');
-
-        // Reset inputs
-        if (nameEl) nameEl.value = '';
-        if (emailEl) emailEl.value = '';
-        if (msgEl) msgEl.value = '';
+        emailjs.send("service_0lzhg1w", "template_enwx6lc", params)
+          .then(() => {
+            alert("Message sent!");
+            showFormAlert("Message sent! 🚀", "#4caf50");
+            contactForm.reset();
+          })
+          .catch((err) => {
+            console.error("EmailJS Error:", err);
+            alert("Failed. Try again.");
+            showFormAlert("Failed. Try again.", "#bc0100");
+          });
       });
     }
 
