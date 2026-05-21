@@ -11,6 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>emailjs.init("Ik_cPwTLCWk7VOyfN");</script>
 
@@ -562,6 +564,8 @@
     #hero-scramble {
       min-height: 220px;   /* 2 lines × 110px line-height — prevents height reflow */
       overflow: visible;   /* was: hidden — caused repaint/reflow on char inject */
+      transform-style: preserve-3d;
+      will-change: transform;
     }
     #hero-scramble .sc-char {
       display: inline;     /* stay inline throughout — no display switch = no layout jump */
@@ -586,10 +590,196 @@
     @media (max-width: 768px) {
       #hero-scramble { min-height: auto; } /* mobile: let it flow naturally */
     }
+
+    /* ═══ PREMIUM LOADING SCREEN ═══ */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    #loading-screen.hidden {
+      pointer-events: none;
+      opacity: 0;
+    }
+    .loader-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      letter-spacing: -0.04em;
+      color: #fff;
+      text-transform: uppercase;
+      overflow: hidden;
+    }
+    .loader-logo span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .loader-bar-wrap {
+      width: 200px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .loader-bar {
+      height: 100%;
+      width: 0%;
+      background: #bc0100;
+      transition: width 0.1s linear;
+    }
+    .loader-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ DARK MODE ORBS ═══ */
+    @keyframes gradient-shift {
+      0%, 100% {
+        opacity: 0.06;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        opacity: 0.12;
+        transform: translate(-50%, -50%) scale(1.15);
+      }
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+      animation: gradient-shift 8s ease-in-out infinite;
+    }
+    .hero-orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(188, 1, 0, 0.9) 0%, transparent 70%);
+      top: 50%;
+      left: 20%;
+    }
+    .hero-orb-2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(80, 0, 200, 0.6) 0%, transparent 70%);
+      top: 30%;
+      left: 70%;
+      animation-delay: -4s;
+    }
+    /* Hide orbs in light mode */
+    html:not(.dark) .hero-orb {
+      display: none;
+    }
+
+    /* ═══ PREMIUM PAGE TRANSITION OVERLAY ═══ */
+    .transition-container {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 999998;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .transition-stripe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      top: 100%;
+      will-change: transform;
+    }
+    .transition-stripe-1 {
+      background: #bc0100;
+    }
+    .transition-stripe-2 {
+      background: #0a0a0a;
+    }
+
+    /* ═══ DEADPOOL SPEECH BUBBLE ═══ */
+    #deadpool-bubble {
+      position: absolute;
+      top: 160px;
+      right: 0px;
+      background: #1a1c1c;
+      color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 10px 14px;
+      border: 2px solid #bc0100;
+      max-width: 220px;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.85) translateY(10px);
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 30;
+      box-shadow: 6px 6px 0px #bc0100;
+    }
+    #deadpool-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 32px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 8px 8px 0 0;
+      border-color: #1a1c1c transparent transparent transparent;
+      display: block;
+    }
+    #deadpool-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -11px;
+      left: 31px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 9px 9px 0 0;
+      border-color: #bc0100 transparent transparent transparent;
+      display: block;
+      z-index: -1;
+    }
+    #deadpool-bubble.bubble-active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    @media (max-width: 768px) {
+      #deadpool-bubble {
+        top: 120px;
+        right: 10px;
+        max-width: 180px;
+      }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- ═══ PREMIUM LOADING SCREEN ═══ -->
+  <div id="loading-screen" aria-hidden="true">
+    <div class="loader-logo">
+      <span>S</span><span>H</span><span>A</span><span>H</span><span>A</span><span>D</span><span>A</span><span>T</span><span>.</span><span>D</span><span>E</span><span>V</span>
+    </div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar" id="loader-bar"></div>
+    </div>
+    <div class="loader-pct" id="loader-pct">0%</div>
+  </div>
+
+  <!-- ═══ PREMIUM PAGE TRANSITION OVERLAY ═══ -->
+  <div class="transition-container" aria-hidden="true">
+    <div class="transition-stripe transition-stripe-1" id="transition-stripe-1"></div>
+    <div class="transition-stripe transition-stripe-2" id="transition-stripe-2"></div>
+  </div>
 
   <!-- ═══ PREMIUM CURSOR LAYERS ═══ -->
   <div id="cursor-glow"></div>
@@ -647,8 +837,15 @@
   <main>
 
     <!-- HERO -->
-    <section id="hero" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface">
-      <div class="max-w-[1440px] mx-auto">
+    <section id="hero" class="relative overflow-hidden px-grid-margin py-unit-xxl border-b-2 border-on-surface">
+      <!-- Particle Canvas -->
+      <canvas id="hero-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.65;" aria-hidden="true"></canvas>
+
+      <!-- Dark mode orbs -->
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+
+      <div class="max-w-[1440px] mx-auto relative z-10">
         <p class="font-mono text-mono-sm uppercase text-primary mb-unit-md tracking-widest">iOS Developer · Swift ·
           UIKit · Fintech</p>
         <h1
@@ -883,11 +1080,16 @@
 ═══════════════════════════════════════════ -->
     <section id="about" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface fade-in">
       <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
-        <div class="reveal-left md:col-span-5">
+        <div class="reveal-left md:col-span-5 relative group">
           <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-sm">About</p>
           <h2 class="text-display-lg font-black tracking-tighter uppercase mb-unit-lg">WHO<br />I AM.</h2>
 
-          <div id="lottie-avatar" aria-label="Animated avatar"></div>
+          <!-- Interactive Deadpool Speech Bubble -->
+          <div id="deadpool-bubble" aria-live="polite">
+            <span id="deadpool-bubble-text">Hey there, bub! Hover over me to see some Chimichanga magic.</span>
+          </div>
+
+          <div id="lottie-avatar" aria-label="Animated avatar" class="cursor-pointer"></div>
         </div>
 
         <div class="reveal-right md:col-span-7 flex flex-col justify-center">
@@ -900,40 +1102,56 @@
             My experience spans from secure financial transaction systems and I believe in performance, reliability, and
             clean code.
           </p>
-          <div class="space-y-unit-lg border-t-2 border-on-surface pt-unit-lg">
-            <p class="font-label-bold text-label-bold uppercase text-primary">Experience</p>
+          
+          <!-- Interactive Tabs -->
+          <div class="flex gap-unit-md border-b-2 border-on-surface pb-unit-sm mb-unit-lg">
+            <button id="about-tab-exp" onclick="switchAboutTab('experience')" class="about-tab-btn font-label-bold text-label-bold uppercase pb-2 tracking-wider text-primary border-b-4 border-primary transition-all duration-200">Experience</button>
+            <button id="about-tab-edu" onclick="switchAboutTab('education')" class="about-tab-btn font-label-bold text-label-bold uppercase pb-2 tracking-wider text-secondary hover:text-primary transition-all duration-200">Education</button>
+          </div>
+
+          <!-- Tab 1: Experience -->
+          <div id="about-exp-timeline" class="space-y-unit-lg">
             <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:0">
               <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
               <p class="font-label-bold uppercase text-secondary">CIBL &mdash; Feb 2026 &ndash; Present</p>
               <p class="font-sans text-body-md text-secondary mt-1">
-                Developing secure and scalable mobile banking solutions at CIBL, focusing on performance and user
-                experience.
-              </p>
+                Developing secure and scalable mobile banking solutions at CIBL, focusing on performance and user experience.
               </p>
             </div>
             <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:1">
               <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
               <p class="font-label-bold uppercase text-secondary">AppExits &mdash; Jan 2025 &ndash; Jan 2026</p>
-              <p class="font-sans text-body-md text-secondary mt-1">AIVideoGencut, Math Solver, Momo, Summarise AI,
-                Collage Studio.</p>
+              <p class="font-sans text-body-md text-secondary mt-1">
+                AIVideoGencut, Math Solver, Momo, Summarise AI, Collage Studio.
+              </p>
             </div>
-            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:2">
+            <div class="stagger-item group pb-unit-lg" style="--i:2">
               <h3 class="font-sans font-bold uppercase text-headline-sm">iOS Intern</h3>
               <p class="font-label-bold uppercase text-secondary">AppExits &mdash; Jul 2024 &ndash; Dec 2024</p>
-              <p class="font-sans text-body-md text-secondary mt-1">Demo apps: ChatBuddy, ExpanseX.</p>
-            </div>
-            <p class="font-label-bold text-label-bold uppercase text-primary mt-unit-lg">Experience</p>
-            <div class="stagger-item group border-b border-surface-dim pb-unit-md" style="--i:3">
-              <h3 class="font-sans font-bold uppercase text-body-md">BSc in CSE</h3>
-              <p class="font-label-bold uppercase text-secondary">Northern University of Bangladesh &mdash; June 2025
-                &ndash; Present</p>
-            </div>
-            <div class="stagger-item group" style="--i:4">
-              <h3 class="font-sans font-bold uppercase text-body-md">Diploma in CST (CGPA: 3.62)</h3>
-              <p class="font-label-bold uppercase text-secondary">Brahmanbaria Polytechnic Institute &mdash; 2020
-                &ndash; 2025</p>
+              <p class="font-sans text-body-md text-secondary mt-1">
+                Demo apps: ChatBuddy, ExpanseX.
+              </p>
             </div>
           </div>
+
+          <!-- Tab 2: Education -->
+          <div id="about-edu-timeline" class="space-y-unit-lg hidden">
+            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:0">
+              <h3 class="font-sans font-bold uppercase text-headline-sm">BSc in CSE</h3>
+              <p class="font-label-bold uppercase text-secondary">Northern University of Bangladesh &mdash; June 2025 &ndash; Present</p>
+              <p class="font-sans text-body-md text-secondary mt-1">
+                Deepening knowledge of computer systems architecture, compiler engineering, and advanced networking.
+              </p>
+            </div>
+            <div class="stagger-item group pb-unit-lg" style="--i:1">
+              <h3 class="font-sans font-bold uppercase text-headline-sm">Diploma in CST (CGPA: 3.62)</h3>
+              <p class="font-label-bold uppercase text-secondary">Brahmanbaria Polytechnic Institute &mdash; 2020 &ndash; 2025</p>
+              <p class="font-sans text-body-md text-secondary mt-1">
+                Acquired fundamental skills in database management systems, OOP structures, and software engineering.
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1871,6 +2089,312 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       autoplay: true,
       path: 'Captain Deadpool.json'
     });
+
+    // ═══ PREMIUM LOADING SCREEN JS ═══
+    (function initLoader() {
+      const screen = document.getElementById('loading-screen');
+      const bar = document.getElementById('loader-bar');
+      const pct = document.getElementById('loader-pct');
+      const letters = screen.querySelectorAll('.loader-logo span');
+      let progress = 0;
+
+      // Animate letters in using GSAP
+      gsap.to(letters, {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.05,
+        ease: 'power3.out',
+        delay: 0.1
+      });
+
+      const ticker = setInterval(() => {
+        progress += Math.random() * 18;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(ticker);
+        }
+        bar.style.width = progress + '%';
+        pct.textContent = Math.round(progress) + '%';
+        if (progress === 100) {
+          setTimeout(() => {
+            gsap.to(screen, {
+              opacity: 0,
+              duration: 0.7,
+              ease: 'power2.inOut',
+              onComplete: () => {
+                screen.style.display = 'none';
+              }
+            });
+          }, 300);
+        }
+      }, 80);
+    })();
+
+    // ═══ THREE.JS HERO PARTICLES JS ═══
+    (function initThreeJS() {
+      const canvas = document.getElementById('hero-canvas');
+      const heroEl = document.querySelector('#hero');
+      if (!canvas || !heroEl) return;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+      camera.position.z = 5;
+
+      const COUNT = 340;
+      const geo = new THREE.BufferGeometry();
+      const pos = new Float32Array(COUNT * 3);
+      const sizes = new Float32Array(COUNT);
+      for (let i = 0; i < COUNT; i++) {
+        pos[i * 3] = (Math.random() - 0.5) * 16;
+        pos[i * 3 + 1] = (Math.random() - 0.5) * 8;
+        pos[i * 3 + 2] = (Math.random() - 0.5) * 4;
+        sizes[i] = Math.random() * 2.5 + 0.5;
+      }
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+      const mat = new THREE.PointsMaterial({
+        color: 0xbc0100,
+        size: 0.04,
+        transparent: true,
+        opacity: 0.7,
+        sizeAttenuation: true,
+      });
+      scene.add(new THREE.Points(geo, mat));
+
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', e => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      function resize() {
+        const w = heroEl.offsetWidth;
+        const h = heroEl.offsetHeight;
+        renderer.setSize(w, h);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const particles = scene.children[0];
+      let frame = 0;
+      (function animate() {
+        requestAnimationFrame(animate);
+        frame += 0.003;
+        particles.rotation.y += (mouseX * 0.5 - particles.rotation.y) * 0.04;
+        particles.rotation.x += (-mouseY * 0.3 - particles.rotation.x) * 0.04;
+        particles.rotation.z = Math.sin(frame) * 0.08;
+        mat.opacity = 0.55 + Math.sin(frame * 2) * 0.12;
+        renderer.render(scene, camera);
+      })();
+    })();
+
+    // ═══ HERO TITLE 3D PARALLAX EFFECT ═══
+    (function () {
+      const heroTitle = document.getElementById('hero-scramble');
+      let mouseX = 0, mouseY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) - 0.5;
+        mouseY = (e.clientY / window.innerHeight) - 0.5;
+
+        if (heroTitle) {
+          heroTitle.style.transform = `perspective(1000px) rotateY(${mouseX * 10}deg) rotateX(${-mouseY * 10}deg) translateZ(20px)`;
+          heroTitle.style.textShadow = `${-mouseX * 30}px ${-mouseY * 30}px 40px rgba(188, 1, 0, 0.35)`;
+          heroTitle.style.transition = 'transform 0.1s ease-out, text-shadow 0.1s ease-out';
+        }
+      });
+    })();
+
+    // ═══ PREMIUM GSAP PAGE TRANSITIONS ═══
+    (function initPageTransitions() {
+      const stripe1 = document.getElementById('transition-stripe-1');
+      const stripe2 = document.getElementById('transition-stripe-2');
+      if (!stripe1 || !stripe2) return;
+
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+
+        const targetEl = document.querySelector(href);
+        if (!targetEl) return;
+
+        e.preventDefault();
+
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+          mobileMenu.classList.remove('open');
+        }
+
+        // Set pointer events to block interaction during navigation
+        const transitionContainer = document.querySelector('.transition-container');
+        if (transitionContainer) {
+          transitionContainer.style.pointerEvents = 'auto';
+        }
+
+        const tl = gsap.timeline();
+
+        // 1. Slide panels up to cover screen
+        tl.to(stripe1, {
+          yPercent: -100,
+          duration: 0.45,
+          ease: 'power3.in'
+        })
+        .to(stripe2, {
+          yPercent: -100,
+          duration: 0.45,
+          ease: 'power3.in'
+        }, '-=0.3')
+        // 2. Scroll target into view
+        .call(() => {
+          targetEl.scrollIntoView({ behavior: 'auto' });
+        })
+        // 3. Slide panels off top of screen
+        .to(stripe2, {
+          yPercent: -200,
+          duration: 0.5,
+          ease: 'power3.out'
+        })
+        .to(stripe1, {
+          yPercent: -200,
+          duration: 0.5,
+          ease: 'power3.out'
+        }, '-=0.35')
+        // 4. Reset panels instantly back below screen & release pointer events
+        .set([stripe1, stripe2], {
+          yPercent: 0
+        })
+        .call(() => {
+          if (transitionContainer) {
+            transitionContainer.style.pointerEvents = 'none';
+          }
+        });
+      });
+    })();
+
+    // ═══ INTERACTIVE ABOUT SECTION TABS ═══
+    window.switchAboutTab = function (tab) {
+      const expTab = document.getElementById('about-tab-exp');
+      const eduTab = document.getElementById('about-tab-edu');
+      const expTimeline = document.getElementById('about-exp-timeline');
+      const eduTimeline = document.getElementById('about-edu-timeline');
+
+      if (!expTab || !eduTab || !expTimeline || !eduTimeline) return;
+
+      if (tab === 'experience') {
+        // Update tabs active state
+        expTab.classList.add('text-primary', 'border-b-4', 'border-primary');
+        expTab.classList.remove('text-secondary');
+        eduTab.classList.remove('text-primary', 'border-b-4', 'border-primary');
+        eduTab.classList.add('text-secondary');
+
+        // Stagger fade-out education timeline, then fade-in experience
+        gsap.to(eduTimeline.querySelectorAll('.stagger-item'), {
+          opacity: 0,
+          y: 15,
+          duration: 0.2,
+          stagger: 0.05,
+          onComplete: () => {
+            eduTimeline.classList.add('hidden');
+            expTimeline.classList.remove('hidden');
+            gsap.fromTo(expTimeline.querySelectorAll('.stagger-item'), 
+              { opacity: 0, y: 15 },
+              { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' }
+            );
+          }
+        });
+      } else {
+        // Update tabs active state
+        eduTab.classList.add('text-primary', 'border-b-4', 'border-primary');
+        eduTab.classList.remove('text-secondary');
+        expTab.classList.remove('text-primary', 'border-b-4', 'border-primary');
+        expTab.classList.add('text-secondary');
+
+        // Stagger fade-out experience timeline, then fade-in education
+        gsap.to(expTimeline.querySelectorAll('.stagger-item'), {
+          opacity: 0,
+          y: 15,
+          duration: 0.2,
+          stagger: 0.05,
+          onComplete: () => {
+            expTimeline.classList.add('hidden');
+            eduTimeline.classList.remove('hidden');
+            gsap.fromTo(eduTimeline.querySelectorAll('.stagger-item'), 
+              { opacity: 0, y: 15 },
+              { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' }
+            );
+          }
+        });
+      }
+    };
+
+    // ═══ INTERACTIVE DEADPOOL SPEECH BUBBLE ═══
+    (function initDeadpoolSpeech() {
+      const avatar = document.getElementById('lottie-avatar');
+      const bubble = document.getElementById('deadpool-bubble');
+      const bubbleText = document.getElementById('deadpool-bubble-text');
+      if (!avatar || !bubble) return;
+
+      const quotes = [
+        "Hey there, bub! Yes, I build banking apps. No, I won't wire you a million bucks.",
+        "Swift is great, but have you tried Chimichangas? Highly recommend.",
+        "My banking code is 100% secure. My mouth? Not so much.",
+        "UIKit is awesome, but MVC stands for Massive Vexing Conflicts, right?",
+        "I compile on the first try. Just kidding, I'm a developer, not a wizard.",
+        "Maximum Effort! (And by effort, I mean StackOverflow searches).",
+        "Don't click me too hard, you'll scratch the suit!",
+        "Yes, my code has zero force-unwraps. Don't check the git logs though.",
+        "Bugs are just undocumented features I added for extra flavor."
+      ];
+
+      let lastIndex = -1;
+      function showRandomQuote() {
+        let index = Math.floor(Math.random() * quotes.length);
+        while (index === lastIndex) {
+          index = Math.floor(Math.random() * quotes.length);
+        }
+        lastIndex = index;
+
+        // Change text inside bubble
+        if (bubbleText) {
+          bubbleText.textContent = quotes[index];
+        }
+
+        // Add bubble show class
+        bubble.classList.add('bubble-active');
+
+        // GSAP shake and bubble bounce
+        gsap.fromTo(bubble, 
+          { scale: 0.85, rotation: -3 },
+          { scale: 1, rotation: 0, duration: 0.45, ease: 'elastic.out(1.2, 0.4)' }
+        );
+      }
+
+      // Show on hover
+      avatar.addEventListener('mouseenter', () => {
+        showRandomQuote();
+      });
+
+      // Hide on mouse leave
+      avatar.addEventListener('mouseleave', () => {
+        bubble.classList.remove('bubble-active');
+      });
+
+      // Change on click
+      avatar.addEventListener('click', () => {
+        showRandomQuote();
+      });
+    })();
   </script>
 </body>
 
