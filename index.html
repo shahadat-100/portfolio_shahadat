@@ -2131,67 +2131,85 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       }, 80);
     })();
 
-    // ═══ THREE.JS HERO PARTICLES JS ═══
-    (function initThreeJS() {
+    // ═══ BINARY CODER HERO PARTICLES JS ═══
+    (function initBinaryParticles() {
       const canvas = document.getElementById('hero-canvas');
       const heroEl = document.querySelector('#hero');
       if (!canvas || !heroEl) return;
 
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
-      camera.position.z = 5;
-
+      const ctx = canvas.getContext('2d');
       const COUNT = 340;
-      const geo = new THREE.BufferGeometry();
-      const pos = new Float32Array(COUNT * 3);
-      const sizes = new Float32Array(COUNT);
-      for (let i = 0; i < COUNT; i++) {
-        pos[i * 3] = (Math.random() - 0.5) * 16;
-        pos[i * 3 + 1] = (Math.random() - 0.5) * 8;
-        pos[i * 3 + 2] = (Math.random() - 0.5) * 4;
-        sizes[i] = Math.random() * 2.5 + 0.5;
-      }
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      geo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-      const mat = new THREE.PointsMaterial({
-        color: 0xbc0100,
-        size: 0.04,
-        transparent: true,
-        opacity: 0.7,
-        sizeAttenuation: true,
-      });
-      scene.add(new THREE.Points(geo, mat));
-
       let mouseX = 0, mouseY = 0;
-      document.addEventListener('mousemove', e => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-      });
+      let w, h;
 
       function resize() {
-        const w = heroEl.offsetWidth;
-        const h = heroEl.offsetHeight;
-        renderer.setSize(w, h);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
+        w = canvas.width = heroEl.offsetWidth;
+        h = canvas.height = heroEl.offsetHeight;
       }
       resize();
       window.addEventListener('resize', resize);
 
-      const particles = scene.children[0];
+      document.addEventListener('mousemove', e => {
+        mouseX = (e.clientX / window.innerWidth - 0.5);
+        mouseY = (e.clientY / window.innerHeight - 0.5);
+      });
+
+      // Build 340 binary particle objects
+      const particles = Array.from({ length: COUNT }, () => ({
+        x: Math.random() * 1.2 - 0.1,       // normalized 0-1 (slight overflow)
+        y: Math.random(),
+        char: Math.random() > 0.5 ? '1' : '0',
+        size: Math.random() * 10 + 8,        // 8–18px
+        speed: Math.random() * 0.00015 + 0.00005, // very slow drift
+        opacity: Math.random() * 0.45 + 0.1,
+        parallaxDepth: Math.random() * 40 + 10,  // px shift on mouse
+        drift: (Math.random() - 0.5) * 0.00008,  // slight horizontal drift
+        flipTimer: Math.random() * 180,       // frames until next bit flip
+        flipInterval: Math.floor(Math.random() * 120) + 60,
+      }));
+
       let frame = 0;
       (function animate() {
         requestAnimationFrame(animate);
-        frame += 0.003;
-        particles.rotation.y += (mouseX * 0.5 - particles.rotation.y) * 0.04;
-        particles.rotation.x += (-mouseY * 0.3 - particles.rotation.x) * 0.04;
-        particles.rotation.z = Math.sin(frame) * 0.08;
-        mat.opacity = 0.55 + Math.sin(frame * 2) * 0.12;
-        renderer.render(scene, camera);
+        frame++;
+
+        ctx.clearRect(0, 0, w, h);
+
+        for (const p of particles) {
+          // Slowly drift down and sideways
+          p.y += p.speed;
+          p.x += p.drift;
+
+          // Wrap around
+          if (p.y > 1.05) { p.y = -0.05; p.x = Math.random() * 1.2 - 0.1; }
+          if (p.x > 1.1)  p.x = -0.1;
+          if (p.x < -0.1) p.x = 1.1;
+
+          // Randomly flip between 0 and 1
+          p.flipTimer--;
+          if (p.flipTimer <= 0) {
+            p.char = p.char === '0' ? '1' : '0';
+            p.flipTimer = p.flipInterval + Math.floor(Math.random() * 60);
+          }
+
+          // Pulse opacity
+          const pulse = 0.08 * Math.sin(frame * 0.02 + p.parallaxDepth);
+          const alpha = Math.min(1, Math.max(0, p.opacity + pulse));
+
+          // Mouse parallax offset
+          const ox = mouseX * p.parallaxDepth;
+          const oy = mouseY * p.parallaxDepth;
+
+          const px = p.x * w + ox;
+          const py = p.y * h + oy;
+
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = '#bc0100';
+          ctx.font = `${p.size}px 'DM Mono', monospace`;
+          ctx.fillText(p.char, px, py);
+          ctx.restore();
+        }
       })();
     })();
 
