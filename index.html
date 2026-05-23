@@ -301,6 +301,7 @@
       #chat-window {
         width: calc(100vw - 32px) !important;
         right: 16px !important;
+        height: min(540px, calc(100svh - 120px)) !important;
       }
     }
 
@@ -754,9 +755,23 @@
     }
     @media (max-width: 768px) {
       #deadpool-bubble {
-        top: 120px;
-        right: 10px;
-        max-width: 180px;
+        /* On mobile (single-column), switch to relative flow so the bubble
+           sits between the heading and the lottie avatar — no overlap */
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-bottom: 16px;
+        max-width: 100%;
+        width: fit-content;
+      }
+      /* Re-point the tail to the bottom-left so it points toward the avatar below */
+      #deadpool-bubble::after {
+        bottom: -8px;
+        left: 24px;
+      }
+      #deadpool-bubble::before {
+        bottom: -11px;
+        left: 23px;
       }
     }
   </style>
