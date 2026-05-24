@@ -1,3 +1,32 @@
+// ========== PREMIUM SMOOTH SCROLLING (LENIS) ==========
+if (typeof Lenis !== 'undefined') {
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  });
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time)=>{
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+  } else {
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+}
+
 
     const SYSTEM_PROMPT = `You are an AI assistant for Shahadat Hossen's iOS developer portfolio website.
 Answer ONLY questions about this developer. Be concise, friendly, and professional.
@@ -676,86 +705,82 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       }, 80);
     })();
 
-    // ═══ BINARY CODER HERO PARTICLES JS ═══
-    (function initBinaryParticles() {
+    // ═══ PREMIUM 3D THREE.JS HERO BACKGROUND ═══
+    (function initThreeJSHero() {
       const canvas = document.getElementById('hero-canvas');
       const heroEl = document.querySelector('#hero');
-      if (!canvas || !heroEl) return;
+      if (!canvas || !heroEl || typeof THREE === 'undefined') return;
 
-      const ctx = canvas.getContext('2d');
-      const COUNT = 340;
-      let mouseX = 0, mouseY = 0;
-      let w, h;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, heroEl.offsetWidth / heroEl.offsetHeight, 0.1, 1000);
+      
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(heroEl.offsetWidth, heroEl.offsetHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
 
-      function resize() {
-        w = canvas.width = heroEl.offsetWidth;
-        h = canvas.height = heroEl.offsetHeight;
-      }
-      resize();
-      window.addEventListener('resize', resize);
+      // Create a highly technical looking geometry (Wireframe Icosahedron)
+      const geometry = new THREE.IcosahedronGeometry(2.5, 1);
+      const material = new THREE.MeshBasicMaterial({ 
+        color: 0xbc0100, 
+        wireframe: true, 
+        transparent: true,
+        opacity: 0.3 
+      });
+      
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+      
+      // Add a secondary inner mesh for depth
+      const innerGeometry = new THREE.IcosahedronGeometry(1.5, 0);
+      const innerMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xbc0100, 
+        wireframe: true, 
+        transparent: true,
+        opacity: 0.15 
+      });
+      const innerMesh = new THREE.Mesh(innerGeometry, innerMaterial);
+      scene.add(innerMesh);
 
-      document.addEventListener('mousemove', e => {
-        mouseX = (e.clientX / window.innerWidth - 0.5);
-        mouseY = (e.clientY / window.innerHeight - 0.5);
+      camera.position.z = 5;
+
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetX = 0;
+      let targetY = 0;
+
+      const windowHalfX = window.innerWidth / 2;
+      const windowHalfY = window.innerHeight / 2;
+
+      document.addEventListener('mousemove', (event) => {
+        mouseX = (event.clientX - windowHalfX);
+        mouseY = (event.clientY - windowHalfY);
       });
 
-      // Build 340 binary particle objects
-      const particles = Array.from({ length: COUNT }, () => ({
-        x: Math.random() * 1.2 - 0.1,       // normalized 0-1 (slight overflow)
-        y: Math.random(),
-        char: Math.random() > 0.5 ? '1' : '0',
-        size: Math.random() * 10 + 8,        // 8–18px
-        speed: Math.random() * 0.00015 + 0.00005, // very slow drift
-        opacity: Math.random() * 0.45 + 0.1,
-        parallaxDepth: Math.random() * 40 + 10,  // px shift on mouse
-        drift: (Math.random() - 0.5) * 0.00008,  // slight horizontal drift
-        flipTimer: Math.random() * 180,       // frames until next bit flip
-        flipInterval: Math.floor(Math.random() * 120) + 60,
-      }));
+      window.addEventListener('resize', () => {
+        camera.aspect = heroEl.offsetWidth / heroEl.offsetHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(heroEl.offsetWidth, heroEl.offsetHeight);
+      });
 
-      let frame = 0;
-      (function animate() {
+      function animate() {
         requestAnimationFrame(animate);
-        frame++;
 
-        ctx.clearRect(0, 0, w, h);
+        targetX = mouseX * 0.001;
+        targetY = mouseY * 0.001;
 
-        for (const p of particles) {
-          // Slowly drift down and sideways
-          p.y += p.speed;
-          p.x += p.drift;
+        mesh.rotation.y += 0.005;
+        mesh.rotation.x += 0.002;
+        
+        innerMesh.rotation.y -= 0.003;
+        innerMesh.rotation.x -= 0.004;
 
-          // Wrap around
-          if (p.y > 1.05) { p.y = -0.05; p.x = Math.random() * 1.2 - 0.1; }
-          if (p.x > 1.1)  p.x = -0.1;
-          if (p.x < -0.1) p.x = 1.1;
+        // Smoothly follow mouse
+        mesh.rotation.y += 0.05 * (targetX - mesh.rotation.y);
+        mesh.rotation.x += 0.05 * (targetY - mesh.rotation.x);
 
-          // Randomly flip between 0 and 1
-          p.flipTimer--;
-          if (p.flipTimer <= 0) {
-            p.char = p.char === '0' ? '1' : '0';
-            p.flipTimer = p.flipInterval + Math.floor(Math.random() * 60);
-          }
-
-          // Pulse opacity
-          const pulse = 0.08 * Math.sin(frame * 0.02 + p.parallaxDepth);
-          const alpha = Math.min(1, Math.max(0, p.opacity + pulse));
-
-          // Mouse parallax offset
-          const ox = mouseX * p.parallaxDepth;
-          const oy = mouseY * p.parallaxDepth;
-
-          const px = p.x * w + ox;
-          const py = p.y * h + oy;
-
-          ctx.save();
-          ctx.globalAlpha = alpha;
-          ctx.fillStyle = '#bc0100';
-          ctx.font = `${p.size}px 'DM Mono', monospace`;
-          ctx.fillText(p.char, px, py);
-          ctx.restore();
-        }
-      })();
+        renderer.render(scene, camera);
+      }
+      animate();
     })();
 
     // ═══ HERO TITLE 3D PARALLAX EFFECT ═══
@@ -884,4 +909,62 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
         showRandomQuote();
       });
     })();
+
+    // ========== PREMIUM SCROLL ANIMATIONS (GSAP ScrollTrigger) ==========
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero Parallax Orbs
+      gsap.to('.hero-orb-1', {
+        y: 150,
+        x: 50,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      gsap.to('.hero-orb-2', {
+        y: 200,
+        x: -50,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      // Projects Grid Parallax Effect
+      gsap.fromTo('.proj-card:nth-child(even)', 
+        { y: 50 },
+        {
+          y: -20,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#projects',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+      gsap.fromTo('.proj-card:nth-child(odd)', 
+        { y: 0 },
+        {
+          y: -40,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#projects',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+    }
   
