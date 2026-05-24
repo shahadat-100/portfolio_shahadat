@@ -656,7 +656,7 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
             gsap.to(screen, {
               opacity: 0,
               duration: 0.7,
-              ease: 'power2.inOut',
+              ease: 'expo.inOut',
               onComplete: () => {
                 screen.style.display = 'none';
               }
@@ -862,7 +862,7 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
             expTimeline.classList.remove('hidden');
             gsap.fromTo(expTimeline.querySelectorAll('.stagger-item'), 
               { opacity: 0, y: 15 },
-              { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' }
+              { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'expo.out' }
             );
           }
         });
@@ -884,7 +884,7 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
             eduTimeline.classList.remove('hidden');
             gsap.fromTo(eduTimeline.querySelectorAll('.stagger-item'), 
               { opacity: 0, y: 15 },
-              { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: 'power2.out' }
+              { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'expo.out' }
             );
           }
         });
