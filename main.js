@@ -765,75 +765,7 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       });
     })();
 
-    // ═══ PREMIUM GSAP PAGE TRANSITIONS ═══
-    (function initPageTransitions() {
-      const stripe1 = document.getElementById('transition-stripe-1');
-      const stripe2 = document.getElementById('transition-stripe-2');
-      if (!stripe1 || !stripe2) return;
 
-      document.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        if (!link) return;
-
-        const href = link.getAttribute('href');
-        if (!href || !href.startsWith('#')) return;
-
-        const targetEl = document.querySelector(href);
-        if (!targetEl) return;
-
-        e.preventDefault();
-
-        // Close mobile menu if open
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu && mobileMenu.classList.contains('open')) {
-          mobileMenu.classList.remove('open');
-        }
-
-        // Set pointer events to block interaction during navigation
-        const transitionContainer = document.querySelector('.transition-container');
-        if (transitionContainer) {
-          transitionContainer.style.pointerEvents = 'auto';
-        }
-
-        const tl = gsap.timeline();
-
-        // 1. Slide panels up to cover screen
-        tl.to(stripe1, {
-          yPercent: -100,
-          duration: 0.45,
-          ease: 'power3.in'
-        })
-        .to(stripe2, {
-          yPercent: -100,
-          duration: 0.45,
-          ease: 'power3.in'
-        }, '-=0.3')
-        // 2. Scroll target into view
-        .call(() => {
-          targetEl.scrollIntoView({ behavior: 'auto' });
-        })
-        // 3. Slide panels off top of screen
-        .to(stripe2, {
-          yPercent: -200,
-          duration: 0.5,
-          ease: 'power3.out'
-        })
-        .to(stripe1, {
-          yPercent: -200,
-          duration: 0.5,
-          ease: 'power3.out'
-        }, '-=0.35')
-        // 4. Reset panels instantly back below screen & release pointer events
-        .set([stripe1, stripe2], {
-          yPercent: 0
-        })
-        .call(() => {
-          if (transitionContainer) {
-            transitionContainer.style.pointerEvents = 'none';
-          }
-        });
-      });
-    })();
 
     // ═══ INTERACTIVE ABOUT SECTION TABS ═══
     window.switchAboutTab = function (tab) {
