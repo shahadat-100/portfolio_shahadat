@@ -616,14 +616,16 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       }, 5000);
     }
 
-    // Initialize Lottie
-    lottie.loadAnimation({
-      container: document.getElementById('lottie-avatar'),
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: 'Captain Deadpool.json'
-    });
+    // Initialize Lottie (with null-guard)
+    if (typeof lottie !== 'undefined' && document.getElementById('lottie-avatar')) {
+      lottie.loadAnimation({
+        container: document.getElementById('lottie-avatar'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'Captain Deadpool.json'
+      });
+    }
 
     // ═══ PREMIUM LOADING SCREEN JS ═══
     (function initLoader() {
@@ -633,15 +635,19 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
       const letters = screen.querySelectorAll('.loader-logo span');
       let progress = 0;
 
-      // Animate letters in using GSAP
-      gsap.to(letters, {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.05,
-        ease: 'power3.out',
-        delay: 0.1
-      });
+      // Animate letters in using GSAP (with null-guard)
+      if (typeof gsap !== 'undefined') {
+        gsap.to(letters, {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.05,
+          ease: 'power3.out',
+          delay: 0.1
+        });
+      } else {
+        letters.forEach(l => { l.style.opacity = '1'; l.style.transform = 'translateY(0)'; });
+      }
 
       const ticker = setInterval(() => {
         progress += Math.random() * 18;
@@ -653,14 +659,18 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
         pct.textContent = Math.round(progress) + '%';
         if (progress === 100) {
           setTimeout(() => {
-            gsap.to(screen, {
-              opacity: 0,
-              duration: 0.7,
-              ease: 'expo.inOut',
-              onComplete: () => {
-                screen.style.display = 'none';
-              }
-            });
+            if (typeof gsap !== 'undefined') {
+              gsap.to(screen, {
+                opacity: 0,
+                duration: 0.7,
+                ease: 'expo.inOut',
+                onComplete: () => { screen.style.display = 'none'; }
+              });
+            } else {
+              screen.style.opacity = '0';
+              screen.style.transition = 'opacity 0.7s';
+              setTimeout(() => { screen.style.display = 'none'; }, 700);
+            }
           }, 300);
         }
       }, 80);
@@ -784,20 +794,16 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
         eduTab.classList.add('text-secondary');
 
         // Stagger fade-out education timeline, then fade-in experience
-        gsap.to(eduTimeline.querySelectorAll('.stagger-item'), {
-          opacity: 0,
-          y: 15,
-          duration: 0.2,
-          stagger: 0.05,
-          onComplete: () => {
-            eduTimeline.classList.add('hidden');
-            expTimeline.classList.remove('hidden');
-            gsap.fromTo(expTimeline.querySelectorAll('.stagger-item'), 
-              { opacity: 0, y: 15 },
-              { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'expo.out' }
-            );
-          }
-        });
+        eduTimeline.classList.add('hidden');
+        expTimeline.classList.remove('hidden');
+        if (typeof gsap !== 'undefined') {
+          gsap.fromTo(expTimeline.querySelectorAll('.stagger-item'),
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'expo.out' }
+          );
+        } else {
+          expTimeline.querySelectorAll('.stagger-item').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; });
+        }
       } else {
         // Update tabs active state
         eduTab.classList.add('text-primary', 'border-b-4', 'border-primary');
@@ -806,20 +812,16 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
         expTab.classList.add('text-secondary');
 
         // Stagger fade-out experience timeline, then fade-in education
-        gsap.to(expTimeline.querySelectorAll('.stagger-item'), {
-          opacity: 0,
-          y: 15,
-          duration: 0.2,
-          stagger: 0.05,
-          onComplete: () => {
-            expTimeline.classList.add('hidden');
-            eduTimeline.classList.remove('hidden');
-            gsap.fromTo(eduTimeline.querySelectorAll('.stagger-item'), 
-              { opacity: 0, y: 15 },
-              { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'expo.out' }
-            );
-          }
-        });
+        expTimeline.classList.add('hidden');
+        eduTimeline.classList.remove('hidden');
+        if (typeof gsap !== 'undefined') {
+          gsap.fromTo(eduTimeline.querySelectorAll('.stagger-item'),
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: 'expo.out' }
+          );
+        } else {
+          eduTimeline.querySelectorAll('.stagger-item').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; });
+        }
       }
     };
 
@@ -859,10 +861,12 @@ If asked anything unrelated, say: "I can only answer questions about Shahadat's 
         bubble.classList.add('bubble-active');
 
         // GSAP shake and bubble bounce
-        gsap.fromTo(bubble, 
-          { scale: 0.85, rotation: -3 },
-          { scale: 1, rotation: 0, duration: 0.45, ease: 'elastic.out(1.2, 0.4)' }
-        );
+        if (typeof gsap !== 'undefined') {
+          gsap.fromTo(bubble,
+            { scale: 0.85, rotation: -3 },
+            { scale: 1, rotation: 0, duration: 0.45, ease: 'elastic.out(1.2, 0.4)' }
+          );
+        }
       }
 
       // Show on hover
