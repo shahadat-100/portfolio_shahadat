@@ -12,6 +12,7 @@
     rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
@@ -27,6 +28,9 @@
     <div class="loader-brand">Shahadat.dev</div>
     <div class="loader-count"><span class="num">0</span><span class="pct">%</span></div>
   </div>
+
+  <!-- ═══ SCROLL PROGRESS BAR ═══ -->
+  <div id="scroll-progress" aria-hidden="true"></div>
 
   <!-- ═══ PREMIUM CURSOR LAYERS ═══ -->
   <div id="cursor-glow"></div>
@@ -1105,6 +1109,7 @@
      REMAINING JAVASCRIPT
 ═══════════════════════════════════════════ -->
   <script src="js/main.js"></script>
+  <script src="js/scroll-fx.js"></script>
 
   <!-- ═══ LENIS SMOOTH SCROLL ═══ -->
   <script type="importmap">
