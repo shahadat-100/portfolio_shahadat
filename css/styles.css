@@ -221,10 +221,6 @@ html.lenis, html.lenis body { height: auto; }
   background: radial-gradient(120% 120% at 85% 15%, #22c55e 0%, #15803d 50%, #052e16 100%);
   color: #ffffff;
 }
-.app-theme-aivideo {
-  background: radial-gradient(120% 120% at 85% 15%, #f43f5e 0%, #be123c 50%, #3f0713 100%);
-  color: #ffffff;
-}
 .app-theme-collage {
   background: radial-gradient(120% 120% at 85% 15%, #38bdf8 0%, #4338ca 50%, #17124a 100%);
   color: #ffffff;

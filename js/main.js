@@ -31,7 +31,7 @@ DEVELOPER FACTS:
   - Trust Money: Trust Bank's iOS banking app with 50+ features (FDR/DPS, bKash/Nagad, real-time alerts)
   - i-Banking: Meghna Bank's iOS digital banking app (multi-account view, card control, PIN reset, bKash/Nagad/Meghna Pay)
 - Previous: Jr iOS Developer at AppExits (Jan 2025 – Jan 2026)
-  - Shipped: AIVideoGencut, Math Solver, Momo, Summarise AI, Collage Studio
+  - Shipped: Math Solver, Momo, Summarise AI, Collage Studio
 - Intern at AppExits (Jul 2024 – Dec 2024) — demo apps: ChatBuddy, ExpanseX
 - Languages (coding): Swift, C, C++, OOP, DSA
 - Design Patterns: MVC, MVVM
@@ -109,7 +109,7 @@ async function getBotReply(userMessage) {
   } else if (msg.includes("nbl") || msg.includes("national bank") || msg.includes("nblipower")) {
     reply = "NBL iPower (NBL Apps) is the official iOS banking app for National Bank Ltd. built with Swift & UIKit, supporting fund transfers, NPSB instant payments, bill payments, and PDF statement exports.";
   } else if (msg.includes("project") || msg.includes("work") || msg.includes("build") || msg.includes("shipped") || msg.includes("banking")) {
-    reply = "Shahadat has built 3 flagship iOS banking apps at CIBL: Meghna Bank (i-Banking), Trust Bank (Trust-Money), and National Bank Ltd. (NBL iPower). He also shipped AIVideoGencut and Collage Studio at AppExits!";
+    reply = "Shahadat has built 3 flagship iOS banking apps at CIBL: Meghna Bank (i-Banking), Trust Bank (Trust-Money), and National Bank Ltd. (NBL iPower). He also shipped Collage Studio and other apps at AppExits!";
   } else if (msg.includes("skill") || msg.includes("expert") || msg.includes("stack") || msg.includes("language") || msg.includes("framework") || msg.includes("database") || msg.includes("swift") || msg.includes("swiftui") || msg.includes("uikit") || msg.includes("combine") || msg.includes("mvvm") || msg.includes("mvc")) {
     reply = "Shahadat works in Swift with both UIKit and SwiftUI, Combine for reactive data flow, and clean MVC / MVVM architecture. Also Alamofire, CoreData, REST APIs, and biometric security — all applied to banking-grade fintech apps.";
   } else if (msg.includes("hire") || msg.includes("available") || msg.includes("opportunity") || msg.includes("job") || msg.includes("offer")) {
@@ -343,41 +343,6 @@ const APPS_DATA = {
       }
     ],
     techStack: ["Swift", "UIKit", "REST API", "MVC Architecture", "NPSB Routing", "PDF Generation", "AutoLayout", "Biometrics"]
-  },
-  aivideo: {
-    title: "AIVideoGencut",
-    subtitle: "AI-Powered Video Editor",
-    dev: "AppExits",
-    age: "4+",
-    rating: "4.8 ★ (1.2k)",
-    category: "Photo & Video",
-    size: "62.4 MB",
-    themeGradient: "linear-gradient(135deg, #3f0713 0%, #be123c 60%, #f43f5e 100%)",
-    accentColor: "#f43f5e",
-    iconSvg: `<svg viewBox="0 0 48 48" class="w-full h-full" fill="none"><rect width="48" height="48" rx="12" fill="#be123c"/><path d="M16 16H32V32H16V16Z" fill="#ffffff"/><circle cx="24" cy="24" r="5" fill="#be123c"/></svg>`,
-    tagline: "Smart AI Cuts &middot; VisionKit &amp; AVFoundation",
-    desc: "Built a high-performance native iOS video editing studio with AI auto-enhancement, scene detection, real-time filters, and hardware-accelerated video export pipeline.",
-    screens: [
-      {
-        headline: "AI Scene Detection",
-        badge: "VISIONKIT",
-        icon: "auto_fix_high",
-        desc: "Automatic keyframe detection and smart cropping using Apple VisionKit framework."
-      },
-      {
-        headline: "Multi-Track Timeline",
-        badge: "AVFOUNDATION",
-        icon: "tune",
-        desc: "Custom compositing engine supporting seamless video overlays, audio tracks, and transitions."
-      },
-      {
-        headline: "4K Hardware Export",
-        badge: "HIGH PERFORMANCE",
-        icon: "bolt",
-        desc: "Optimized GPU rendering pipeline achieving ultra-fast 4K ProRes and H.264 video exports."
-      }
-    ],
-    techStack: ["Swift", "AVFoundation", "VisionKit", "CoreImage", "UIKit", "Metal Shaders"]
   },
   collage: {
     title: "Collage Studio",
