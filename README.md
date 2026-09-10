@@ -8,8 +8,14 @@ A personal portfolio site with an AI-powered chatbot assistant.
 
 ```
 portfolio-site/
-├── index.html    ← Portfolio & AI chatbot
-└── README.md     ← Project overview
+├── index.html            ← Markup only
+├── css/
+│   └── styles.css        ← All custom styles
+├── js/
+│   ├── tailwind-config.js ← Tailwind CDN theme config
+│   └── main.js           ← All behaviour (chatbot, cursor, animations, forms)
+├── server.js             ← Local static server (npm start → :3001)
+└── README.md             ← Project overview
 ```
 
 ---
