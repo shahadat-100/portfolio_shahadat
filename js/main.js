@@ -504,38 +504,9 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeAppModal();
 });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// Staggered scroll items animation
-const staggerItems = document.querySelectorAll('.stagger-item');
-const staggerObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        staggerObserver.unobserve(entry.target); // fire once
-      }
-    });
-  },
-  {
-    threshold: 0.15,   // 15% visible triggers it
-    rootMargin: '0px', // no offset
-  }
-);
-staggerItems.forEach((item) => staggerObserver.observe(item));
-
-/* Accessibility: skip animation if user prefers reduced motion */
-const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-if (mq.matches) {
-  staggerItems.forEach((el) => el.classList.add('visible'));
-}
+// Scroll-reveal entrances (.fade-in / .reveal / .reveal-left / .reveal-right /
+// .stagger-item) and heading line reveals are handled by the GSAP
+// ScrollTrigger system in js/scroll-fx.js.
 
 const sections = ['hero', 'projects', 'about', 'skills', 'contact'];
 window.addEventListener('scroll', () => {
@@ -555,72 +526,7 @@ window.addEventListener('scroll', () => {
 // 1. In-page anchor navigation is handled by the Lenis module in index.html
 //    (lenis.scrollTo on every a[href^="#"] click).
 
-// 2. Scroll Text Reveal — word-by-word heading reveal
-function splitTextForReveal(element) {
-  const childNodes = Array.from(element.childNodes);
-  element.innerHTML = '';
-
-  let wordIndex = 0;
-
-  childNodes.forEach(node => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const words = node.textContent.split(/(\s+)/);
-      words.forEach(word => {
-        if (word.trim() === '') {
-          element.appendChild(document.createTextNode(word));
-        } else {
-          const wrapper = document.createElement('span');
-          wrapper.className = 'reveal-word-wrapper';
-          wrapper.style.display = 'inline-block';
-          wrapper.style.overflow = 'hidden';
-          wrapper.style.verticalAlign = 'bottom';
-
-          const innerSpan = document.createElement('span');
-          innerSpan.className = 'reveal-word';
-          innerSpan.style.display = 'inline-block';
-          innerSpan.style.transform = 'translateY(40px)';
-          innerSpan.style.opacity = '0';
-          innerSpan.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-          innerSpan.style.transitionDelay = `${wordIndex * 0.08}s`;
-          innerSpan.textContent = word;
-
-          wrapper.appendChild(innerSpan);
-          element.appendChild(wrapper);
-          wordIndex++;
-        }
-      });
-    } else {
-      element.appendChild(node.cloneNode(true));
-    }
-  });
-}
-
-const revealHeadings = document.querySelectorAll('h1:not([data-no-reveal]), h2');
-revealHeadings.forEach(heading => {
-  splitTextForReveal(heading);
-
-  if (REDUCE_MOTION) {
-    heading.querySelectorAll('.reveal-word').forEach(w => {
-      w.style.transform = 'translateY(0)';
-      w.style.opacity = '1';
-    });
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.reveal-word').forEach(word => {
-          word.style.transform = 'translateY(0)';
-          word.style.opacity = '1';
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  observer.observe(heading);
-});
+// 2. Heading line reveals are handled by js/scroll-fx.js (GSAP ScrollTrigger).
 
 // ═══ HERO SCRAMBLE → REVEAL ANIMATION ═══
 (function initHeroScramble() {
@@ -891,18 +797,7 @@ document.querySelectorAll('.magnetic-btn').forEach(btn => {
   });
 });
 
-// 6. Scroll Reveal Animations
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
-  revealObserver.observe(el);
-});
+// 6. Scroll-reveal entrances → js/scroll-fx.js (GSAP ScrollTrigger).
 
 // 7. Counter & Skill Bar Animation
 const counterObserver = new IntersectionObserver((entries) => {
@@ -1306,50 +1201,5 @@ window.switchAboutTab = function (tab) {
   });
 })();
 
-// ═══ REVEAL SAFETY NET ═══
-// IntersectionObserver notifications can lag badly right after a smooth (Lenis)
-// scroll jump. This sweep guarantees any reveal element / heading line within
-// reach of the viewport ends up visible, while the observers still provide the
-// nicer staggered timing whenever they fire in time.
-(function initRevealSafetyNet() {
-  const BLOCK_SEL = '.fade-in, .reveal, .reveal-left, .reveal-right, .stagger-item';
-  let scheduled = false;
-
-  function sweep() {
-    scheduled = false;
-    const vh = window.innerHeight;
-    const near = (el) => {
-      const r = el.getBoundingClientRect();
-      return r.top < vh * 1.15 && r.bottom > -vh * 0.15;
-    };
-
-    document.querySelectorAll(BLOCK_SEL).forEach(el => {
-      if (!el.classList.contains('visible') && near(el)) el.classList.add('visible');
-    });
-
-    document.querySelectorAll('h1:not([data-no-reveal]), h2').forEach(h => {
-      const words = h.querySelectorAll('.reveal-word');
-      if (!words.length || !near(h)) return;
-      let pending = false;
-      words.forEach(w => {
-        if (w.style.opacity !== '1') {
-          w.style.transform = 'translateY(0)';
-          w.style.opacity = '1';
-          pending = true;
-        }
-      });
-      void pending;
-    });
-  }
-
-  function onScroll() {
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(sweep);
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  sweep();
-  [200, 600, 1200, 2600].forEach(t => setTimeout(sweep, t));
-})();
+// (Reveal safety-net removed — GSAP ScrollTrigger in js/scroll-fx.js sets any
+//  already-scrolled-past reveal to its end state on refresh, so no sweep needed.)

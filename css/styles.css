@@ -318,16 +318,8 @@ html.lenis, html.lenis body { height: auto; }
   width: 210px;
 }
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: none;
-}
+/* .fade-in is now a no-op marker; section children carry the motion
+   (headings + .reveal* + .stagger-item), animated by js/scroll-fx.js. */
 
 #mobile-menu {
   display: none;
@@ -377,21 +369,17 @@ html.lenis, html.lenis body { height: auto; }
   }
 }
 
-/* Staggered Scroll Animation */
-.stagger-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
-}
+/* .stagger-item / .reveal* are no-op markers targeted by js/scroll-fx.js
+   (GSAP ScrollTrigger). GSAP owns the hidden start state and the reveal. */
 
-.stagger-item.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* Masked heading line reveal (js/scroll-fx.js wraps each <br>-line) */
+.line-mask {
+  display: block;
+  overflow: hidden;
 }
-
-/* Delay driven by a CSS custom property --i set inline on each element */
-.stagger-item.visible {
-  transition-delay: calc(var(--i) * 120ms);
+.line-inner {
+  display: block;
+  will-change: transform;
 }
 
 /* ═══ PREMIUM CURSOR SYSTEM ═══ */
@@ -599,39 +587,9 @@ html.lenis, html.lenis body { height: auto; }
   transform: scale(1.02);
 }
 
-/* Scroll Reveal Animations */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-left.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.reveal-right {
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-right.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+/* Scroll-reveal entrances (.reveal / .reveal-left / .reveal-right) are
+   animated by js/scroll-fx.js via GSAP ScrollTrigger. */
+.reveal, .reveal-left, .reveal-right { will-change: transform; }
 
 /* ═══ HERO SCRAMBLE ANIMATION ═══ */
 #hero-scramble {
@@ -863,18 +821,10 @@ html:not(.dark) .hero-orb {
 
   #loading-screen { display: none !important; }
 
-  .reveal-word {
-    transform: none !important;
-    opacity: 1 !important;
-    transition: none !important;
-  }
-
-  .reveal, .reveal-left, .reveal-right,
-  .fade-in, .stagger-item {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
-  #lottie-avatar { transform: none !important; }
+  /* scroll-fx.js bails under reduced motion, so reveal targets are never
+     hidden; these just neutralise any lingering transforms. */
+  #lottie-avatar,
+  #hero-canvas,
+  .marquee-row,
+  .line-inner { transform: none !important; }
 }
