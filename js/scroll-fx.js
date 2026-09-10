@@ -15,25 +15,15 @@
       window.lenis.on('scroll', ScrollTrigger.update);
     }
 
-    // ── 1. Scroll progress bar ──────────────────────────────────────
-    gsap.fromTo('#scroll-progress',
-      { scaleX: 0 },
-      { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.2 } }
-    );
+    // ── 1. Hero particle-field parallax ─────────────────────────────
+    // The binary-particle canvas lags behind the scroll so the hero
+    // gains depth as you leave it.
+    gsap.to('#hero-canvas', {
+      yPercent: 26,
+      ease: 'none',
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
 
-    // ── 2. Hero depth parallax ──────────────────────────────────────
-    // The particle field lags behind the scroll; the content block leads
-    // slightly. (The glow orbs are display:none in light mode, so they
-    // are not parallaxed.)
-    const heroScrub = { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true };
-    gsap.to('#hero-canvas', { yPercent: 22, ease: 'none', scrollTrigger: heroScrub });
-
-    const heroInner = document.querySelector('#hero > div:not(.hero-orb)');
-    if (heroInner) {
-      gsap.to(heroInner, { yPercent: -6, ease: 'none', scrollTrigger: { ...heroScrub } });
-    }
-
-    // ── 3. Marquee skew on scroll velocity ──────────────────────────
     // Skews the row wrappers; the CSS marquee loop on the inner tracks
     // is untouched (separate transform).
     const rows = gsap.utils.toArray('.marquee-row');
