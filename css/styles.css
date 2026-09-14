@@ -404,6 +404,26 @@ html.lenis, html.lenis body { height: auto; }
   }
 }
 
+/* App Store modal sits above the custom cursor layers (z-index 999999 vs
+   ~100000), which hides them without disabling them — with the native
+   cursor off everywhere, that left no visible pointer at all while a modal
+   was open. Bring the real cursor back for the duration. */
+body.modal-open #cursor-dot,
+body.modal-open #cursor-ring,
+body.modal-open #cursor-glow {
+  display: none !important;
+}
+@media (pointer: fine) {
+  body.modal-open,
+  body.modal-open * {
+    cursor: auto !important;
+  }
+  body.modal-open a,
+  body.modal-open button {
+    cursor: pointer !important;
+  }
+}
+
 @media (pointer: coarse) {
 
   #cursor-dot,

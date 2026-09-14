@@ -487,12 +487,18 @@ function openAppModal(appKey) {
   modal.style.display = 'flex';
   setTimeout(() => modal.classList.add('active'), 10);
   document.body.style.overflow = 'hidden';
+  // The modal's z-index sits above the custom cursor layers, which hides
+  // them (not disables them) — with the native cursor also turned off
+  // site-wide, that left no visible pointer at all over the modal. Restore
+  // the real cursor while it's open.
+  document.body.classList.add('modal-open');
 }
 
 function closeAppModal() {
   const modal = document.getElementById('appstore-modal');
   if (!modal) return;
   modal.classList.remove('active');
+  document.body.classList.remove('modal-open');
   setTimeout(() => {
     modal.style.display = 'none';
     document.body.style.overflow = '';
