@@ -162,7 +162,7 @@ const APPS_DATA = {
     size: "68.5 MB",
     themeGradient: "radial-gradient(120% 120% at 85% 15%, #10b981 0%, #047857 35%, #064e3b 65%, #0a2540 100%)",
     accentColor: "#10b981",
-    iconSvg: `<img src="images/pmoney/icon.jpg" alt="pMoney" class="w-full h-full object-cover rounded-xl" />`,
+    iconSvg: `<img src="images/pmoney/icon.png" alt="pMoney" class="w-full h-full object-contain rounded-xl" />`,
     previewImages: [
       "images/pmoney/screenshots-1.jpg",
       "images/pmoney/screenshots-2.jpg"
