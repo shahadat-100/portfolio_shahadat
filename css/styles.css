@@ -209,6 +209,10 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 /* App Banner Header Themes */
+.app-theme-pmoney {
+  background: radial-gradient(120% 120% at 85% 15%, #10b981 0%, #047857 35%, #064e3b 65%, #0a2540 100%);
+  color: #ffffff;
+}
 .app-theme-trust {
   background: radial-gradient(120% 120% at 85% 15%, #10b981 0%, #059669 45%, #044e3b 100%);
   color: #ffffff;

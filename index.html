@@ -209,7 +209,7 @@
             <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Selected Work &middot; Native iOS</p>
             <h2 class="text-display-lg font-black tracking-tighter uppercase">PROJECTS.</h2>
           </div>
-          <p class="font-label-bold text-label-bold uppercase text-secondary hidden md:block">01 — 04</p>
+          <p class="font-label-bold text-label-bold uppercase text-secondary hidden md:block">01 — 05</p>
         </div>
         
         <!-- Filter Tabs -->
@@ -228,10 +228,104 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter" id="proj-grid">
 
-          <!-- 1. NBLiPower (National Bank Limited) -->
+          <!-- 1. Pmoney (The Premier Bank PLC) -->
+          <div
+            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between md:col-span-2"
+            data-tags="swift uikit banking" style="--i:0" onclick="openAppModal('pmoney')">
+            <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
+            
+            <!-- App Store Theme Banner -->
+            <div class="app-theme-pmoney p-unit-lg border-b-2 border-on-surface relative overflow-hidden">
+              <div class="flex flex-col sm:flex-row justify-between sm:items-start gap-4 relative z-10">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-2xl bg-white p-1 shadow-md flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    <img src="images/pmoney/icon.jpg" alt="Pmoney Logo" class="w-full h-full object-cover rounded-xl" />
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-sans font-black text-xl text-white tracking-tight uppercase leading-tight">Pmoney</h3>
+                      <span class="bg-emerald-400/30 text-white font-mono text-[10px] px-2 py-0.5 rounded-full border border-emerald-300/40 font-bold uppercase tracking-wider">NEW &bull; LIVE</span>
+                    </div>
+                    <p class="font-sans text-xs text-white/80 font-medium">Premier Bank Mobile Banking &middot; The Premier Bank PLC</p>
+                  </div>
+                </div>
+                <div class="appstore-chip">
+                  <span class="material-symbols-outlined text-[14px] text-emerald-300">verified</span>
+                  <span>Live on App Store &middot; Finance</span>
+                </div>
+              </div>
+
+              <!-- App Screen Mini Mockups Preview -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
+                <div class="app-mini-screen">
+                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Dashboard</div>
+                  <div class="my-auto text-center">
+                    <span class="material-symbols-outlined text-white/80 text-[20px]">account_balance</span>
+                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Remittance &bull; Cards</div>
+                  </div>
+                  <div class="text-[8px] text-emerald-200 font-mono">Tap for Balance</div>
+                </div>
+                <div class="app-mini-screen">
+                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Fund Transfer</div>
+                  <div class="my-auto text-center">
+                    <span class="material-symbols-outlined text-white/80 text-[20px]">sync_alt</span>
+                    <div class="text-[9px] font-bold text-white leading-tight mt-1">NPSB &bull; BEFTN</div>
+                  </div>
+                  <div class="text-[8px] text-emerald-200 font-mono">RTGS Instant</div>
+                </div>
+                <div class="app-mini-screen">
+                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Pay Bills</div>
+                  <div class="my-auto text-center">
+                    <span class="material-symbols-outlined text-white/80 text-[20px]">receipt_long</span>
+                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Utility &bull; Fees</div>
+                  </div>
+                  <div class="text-[8px] text-emerald-200 font-mono">Electricity &bull; Gas</div>
+                </div>
+                <div class="app-mini-screen">
+                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Recharge &amp; QR</div>
+                  <div class="my-auto text-center">
+                    <span class="material-symbols-outlined text-white/80 text-[20px]">qr_code_scanner</span>
+                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Bangla QR &bull; Top-up</div>
+                  </div>
+                  <div class="text-[8px] text-emerald-200 font-mono">FDR &bull; DPS Open</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Body Content -->
+            <div class="p-unit-lg flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-label-bold text-xs uppercase text-emerald-700 tracking-wider">Official Mobile Banking App</span>
+                  <span class="font-label-sm text-label-sm uppercase text-secondary">CIBL &middot; 2026</span>
+                </div>
+                <p class="font-sans text-body-md text-secondary mb-unit-md">
+                  Production mobile banking iOS application for Premier Bank PLC, live on the App Store! Empowers users with seamless interbank fund transfers (NPSB instant, BEFTN, RTGS), utility bill payments, mobile recharge across all operators, instant Bangla QR scanning, beneficiary management, and digital FDR/DPS deposit opening.
+                </p>
+                <div class="flex flex-wrap gap-unit-xs mb-unit-md">
+                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
+                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">UIKit</span>
+                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">REST APIs</span>
+                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">MVC</span>
+                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Bangla QR</span>
+                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Fund Transfer</span>
+                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">FDR/DPS</span>
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md mt-auto">
+                <span class="font-label-bold text-label-bold uppercase text-primary">Live on App Store &middot; The Premier Bank PLC</span>
+                <span class="inline-flex items-center gap-1 font-label-bold text-xs uppercase text-on-surface group-hover:text-primary transition-colors">
+                  App Store Showcase <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. NBLiPower (National Bank Limited) -->
           <div
             class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit banking" style="--i:0" onclick="openAppModal('nbl')">
+            data-tags="swift uikit banking" style="--i:1" onclick="openAppModal('nbl')">
             <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
             
             <!-- App Store Theme Banner -->
@@ -345,10 +439,10 @@
             </div>
           </div>
 
-          <!-- 2. Trust Money (Trust Bank) -->
+          <!-- 3. Trust Money (Trust Bank) -->
           <div
             class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit banking" style="--i:1" onclick="openAppModal('trust')">
+            data-tags="swift uikit banking" style="--i:2" onclick="openAppModal('trust')">
             <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
             
             <!-- App Store Theme Banner -->
@@ -434,10 +528,10 @@
             </div>
           </div>
 
-          <!-- 3. i-Banking (Meghna Bank Ltd) -->
+          <!-- 4. i-Banking (Meghna Bank Ltd) -->
           <div
             class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit banking" style="--i:2" onclick="openAppModal('meghna')">
+            data-tags="swift uikit banking" style="--i:3" onclick="openAppModal('meghna')">
             <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
 
             <!-- App Store Theme Banner -->
@@ -530,10 +624,10 @@
             </div>
           </div>
 
-          <!-- 4. Collage Studio (AppExits) -->
+          <!-- 5. Collage Studio (AppExits) -->
           <div
             class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit creative" style="--i:3" onclick="openAppModal('collage')">
+            data-tags="swift uikit creative" style="--i:4" onclick="openAppModal('collage')">
             <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
             
             <!-- App Store Theme Banner -->
@@ -655,7 +749,7 @@
               <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
               <p class="font-label-bold uppercase text-secondary">CIBL &mdash; Feb 2026 &ndash; Present</p>
               <p class="font-sans text-body-md text-secondary mt-1">
-                Developing secure, scalable production mobile banking solutions at CIBL including <strong>Meghna Bank (i-Banking)</strong>, <strong>Trust Bank (Trust-Money)</strong>, and <strong>National Bank Ltd. (NBL iPower)</strong> with complex fund transfers, NPSB/BEFTN, card lifecycle management, and biometric security.
+                Developing secure, scalable production mobile banking solutions at CIBL including <strong>Premier Bank (Pmoney)</strong>, <strong>Meghna Bank (i-Banking)</strong>, <strong>Trust Bank (Trust-Money)</strong>, and <strong>National Bank Ltd. (NBL iPower)</strong> with complex fund transfers, NPSB/BEFTN/RTGS, card lifecycle management, and biometric security.
               </p>
             </div>
             <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:1">

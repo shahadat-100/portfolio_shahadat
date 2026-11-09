@@ -27,6 +27,7 @@ DEVELOPER FACTS:
 - Location: Dhaka Cantonment, Bangladesh
 - Email: ios.shahadathossen@gmail.com | Phone: 01815-933780
 - Current Role: Junior iOS Developer at CIBL (Feb 2026 – Present)
+  - Pmoney: iOS mobile banking app for Premier Bank PLC live on the App Store (NPSB/BEFTN/RTGS, Bangla QR, bills, recharge, FDR/DPS)
   - NBLiPower: iOS banking app for National Bank Ltd. (account management, fund transfers, NPSB, bill pay, recharge)
   - Trust Money: Trust Bank's iOS banking app with 50+ features (FDR/DPS, bKash/Nagad, real-time alerts)
   - i-Banking: Meghna Bank's iOS digital banking app (multi-account view, card control, PIN reset, bKash/Nagad/Meghna Pay)
@@ -102,14 +103,16 @@ async function getBotReply(userMessage) {
   let reply = "";
 
   // Offline Keywords/Rules Matching Engine
-  if (msg.includes("meghna") || msg.includes("i-banking") || msg.includes("ibanking")) {
+  if (msg.includes("pmoney") || msg.includes("premier") || msg.includes("premier bank")) {
+    reply = "Pmoney is Premier Bank PLC's official iOS mobile banking app built by Shahadat at CIBL, now live on the App Store! It supports fund transfers (NPSB, BEFTN, RTGS), utility bills, all-operator recharge, Bangla QR, and digital FDR/DPS.";
+  } else if (msg.includes("meghna") || msg.includes("i-banking") || msg.includes("ibanking")) {
     reply = "Shahadat developed Meghna Bank's i-Banking iOS app at CIBL! It features multi-account management, instant fund transfers across all banks & wallets (bKash, Nagad, Meghna Pay), biometric Face ID login, and full card lifecycle control (PIN reset, card block).";
   } else if (msg.includes("trust") || msg.includes("trust money") || msg.includes("trust bank")) {
     reply = "Trust-Money is Trust Bank's production mobile banking iOS app built by Shahadat at CIBL. It includes 50+ banking features, FDR/DPS modules, bKash/Nagad wallet integration, and real-time alerts.";
   } else if (msg.includes("nbl") || msg.includes("national bank") || msg.includes("nblipower")) {
     reply = "NBL iPower (NBL Apps) is the official iOS banking app for National Bank Ltd. built with Swift & UIKit, supporting fund transfers, NPSB instant payments, bill payments, and PDF statement exports.";
   } else if (msg.includes("project") || msg.includes("work") || msg.includes("build") || msg.includes("shipped") || msg.includes("banking")) {
-    reply = "Shahadat has built 3 flagship iOS banking apps at CIBL: Meghna Bank (i-Banking), Trust Bank (Trust-Money), and National Bank Ltd. (NBL iPower). He also shipped Collage Studio and other apps at AppExits!";
+    reply = "Shahadat has built 4 flagship iOS banking apps at CIBL: Premier Bank (Pmoney), Meghna Bank (i-Banking), Trust Bank (Trust-Money), and National Bank Ltd. (NBL iPower). He also shipped Collage Studio and other apps at AppExits!";
   } else if (msg.includes("skill") || msg.includes("expert") || msg.includes("stack") || msg.includes("language") || msg.includes("framework") || msg.includes("database") || msg.includes("swift") || msg.includes("swiftui") || msg.includes("uikit") || msg.includes("combine") || msg.includes("mvvm") || msg.includes("mvc")) {
     reply = "Shahadat works in Swift with both UIKit and SwiftUI, Combine for reactive data flow, and clean MVC / MVVM architecture. Also Alamofire, CoreData, REST APIs, and biometric security — all applied to banking-grade fintech apps.";
   } else if (msg.includes("hire") || msg.includes("available") || msg.includes("opportunity") || msg.includes("job") || msg.includes("offer")) {
@@ -117,15 +120,15 @@ async function getBotReply(userMessage) {
   } else if (msg.includes("contact") || msg.includes("email") || msg.includes("phone") || msg.includes("call") || msg.includes("address") || msg.includes("location")) {
     reply = "You can reach Shahadat directly at ios.shahadathossen@gmail.com or 01815-933780. He is based in Dhaka Cantonment, Bangladesh.";
   } else if (msg.includes("experience") || msg.includes("role") || msg.includes("current") || msg.includes("cibl") || msg.includes("appexits")) {
-    reply = "Shahadat is currently a Junior iOS Developer at CIBL (Feb 2026 – Present) building banking applications for Meghna Bank, Trust Bank, and National Bank Ltd. Previously, he shipped multiple apps at AppExits.";
+    reply = "Shahadat is currently a Junior iOS Developer at CIBL (Feb 2026 – Present) building banking applications for Premier Bank (Pmoney), Meghna Bank, Trust Bank, and National Bank Ltd. Previously, he shipped multiple apps at AppExits.";
   } else if (msg.includes("education") || msg.includes("study") || msg.includes("college") || msg.includes("university") || msg.includes("degree") || msg.includes("diploma")) {
     reply = "Shahadat is pursuing a BSc in CSE at Northern University of Bangladesh and holds a Diploma in CST (CGPA 3.62) from Brahmanbaria Polytechnic Institute.";
   } else if (msg.includes("who") || msg.includes("about") || msg.includes("name") || msg.includes("yourself")) {
     reply = "Shahadat Hossen is a dedicated Junior iOS Developer specializing in UIKit, Swift, MVC architecture, and secure Fintech banking apps.";
   } else if (msg.includes("hi") || msg.includes("hello") || msg.includes("hey") || msg.includes("welcome")) {
-    reply = "Hello! I am Shahadat's portfolio assistant. Ask me anything about his banking apps (Meghna Bank, Trust Money, NBL), skills, or availability! 👋";
+    reply = "Hello! I am Shahadat's portfolio assistant. Ask me anything about his banking apps (Premier Bank Pmoney, Meghna Bank, Trust Money, NBL), skills, or availability! 👋";
   } else {
-    reply = "I can answer questions regarding Shahadat Hossen's iOS portfolio, banking projects (Meghna Bank, Trust Bank, NBL), skills, and contact details!";
+    reply = "I can answer questions regarding Shahadat Hossen's iOS portfolio, banking projects (Premier Bank Pmoney, Meghna Bank, Trust Bank, NBL), skills, and contact details!";
   }
 
   chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
@@ -149,6 +152,57 @@ function filterProj(tag, btn) {
 
 // ═══ APP STORE SHOWCASE MODAL ENGINE ═══
 const APPS_DATA = {
+  pmoney: {
+    title: "pMoney",
+    subtitle: "Premier Bank Mobile Banking",
+    dev: "The Premier Bank PLC",
+    age: "4+",
+    rating: "Live ★ Launch",
+    category: "Finance",
+    size: "68.5 MB",
+    themeGradient: "radial-gradient(120% 120% at 85% 15%, #10b981 0%, #047857 35%, #064e3b 65%, #0a2540 100%)",
+    accentColor: "#10b981",
+    iconSvg: `<img src="images/pmoney/icon.jpg" alt="pMoney" class="w-full h-full object-cover rounded-xl" />`,
+    previewImages: [
+      "images/pmoney/screenshots-1.jpg",
+      "images/pmoney/screenshots-2.jpg"
+    ],
+    tagline: "Change the Way You Money &middot; Smart Banking at Your Fingertips",
+    desc: "Production mobile banking iOS application for Premier Bank PLC, live on the App Store! Built with Swift, UIKit, REST APIs, and MVC architecture. Features real-time interbank fund transfers (NPSB, BEFTN, RTGS), utility bill payments, mobile recharge across all operators, Bangla QR payments, beneficiary management, and digital FDR/DPS account management.",
+    screens: [
+      {
+        headline: "Change the Way You Money",
+        badge: "ACCOUNTS & CARDS",
+        icon: "account_balance",
+        desc: "Complete account overview, Premier Remittance Savers, instant balance check, and debit/credit card controls."
+      },
+      {
+        headline: "Send Money Quickly and Easily",
+        badge: "FUND TRANSFERS",
+        icon: "sync_alt",
+        desc: "Interbank transfers via NPSB Instant Transfer, BEFTN regular transfer, RTGS, and beneficiary address management."
+      },
+      {
+        headline: "Pay Your All Bill in One Place",
+        badge: "BILL & UTILITIES",
+        icon: "receipt_long",
+        desc: "One-stop bill settlements for Electricity (DPDC, Desco), Gas (Titash), Water (WASA), Tuition fees, and insurance."
+      },
+      {
+        headline: "Mobile Recharge in All Operators",
+        badge: "MOBILE RECHARGE",
+        icon: "phone_android",
+        desc: "Instant airtime top-up for Banglalink, GP, Robi, Teletalk, and Skitto with prepaid/postpaid quick selection."
+      },
+      {
+        headline: "AI-Driven Quick Service & Bangla QR",
+        badge: "SMART BANKING",
+        icon: "qr_code_scanner",
+        desc: "Direct Bangla QR scanning, quick access modal for bKash/Nagad transfers, and opening new FDR/DPS deposits."
+      }
+    ],
+    techStack: ["Swift", "UIKit", "REST APIs", "MVC Architecture", "Bangla QR", "NPSB / BEFTN / RTGS", "Biometric Security", "AutoLayout"]
+  },
   meghna: {
     title: "i-Banking",
     subtitle: "Meghna Bank Mobile Banking",
@@ -473,6 +527,25 @@ function openAppModal(appKey) {
         ${screensHtml}
       </div>
     </div>
+
+    <!-- Official App Store Screenshots (if available) -->
+    ${data.previewImages && data.previewImages.length ? `
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="text-xs font-bold uppercase font-mono text-slate-400 tracking-wider">Live App Store Screenshots</h4>
+        <span class="text-[11px] font-mono text-emerald-400 font-bold flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse"></span> Production Showcase
+        </span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        ${data.previewImages.map(img => `
+          <div class="rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black/40 hover:scale-[1.01] transition-transform">
+            <img src="${img}" alt="${data.title} Screenshot" class="w-full h-auto object-cover" loading="lazy" />
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ` : ''}
 
     <!-- Architecture & Tech Stack -->
     <div class="p-4 bg-white/5 rounded-xl border border-white/10">
