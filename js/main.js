@@ -1168,8 +1168,8 @@ function showFormAlert(message, bgColor) {
 }
 
 // Initialize Lottie — swap this path to change the avatar
-// ('Spider Man.json' for the Spider-Man mask).
-const AVATAR_JSON = 'Captain Deadpool.json';
+// ('Captain Deadpool.json' for the original).
+const AVATAR_JSON = 'Spider Man.json';
 lottie.loadAnimation({
   container: document.getElementById('lottie-avatar'),
   renderer: 'svg',
