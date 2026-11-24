@@ -82,7 +82,13 @@
   <main>
 
     <!-- HERO -->
-    <section id="hero" class="relative overflow-hidden px-grid-margin py-unit-xxl border-b-2 border-on-surface">
+    <section id="hero" class="relative overflow-hidden px-grid-margin py-unit-xxl border-b-2 border-on-surface hero-media-section">
+      <!-- Full-screen animated backdrop -->
+      <div class="hero-media" aria-hidden="true">
+        <img class="hero-media__gif" src="images/hero.gif" alt="" />
+        <div class="hero-media__veil"></div>
+      </div>
+
       <!-- Binary particle canvas -->
       <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.65;" aria-hidden="true"></canvas>
 
@@ -163,40 +169,69 @@
       </div>
     </section>
 
-    <!-- MARQUEE TICKER -->
-    <div class="marquee-container select-none">
-      <!-- Row 1: Left to Right -->
-      <div class="marquee-row">
-        <div class="animate-marquee-left">
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <!-- MARQUEE RIBBONS — edit the words inside .marquee-item, then copy the
+         whole .marquee-run so both runs stay identical for the seamless loop. -->
+    <div class="marquee-container select-none" aria-label="Skills ticker">
+      <!-- Dark ribbon: left to right -->
+      <div class="marquee-tape marquee-tape--dark">
+        <div class="marquee-row">
+          <div class="animate-marquee-left">
+            <span class="marquee-run">
+              <span class="marquee-item">iOS Developer<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Swift<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">UIKit<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">SwiftUI<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Combine<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">MVC<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">MVVM<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Fintech<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Clean Code<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Banking Apps<span class="marquee-star" aria-hidden="true">✦</span></span>
+            </span>
+            <span class="marquee-run" aria-hidden="true">
+              <span class="marquee-item">iOS Developer<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Swift<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">UIKit<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">SwiftUI<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Combine<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">MVC<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">MVVM<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Fintech<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Clean Code<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Banking Apps<span class="marquee-star">✦</span></span>
+            </span>
+          </div>
         </div>
       </div>
-      <!-- Row 2: Right to Left -->
-      <div class="marquee-row">
-        <div class="animate-marquee-right">
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="font-mono text-[12px] tracking-[0.15em] uppercase text-white/60 whitespace-nowrap">iOS Developer
-            &nbsp;·&nbsp; Swift &nbsp;·&nbsp; UIKit &nbsp;·&nbsp; SwiftUI &nbsp;·&nbsp; Combine &nbsp;·&nbsp; MVC &nbsp;·&nbsp; MVVM &nbsp;·&nbsp; Fintech &nbsp;·&nbsp; Clean Code
-            &nbsp;·&nbsp; Banking Apps &nbsp;·&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <!-- Light ribbon: right to left -->
+      <div class="marquee-tape marquee-tape--light">
+        <div class="marquee-row">
+          <div class="animate-marquee-right">
+            <span class="marquee-run">
+              <span class="marquee-item">iOS Developer<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Swift<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">UIKit<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">SwiftUI<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Combine<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">MVC<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">MVVM<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Fintech<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Clean Code<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Banking Apps<span class="marquee-star" aria-hidden="true">✦</span></span>
+            </span>
+            <span class="marquee-run" aria-hidden="true">
+              <span class="marquee-item">iOS Developer<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Swift<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">UIKit<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">SwiftUI<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Combine<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">MVC<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">MVVM<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Fintech<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Clean Code<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Banking Apps<span class="marquee-star">✦</span></span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -204,16 +239,15 @@
     <!-- PROJECTS -->
     <section id="projects" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface bg-surface-container fade-in">
       <div class="max-w-[1440px] mx-auto">
-        <div class="flex justify-between items-end border-b-4 border-on-surface pb-unit-md mb-unit-xl">
-          <div>
-            <p class="font-label-bold text-label-bold uppercase text-primary mb-1">Selected Work &middot; Native iOS</p>
-            <h2 class="text-display-lg font-black tracking-tighter uppercase">PROJECTS.</h2>
-          </div>
-          <p class="font-label-bold text-label-bold uppercase text-secondary hidden md:block">01 — 05</p>
-        </div>
-        
+        <header class="work-head">
+          <span class="work-ghost" aria-hidden="true">02</span>
+          <p class="work-kicker"><span>02</span><i>//</i> Chapter 02 &mdash; Selected work</p>
+          <h2 class="work-title">Selected <span>work.</span></h2>
+          <p class="work-intro">Five products, each built for a real problem and shipped to real people. Open a card for the full story.</p>
+        </header>
+
         <!-- Filter Tabs -->
-        <div class="flex gap-unit-sm mb-unit-xl flex-wrap">
+        <div class="work-filters">
           <button onclick="filterProj('all',this)"
             class="proj-filter active-filter bg-on-surface text-background font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-primary hover:border-primary transition-all">All</button>
           <button onclick="filterProj('swift',this)"
@@ -226,566 +260,420 @@
             class="proj-filter bg-background text-on-surface font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-on-surface hover:text-background transition-all">Creative Apps</button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter" id="proj-grid">
+        <!-- WORK INDEX — red-focused archive rows. Click a row for the case study. -->
+        <div class="work-index" id="proj-grid">
 
-          <!-- 1. Pmoney (The Premier Bank PLC) -->
-          <div
-            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between md:col-span-2"
-            data-tags="swift uikit banking" style="--i:0" onclick="openAppModal('pmoney')">
-            <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
-            
-            <!-- App Store Theme Banner -->
-            <div class="app-theme-pmoney p-unit-lg border-b-2 border-on-surface relative overflow-hidden">
-              <div class="flex flex-col sm:flex-row justify-between sm:items-start gap-4 relative z-10">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-white p-1 shadow-md flex items-center justify-center flex-shrink-0 overflow-hidden">
-                    <img src="images/pmoney/icon.png" alt="Pmoney Logo" class="w-full h-full object-contain rounded-xl" />
-                  </div>
-                  <div>
-                    <div class="flex items-center gap-2">
-                      <h3 class="font-sans font-black text-xl text-white tracking-tight uppercase leading-tight">Pmoney</h3>
-                      <span class="bg-emerald-400/30 text-white font-mono text-[10px] px-2 py-0.5 rounded-full border border-emerald-300/40 font-bold uppercase tracking-wider">NEW &bull; LIVE</span>
-                    </div>
-                    <p class="font-sans text-xs text-white/80 font-medium">Premier Bank Mobile Banking &middot; The Premier Bank PLC</p>
-                  </div>
-                </div>
-                <div class="appstore-chip">
-                  <span class="material-symbols-outlined text-[14px] text-emerald-300">verified</span>
-                  <span>Live on App Store &middot; Finance</span>
-                </div>
-              </div>
-
-              <!-- App Screen Mini Mockups Preview -->
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Dashboard</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">account_balance</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Remittance &bull; Cards</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-200 font-mono">Tap for Balance</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Fund Transfer</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">sync_alt</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">NPSB &bull; BEFTN</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-200 font-mono">RTGS Instant</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Pay Bills</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">receipt_long</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Utility &bull; Fees</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-200 font-mono">Electricity &bull; Gas</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Recharge &amp; QR</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">qr_code_scanner</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Bangla QR &bull; Top-up</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-200 font-mono">FDR &bull; DPS Open</div>
-                </div>
-              </div>
+          <div class="work-row stagger-item" data-tags="swift uikit banking" style="--i:0" role="button" tabindex="0"
+            onclick="openAppModal('pmoney')" onkeydown="if(event.key==='Enter')openAppModal('pmoney')">
+            <span class="work-row__no">01</span>
+            <div class="work-row__main">
+              <h3 class="work-row__title">Pmoney</h3>
+              <p class="work-row__blurb">Official mobile banking app for Premier Bank PLC — live on the App Store.</p>
             </div>
+            <p class="work-row__meta">CIBL <span>&middot;</span> 2026 <em>Live</em></p>
+            <p class="work-row__tech">Swift / UIKit / REST APIs / MVC</p>
+            <span class="work-row__arrow" aria-hidden="true">&nearr;</span>
+          </div>
 
-            <!-- Card Body Content -->
-            <div class="p-unit-lg flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex justify-between items-center mb-2">
-                  <span class="font-label-bold text-xs uppercase text-emerald-700 tracking-wider">Official Mobile Banking App</span>
-                  <span class="font-label-sm text-label-sm uppercase text-secondary">CIBL &middot; 2026</span>
-                </div>
-                <p class="font-sans text-body-md text-secondary mb-unit-md">
-                  Production mobile banking iOS application for Premier Bank PLC, live on the App Store! Empowers users with seamless interbank fund transfers (NPSB instant, BEFTN, RTGS), utility bill payments, mobile recharge across all operators, instant Bangla QR scanning, beneficiary management, and digital FDR/DPS deposit opening.
-                </p>
-                <div class="flex flex-wrap gap-unit-xs mb-unit-md">
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">UIKit</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">REST APIs</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">MVC</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Bangla QR</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Fund Transfer</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">FDR/DPS</span>
-                </div>
-              </div>
+          <div class="work-row stagger-item" data-tags="swift uikit banking" style="--i:1" role="button" tabindex="0"
+            onclick="openAppModal('nbl')" onkeydown="if(event.key==='Enter')openAppModal('nbl')">
+            <span class="work-row__no">02</span>
+            <div class="work-row__main">
+              <h3 class="work-row__title">NBL Apps</h3>
+              <p class="work-row__blurb">National Bank Ltd. banking with real-time NPSB transfers and biometric login.</p>
+            </div>
+            <p class="work-row__meta">CIBL <span>&middot;</span> 2026 <em>Production</em></p>
+            <p class="work-row__tech">Swift / UIKit / REST API / NPSB</p>
+            <span class="work-row__arrow" aria-hidden="true">&nearr;</span>
+          </div>
 
-              <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md mt-auto">
-                <span class="font-label-bold text-label-bold uppercase text-primary">Live on App Store &middot; The Premier Bank PLC</span>
-                <span class="inline-flex items-center gap-1 font-label-bold text-xs uppercase text-on-surface group-hover:text-primary transition-colors">
-                  App Store Showcase <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
-                </span>
+          <div class="work-row stagger-item" data-tags="swift uikit banking" style="--i:2" role="button" tabindex="0"
+            onclick="openAppModal('trust')" onkeydown="if(event.key==='Enter')openAppModal('trust')">
+            <span class="work-row__no">03</span>
+            <div class="work-row__main">
+              <h3 class="work-row__title">Trust-Money</h3>
+              <p class="work-row__blurb">Trust Bank's flagship app — 50+ features, FDR/DPS, bKash &amp; Nagad wallet transfers.</p>
+            </div>
+            <p class="work-row__meta">CIBL <span>&middot;</span> 2026 <em>Production</em></p>
+            <p class="work-row__tech">Swift / UIKit / Alamofire / CoreData</p>
+            <span class="work-row__arrow" aria-hidden="true">&nearr;</span>
+          </div>
+
+          <div class="work-row stagger-item" data-tags="swift uikit banking" style="--i:3" role="button" tabindex="0"
+            onclick="openAppModal('meghna')" onkeydown="if(event.key==='Enter')openAppModal('meghna')">
+            <span class="work-row__no">04</span>
+            <div class="work-row__main">
+              <h3 class="work-row__title">i-Banking</h3>
+              <p class="work-row__blurb">Meghna Bank digital banking — multi-account views, BEFTN/RTGS and card lifecycle.</p>
+            </div>
+            <p class="work-row__meta">CIBL <span>&middot;</span> 2026 <em>Production</em></p>
+            <p class="work-row__tech">Swift / UIKit / REST API / Biometrics</p>
+            <span class="work-row__arrow" aria-hidden="true">&nearr;</span>
+          </div>
+
+          <div class="work-row stagger-item" data-tags="swift uikit creative" style="--i:4" role="button" tabindex="0"
+            onclick="openAppModal('collage')" onkeydown="if(event.key==='Enter')openAppModal('collage')">
+            <span class="work-row__no">05</span>
+            <div class="work-row__main">
+              <h3 class="work-row__title">Collage Studio</h3>
+              <p class="work-row__blurb">Photo collage maker with smart templates, rich text overlays and cloud sync.</p>
+            </div>
+            <p class="work-row__meta">AppExits <span>&middot;</span> 2024 <em>App Store</em></p>
+            <p class="work-row__tech">Swift / UIKit / PhotosUI / Core Image</p>
+            <span class="work-row__arrow" aria-hidden="true">&nearr;</span>
+          </div>
+
+        </div>
+
+        <!-- BOOK SHELF — hover a volume to pull it out, click to open its case -->
+        <div class="book-shelf">
+          <div class="book-shelf__head">
+            <div class="book-shelf__intro">
+              <p class="book-shelf__title">Also on the shelf</p>
+              <p class="book-shelf__hint">Every project as a volume. <em>Pull one out.</em></p>
+            </div>
+            <div class="shelf">
+              <div class="shelf__row">
+              <span class="book-place">
+                <button class="book book--1" style="--t:2.3;--k:1;--s:1" onclick="openAppModal('pmoney')" aria-label="Open Pmoney">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">Pmoney</span><span class="book__no">01</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">01</span><span class="book__covertitle">Pmoney</span><span class="book__line">Premier Bank mobile banking</span><span class="book__foot">Live</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--2" style="--t:1.7;--k:0.9;--s:0.78" onclick="openAppModal('nbl')" aria-label="Open NBL iPower">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">NBL iPower</span><span class="book__no">02</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">02</span><span class="book__covertitle">NBL iPower</span><span class="book__line">National Bank utility payments</span><span class="book__foot">2026</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--3" style="--t:2.6;--k:0.96;--s:1" onclick="openAppModal('trust')" aria-label="Open Trust Money">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">Trust Money</span><span class="book__no">03</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">03</span><span class="book__covertitle">Trust Money</span><span class="book__line">Trust Bank banking app</span><span class="book__foot">Live</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--4" style="--t:1.9;--k:0.85;--s:1" onclick="openAppModal('meghna')" aria-label="Open i-Banking">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">i-Banking</span><span class="book__no">04</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">04</span><span class="book__covertitle">i-Banking</span><span class="book__line">Meghna Bank i-Banking</span><span class="book__foot">Live</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--5" style="--t:2.2;--k:1;--s:1" onclick="openAppModal('collage')" aria-label="Open Collage Studio">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">Collage Studio</span><span class="book__no">05</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">05</span><span class="book__covertitle">Collage Studio</span><span class="book__line">Photo collage creative app</span><span class="book__foot">App Store</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
               </div>
             </div>
           </div>
-
-          <!-- 2. NBLiPower (National Bank Limited) -->
-          <div
-            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit banking" style="--i:1" onclick="openAppModal('nbl')">
-            <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
-            
-            <!-- App Store Theme Banner -->
-            <div class="app-theme-nbl p-unit-lg border-b-2 border-on-surface relative overflow-hidden">
-              <div class="flex justify-between items-start relative z-10">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center flex-shrink-0">
-                    <svg viewBox="0 0 256 256" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        <linearGradient id="nbl-orange-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#ff9d1e"/>
-                          <stop offset="100%" stop-color="#ea580c"/>
-                        </linearGradient>
-                        <linearGradient id="nbl-green-tl" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#009639"/>
-                          <stop offset="60%" stop-color="#007a2f"/>
-                          <stop offset="100%" stop-color="#005822"/>
-                        </linearGradient>
-                        <linearGradient id="nbl-green-tr" x1="100%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stop-color="#009639"/>
-                          <stop offset="60%" stop-color="#007a2f"/>
-                          <stop offset="100%" stop-color="#005822"/>
-                        </linearGradient>
-                        <linearGradient id="nbl-gloss-l" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
-                          <stop offset="60%" stop-color="#ffffff" stop-opacity="0.12"/>
-                          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-                        </linearGradient>
-                        <linearGradient id="nbl-gloss-r" x1="100%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
-                          <stop offset="60%" stop-color="#ffffff" stop-opacity="0.12"/>
-                          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-                        </linearGradient>
-                      </defs>
-                      <path d="M0 0 L108 30 C118 33 124 43 124 53 L124 116 L109 110 L109 56 C109 51 104 46 99 44 L15 20 L15 82 L0 76 Z" fill="url(#nbl-orange-grad)"/>
-                      <path d="M0 84 C38 103 80 115 120 118 L120 186 C82 182 40 169 0 148 Z" fill="url(#nbl-green-tl)"/>
-                      <path d="M12 94 C46 111 82 121 114 124 C106 138 88 152 56 148 C30 144 16 122 12 94 Z" fill="url(#nbl-gloss-l)"/>
-                      <path d="M256 84 C218 103 176 115 136 118 L136 186 C174 182 216 169 256 148 Z" fill="url(#nbl-green-tr)"/>
-                      <path d="M244 94 C210 111 174 121 142 124 C150 138 168 152 200 148 C226 144 240 122 244 94 Z" fill="url(#nbl-gloss-r)"/>
-                      <path d="M0 154 C38 173 80 185 120 188 L120 256 C82 252 40 239 0 218 Z" fill="url(#nbl-green-tl)"/>
-                      <path d="M12 164 C46 181 82 191 114 194 C106 208 88 222 56 218 C30 214 16 192 12 164 Z" fill="url(#nbl-gloss-l)"/>
-                      <path d="M256 154 C218 173 176 185 136 188 L136 256 C174 252 216 239 256 218 Z" fill="url(#nbl-green-tr)"/>
-                      <path d="M244 164 C210 181 174 191 142 194 C150 208 168 222 200 218 C226 214 240 192 244 164 Z" fill="url(#nbl-gloss-r)"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="font-sans font-black text-xl text-white tracking-tight uppercase leading-tight">NBL Apps</h3>
-                    <p class="font-sans text-xs text-white/80 font-medium">National Bank Limited &middot; NBL iPower</p>
-                  </div>
-                </div>
-                <div class="appstore-chip">
-                  <span class="material-symbols-outlined text-[14px] text-yellow-300 fill-1">star</span>
-                  <span>2.5 &middot; Finance</span>
-                </div>
-              </div>
-
-              <!-- App Screen Mini Mockups Preview -->
-              <div class="app-preview-screens">
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Welcome</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">account_balance</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">NBL iPower</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-300 font-mono">OTP SMS &bull; Safe</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Transfers</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">sync_alt</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">NPSB &bull; 24/7</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-300 font-mono">Fund &bull; Utility</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Statement</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">description</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">PDF Export</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-300 font-mono">Real-time</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card Body Content -->
-            <div class="p-unit-lg flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex justify-between items-center mb-2">
-                  <span class="font-label-bold text-xs uppercase text-emerald-700 tracking-wider">Mobile Banking App</span>
-                  <span class="font-label-sm text-label-sm uppercase text-secondary">CIBL &middot; 2026</span>
-                </div>
-                <p class="font-sans text-body-md text-secondary mb-unit-md">
-                  Production iOS banking app for National Bank Ltd. featuring end-to-end account management, real-time fund transfers, NPSB instant payments, utility bill settlements, and biometric login.
-                </p>
-                <div class="flex flex-wrap gap-unit-xs mb-unit-md">
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">UIKit</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">REST API</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">NPSB</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">MVC</span>
-                </div>
-              </div>
-
-              <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md mt-auto">
-                <span class="font-label-bold text-label-bold uppercase text-primary">Production &middot; National Bank Ltd.</span>
-                <span class="inline-flex items-center gap-1 font-label-bold text-xs uppercase text-on-surface group-hover:text-primary transition-colors">
-                  App Store Showcase <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. Trust Money (Trust Bank) -->
-          <div
-            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit banking" style="--i:2" onclick="openAppModal('trust')">
-            <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
-            
-            <!-- App Store Theme Banner -->
-            <div class="app-theme-trust p-unit-lg border-b-2 border-on-surface relative overflow-hidden">
-              <div class="flex justify-between items-start relative z-10">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-white p-1 shadow-md flex items-center justify-center flex-shrink-0">
-                    <svg viewBox="0 0 256 256" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="80" y="64" width="110" height="98" rx="4" fill="#006837"/>
-                      <circle cx="122" cy="102" r="62" fill="#a6192e"/>
-                      <circle cx="132" cy="110" r="44" fill="#ffffff"/>
-                      <path d="M92 98 L166 98 L166 102 L92 102 Z" fill="#006837"/>
-                      <path d="M149 84 L124 84 L106 136 C100 153 131 153 170 124 L166 120 C133 141 117 139 125 121 L132 102 L156 102 Z" fill="#006837"/>
-                      <text x="128" y="206" font-family="'Inter', -apple-system, sans-serif" font-style="italic" font-weight="900" font-size="31" fill="#006837" text-anchor="middle" letter-spacing="-0.5">Trust Money</text>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="font-sans font-black text-xl text-white tracking-tight uppercase leading-tight">Trust-Money</h3>
-                    <p class="font-sans text-xs text-white/80 font-medium">Trust Bank Mobile Banking &middot; Trust Bank LTD</p>
-                  </div>
-                </div>
-                <div class="appstore-chip">
-                  <span class="material-symbols-outlined text-[14px] text-yellow-300 fill-1">star</span>
-                  <span>3.2 (206) &middot; Finance</span>
-                </div>
-              </div>
-
-              <!-- App Screen Mini Mockups Preview -->
-              <div class="app-preview-screens">
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Safe &bull; Simple</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">fingerprint</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Biometric ID</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-200 font-mono">Millions Trusted</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Modern Look</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">account_balance_wallet</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">FDR / DPS</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-200 font-mono">Smart Balance</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Smart Menu</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">qr_code_scanner</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">bKash / Nagad</div>
-                  </div>
-                  <div class="text-[8px] text-emerald-200 font-mono">50+ Services</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card Body Content -->
-            <div class="p-unit-lg flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex justify-between items-center mb-2">
-                  <span class="font-label-bold text-xs uppercase text-emerald-600 tracking-wider">Flagship Mobile Banking</span>
-                  <span class="font-label-sm text-label-sm uppercase text-secondary">CIBL &middot; 2026</span>
-                </div>
-                <p class="font-sans text-body-md text-secondary mb-unit-md">
-                  Architected and engineered Trust Bank's iOS app with 50+ banking features: automated FDR/DPS deposit modules, seamless MFS wallet transfers (bKash & Nagad), card management, and real-time transaction alerts.
-                </p>
-                <div class="flex flex-wrap gap-unit-xs mb-unit-md">
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">UIKit</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Alamofire</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">CoreData</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">REST API</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">MVC</span>
-                </div>
-              </div>
-
-              <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md mt-auto">
-                <span class="font-label-bold text-label-bold uppercase text-primary">Production &middot; Trust Bank</span>
-                <span class="inline-flex items-center gap-1 font-label-bold text-xs uppercase text-on-surface group-hover:text-primary transition-colors">
-                  App Store Showcase <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 4. i-Banking (Meghna Bank Ltd) -->
-          <div
-            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit banking" style="--i:3" onclick="openAppModal('meghna')">
-            <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
-
-            <!-- App Store Theme Banner -->
-            <div class="app-theme-meghna p-unit-lg border-b-2 border-on-surface relative overflow-hidden">
-              <div class="flex justify-between items-start relative z-10">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center flex-shrink-0">
-                    <svg viewBox="0 0 256 256" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        <linearGradient id="meghna-card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#6f2897"/>
-                          <stop offset="60%" stop-color="#5a227e"/>
-                          <stop offset="100%" stop-color="#461466"/>
-                        </linearGradient>
-                      </defs>
-                      <path d="M51 206 C55 174 59 128 44 95 C64 104 76 117 81 136 C71 161 60 188 51 206 Z" fill="url(#meghna-card-grad)"/>
-                      <path d="M58 207 C70 176 80 122 77 48 C100 68 118 91 123 119 C104 151 79 183 58 207 Z" fill="url(#meghna-card-grad)"/>
-                      <path d="M66 209 C92 177 121 122 128 59 C161 89 194 133 213 209 C159 194 107 196 66 209 Z" fill="url(#meghna-card-grad)"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="flex items-center gap-2">
-                      <h3 class="font-sans font-black text-xl text-white tracking-tight uppercase leading-tight">i-Banking</h3>
-                      <span class="bg-purple-400/30 text-white font-mono text-[10px] px-2 py-0.5 rounded-full border border-purple-300/40">NEW</span>
-                    </div>
-                    <p class="font-sans text-xs text-white/80 font-medium">Meghna Bank Digital &middot; Meghna Bank Ltd.</p>
-                  </div>
-                </div>
-                <div class="appstore-chip">
-                  <span class="material-symbols-outlined text-[14px] text-purple-200">verified</span>
-                  <span>4+ &middot; Finance</span>
-                </div>
-              </div>
-
-              <!-- App Screen Mini Mockups Preview -->
-              <div class="app-preview-screens">
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">All Accounts</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">credit_card</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">One Dashboard</div>
-                  </div>
-                  <div class="text-[8px] text-purple-200 font-mono">Platinum Cards</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Bank Anywhere</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">lock</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Face ID Login</div>
-                  </div>
-                  <div class="text-[8px] text-purple-200 font-mono">256-bit Encrypted</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Card Control</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">security</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">PIN &bull; Block</div>
-                  </div>
-                  <div class="text-[8px] text-purple-200 font-mono">Card to Account</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card Body Content -->
-            <div class="p-unit-lg flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex justify-between items-center mb-2">
-                  <span class="font-label-bold text-xs uppercase text-purple-700 tracking-wider">Digital Banking</span>
-                  <span class="font-label-sm text-label-sm uppercase text-secondary">CIBL &middot; 2026</span>
-                </div>
-                <p class="font-sans text-body-md text-secondary mb-unit-md">
-                  Native iOS banking app for Meghna Bank Ltd. with unified multi-account views, instant transfers across all Bangladesh banks (BEFTN/NPSB/RTGS) and MFS wallets (bKash, Nagad, Meghna Pay), biometric security, and full card lifecycle controls.
-                </p>
-                <div class="flex flex-wrap gap-unit-xs mb-unit-md">
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">UIKit</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">REST API</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">MVC</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Card Control SDK</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Biometrics</span>
-                </div>
-              </div>
-
-              <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md mt-auto">
-                <span class="font-label-bold text-label-bold uppercase text-primary">Production &middot; Meghna Bank Ltd.</span>
-                <span class="inline-flex items-center gap-1 font-label-bold text-xs uppercase text-on-surface group-hover:text-primary transition-colors">
-                  App Store Showcase <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 5. Collage Studio (AppExits) -->
-          <div
-            class="stagger-item proj-card tilt-card relative overflow-hidden border-2 border-on-surface bg-background transition-all cursor-pointer group flex flex-col justify-between"
-            data-tags="swift uikit creative" style="--i:4" onclick="openAppModal('collage')">
-            <div class="tilt-glare absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"></div>
-            
-            <!-- App Store Theme Banner -->
-            <div class="app-theme-collage p-unit-lg border-b-2 border-on-surface relative overflow-hidden">
-              <div class="flex justify-between items-start relative z-10">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center flex-shrink-0">
-                    <span class="material-symbols-outlined text-indigo-600 text-[28px]">photo_library</span>
-                  </div>
-                  <div>
-                    <h3 class="font-sans font-black text-xl text-white tracking-tight uppercase leading-tight">Collage Studio</h3>
-                    <p class="font-sans text-xs text-white/80 font-medium">Creative Photo Editor &middot; AppExits</p>
-                  </div>
-                </div>
-                <div class="appstore-chip">
-                  <span class="material-symbols-outlined text-[14px] text-yellow-300 fill-1">star</span>
-                  <span>4.7 &middot; Graphics</span>
-                </div>
-              </div>
-
-              <!-- App Screen Mini Mockups Preview -->
-              <div class="app-preview-screens">
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Templates</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">grid_view</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">100+ Grids</div>
-                  </div>
-                  <div class="text-[8px] text-cyan-200 font-mono">Auto-Snap</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">PhotosUI</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">filter</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Core Image</div>
-                  </div>
-                  <div class="text-[8px] text-cyan-200 font-mono">High-Res</div>
-                </div>
-                <div class="app-mini-screen">
-                  <div class="text-[9px] font-bold text-white/90 uppercase tracking-wider">Cloud</div>
-                  <div class="my-auto text-center">
-                    <span class="material-symbols-outlined text-white/80 text-[20px]">cloud_sync</span>
-                    <div class="text-[9px] font-bold text-white leading-tight mt-1">Cloudinary</div>
-                  </div>
-                  <div class="text-[8px] text-cyan-200 font-mono">Sync &bull; Share</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card Body Content -->
-            <div class="p-unit-lg flex-1 flex flex-col justify-between">
-              <div>
-                <div class="flex justify-between items-center mb-2">
-                  <span class="font-label-bold text-xs uppercase text-indigo-600 tracking-wider">Photo Collage Maker</span>
-                  <span class="font-label-sm text-label-sm uppercase text-secondary">AppExits &middot; 2024</span>
-                </div>
-                <p class="font-sans text-body-md text-secondary mb-unit-md">
-                  Photo collage maker with smart dynamic templates, custom grid layouts, rich text overlays, sticker engine, and Cloudinary-powered cloud media management.
-                </p>
-                <div class="flex flex-wrap gap-unit-xs mb-unit-md">
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Swift</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">UIKit</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">PhotosUI</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Core Image</span>
-                  <span class="font-mono text-mono-sm uppercase border border-on-surface px-unit-sm py-1">Cloudinary</span>
-                </div>
-              </div>
-
-              <div class="flex justify-between items-center border-t-2 border-on-surface pt-unit-md mt-auto">
-                <span class="font-label-bold text-label-bold uppercase text-primary">App Store &middot; AppExits</span>
-                <span class="inline-flex items-center gap-1 font-label-bold text-xs uppercase text-on-surface group-hover:text-primary transition-colors">
-                  App Store Showcase <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
 
     <!-- ═══════════════════════════════════════════
+     STACK — scroll-sticking layers. Edit names/tech inside each
+     .stack-layer; keep the --i value in ascending order.
+═══════════════════════════════════════════ -->
+    <section id="stack" class="stack-section border-b-2 border-on-surface" aria-labelledby="stack-title">
+      <!-- Second ribbon set — white + red zigzag, pinned to the section 2 / 3 border -->
+      <div class="marquee-container marquee-container--zig select-none" aria-hidden="true">
+        <div class="marquee-tape marquee-tape--paper">
+          <div class="marquee-row">
+            <div class="animate-marquee-left">
+              <span class="marquee-run">
+                <span class="marquee-item">Swift<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">UIKit<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">SwiftUI<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">Combine<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">CoreData<span class="marquee-star">✦</span></span>
+              </span>
+              <span class="marquee-run">
+                <span class="marquee-item">Swift<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">UIKit<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">SwiftUI<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">Combine<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">CoreData<span class="marquee-star">✦</span></span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="marquee-tape marquee-tape--accent">
+          <div class="marquee-row">
+            <div class="animate-marquee-right">
+              <span class="marquee-run">
+                <span class="marquee-item">Full stack<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">No fluff<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">Real ship<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">Open to freelance<span class="marquee-star">✦</span></span>
+              </span>
+              <span class="marquee-run">
+                <span class="marquee-item">Full stack<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">No fluff<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">Real ship<span class="marquee-star">✦</span></span>
+                <span class="marquee-item">Open to freelance<span class="marquee-star">✦</span></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-grid-margin pt-unit-xxl pb-unit-xl">
+        <header class="stack-head">
+          <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-sm">03 <span class="text-background/40">//</span> Chapter 03 &mdash; The stack</p>
+          <h2 id="stack-title" class="text-display-lg font-black tracking-tighter uppercase">Every <span class="text-primary">layer</span></h2>
+          <p class="font-body-md text-background/60 mt-unit-md max-w-[640px]">Not a wall of logos. Keep scrolling and the layers stack up: what I use at each level of a product, and where I have used it.</p>
+        </header>
+      </div>
+
+      <ol class="stack-layers">
+        <li class="stack-layer" style="--i:0">
+          <p class="stack-layer__strip">
+            <span class="stack-layer__no">00</span><span>Languages</span><span class="stack-layer__hint">What I write in</span>
+          </p>
+          <div class="stack-layer__body">
+            <div class="stack-layer__head">
+              <h3 class="stack-layer__name">Languages</h3>
+              <p class="stack-layer__blurb"><em>What I write in</em></p>
+            </div>
+            <div class="stack-layer__detail">
+              <ul class="stack-layer__tech" aria-label="Languages">
+                <li>Swift</li><li>C / C++</li>
+              </ul>
+              <p class="stack-layer__used">Used in &mdash; Pmoney &middot; NBLiPower &middot; Trust Money</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="stack-layer" style="--i:1">
+          <p class="stack-layer__strip">
+            <span class="stack-layer__no">01</span><span>Interface</span><span class="stack-layer__hint">What people touch</span>
+          </p>
+          <div class="stack-layer__body">
+            <div class="stack-layer__head">
+              <h3 class="stack-layer__name">Interface</h3>
+              <p class="stack-layer__blurb"><em>What people touch</em></p>
+            </div>
+            <div class="stack-layer__detail">
+              <ul class="stack-layer__tech" aria-label="Interface">
+                <li>UIKit</li><li>SwiftUI</li><li>Auto Layout</li><li>Combine</li><li>Core Animation</li>
+              </ul>
+              <p class="stack-layer__used">Used in &mdash; all five banking apps</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="stack-layer" style="--i:2">
+          <p class="stack-layer__strip">
+            <span class="stack-layer__no">02</span><span>API</span><span class="stack-layer__hint">What answers</span>
+          </p>
+          <div class="stack-layer__body">
+            <div class="stack-layer__head">
+              <h3 class="stack-layer__name">API</h3>
+              <p class="stack-layer__blurb"><em>What answers</em></p>
+            </div>
+            <div class="stack-layer__detail">
+              <ul class="stack-layer__tech" aria-label="API">
+                <li>URLSession</li><li>Alamofire</li><li>REST APIs</li><li>Firebase Auth</li>
+              </ul>
+              <p class="stack-layer__used">Used in &mdash; Pmoney &middot; i-Banking &middot; Trust Money</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="stack-layer" style="--i:3">
+          <p class="stack-layer__strip">
+            <span class="stack-layer__no">03</span><span>Data</span><span class="stack-layer__hint">What remembers</span>
+          </p>
+          <div class="stack-layer__body">
+            <div class="stack-layer__head">
+              <h3 class="stack-layer__name">Data</h3>
+              <p class="stack-layer__blurb"><em>What remembers</em></p>
+            </div>
+            <div class="stack-layer__detail">
+              <ul class="stack-layer__tech" aria-label="Data">
+                <li>CoreData</li><li>UserDefaults</li><li>Firestore</li><li>Firebase</li><li>Cloudinary</li>
+              </ul>
+              <p class="stack-layer__used">Used in &mdash; Pmoney &middot; Collage Studio &middot; NBLiPower</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="stack-layer" style="--i:4">
+          <p class="stack-layer__strip">
+            <span class="stack-layer__no">04</span><span>Device</span><span class="stack-layer__hint">What senses</span>
+          </p>
+          <div class="stack-layer__body">
+            <div class="stack-layer__head">
+              <h3 class="stack-layer__name">Device</h3>
+              <p class="stack-layer__blurb"><em>What senses</em></p>
+            </div>
+            <div class="stack-layer__detail">
+              <ul class="stack-layer__tech" aria-label="Device">
+                <li>AVFoundation</li><li>VisionKit</li><li>CoreLocation</li><li>LocalAuthentication</li><li>UserNotifications</li>
+              </ul>
+              <p class="stack-layer__used">Used in &mdash; Collage Studio &middot; i-Banking</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="stack-layer stack-layer--top" style="--i:5">
+          <p class="stack-layer__strip">
+            <span class="stack-layer__no">05</span><span>Ship</span><span class="stack-layer__hint">What gets it live</span>
+          </p>
+          <div class="stack-layer__body">
+            <div class="stack-layer__head">
+              <h3 class="stack-layer__name">Ship</h3>
+              <p class="stack-layer__blurb"><em>What gets it live</em></p>
+            </div>
+            <div class="stack-layer__detail">
+              <ul class="stack-layer__tech" aria-label="Ship">
+                <li>Xcode</li><li>Swift Package Manager</li><li>CocoaPods</li><li>Fastlane</li><li>TestFlight</li><li>App Store Connect</li>
+              </ul>
+              <p class="stack-layer__used">Used in &mdash; Pmoney &middot; NBLiPower &middot; Collage Studio</p>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
      ABOUT  — Lottie avatar replaces static box
 ═══════════════════════════════════════════ -->
-    <section id="about" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface fade-in">
-      <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
-        <div class="reveal-left md:col-span-5 relative group">
-          <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-sm">About</p>
-          <h2 class="text-display-lg font-black tracking-tighter uppercase mb-unit-lg">WHO<br />I AM.</h2>
+    <section id="about" class="about-section px-grid-margin py-unit-xxl border-b-2 border-on-surface fade-in">
+      <div class="max-w-[1440px] mx-auto">
+        <header class="about-head reveal">
+          <p class="about-kicker"><span>04</span><i>//</i> Chapter 04 &mdash; Who I am</p>
+          <h2 class="about-title">WHO <span>I AM.</span></h2>
+          <p class="about-head__note">The human behind the commits.</p>
+        </header>
 
-          <!-- Interactive Deadpool Speech Bubble -->
-          <div id="deadpool-bubble" aria-live="polite">
-            <span id="deadpool-bubble-text">Hey there, bub! Hover over me to see some Chimichanga magic.</span>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-grid-gutter">
+          <div class="reveal-left md:col-span-5 relative group about-profile">
+            <div class="about-card">
+              <div class="about-card__bar"><span>ID / SH-01</span><span>iOS &middot; Swift</span></div>
+              <div class="about-card__stage">
+                <!-- Interactive Deadpool Speech Bubble -->
+                <div id="deadpool-bubble" aria-live="polite">
+                  <span id="deadpool-bubble-text">Hey there, bub! Hover over me to see some Chimichanga magic.</span>
+                </div>
+                <div id="lottie-avatar" aria-label="Animated avatar" class="cursor-pointer"></div>
+              </div>
+              <div class="about-card__foot">
+                <span class="about-card__name">Shahadat Hossen</span>
+                <span class="about-card__live"><i></i> Open to work</span>
+              </div>
+            </div>
+            <span class="about-card__stamp" aria-hidden="true">BUILD &middot; SHIP &middot; REPEAT</span>
           </div>
 
-          <div id="lottie-avatar" aria-label="Animated avatar" class="cursor-pointer"></div>
-        </div>
+          <div class="reveal-right md:col-span-7 flex flex-col justify-center">
+            <p class="about-lede">I'm <strong>Shahadat Hossen</strong>, a Junior iOS Developer at CIBL, Dhaka Cantonment. I specialize in building large-scale native iOS applications using Swift and UIKit, with a focus on banking security and clean MVC architecture.</p>
+            <blockquote class="about-quote">“I believe in <em>performance, reliability</em>, and clean code.”</blockquote>
+            <ul class="about-facts">
+              <li><b>02+</b><span>Years building</span></li>
+              <li><b>04</b><span>Banking apps shipped</span></li>
+              <li><b>iOS</b><span>Native &middot; Swift</span></li>
+            </ul>
 
-        <div class="reveal-right md:col-span-7 flex flex-col justify-center">
-          <p class="font-sans text-body-lg text-secondary mb-unit-lg">
-            I'm <strong>Shahadat Hossen</strong>, a Junior iOS Developer at CIBL, Dhaka Cantonment. I specialize in
-            building large-scale native iOS applications using Swift and UIKit, with a focus on banking security and
-            clean MVC architecture.
-          </p>
-          <p class="font-sans text-body-lg text-secondary mb-unit-xl">
-            My experience spans from secure financial transaction systems and I believe in performance, reliability, and
-            clean code.
-          </p>
-          
-          <!-- Interactive Tabs -->
-          <div class="flex gap-unit-md border-b-2 border-on-surface pb-unit-sm mb-unit-lg">
-            <button id="about-tab-exp" onclick="switchAboutTab('experience')" class="about-tab-btn font-label-bold text-label-bold uppercase pb-2 tracking-wider text-primary border-b-4 border-primary transition-all duration-200">Experience</button>
-            <button id="about-tab-edu" onclick="switchAboutTab('education')" class="about-tab-btn font-label-bold text-label-bold uppercase pb-2 tracking-wider text-secondary hover:text-primary transition-all duration-200">Education</button>
-          </div>
+            <!-- Interactive Tabs -->
+            <div class="about-tabs">
+              <button id="about-tab-exp" onclick="switchAboutTab('experience')" class="about-tab-btn font-label-bold text-label-bold uppercase pb-2 tracking-wider text-primary border-b-4 border-primary transition-all duration-200"><small>01</small>Experience</button>
+              <button id="about-tab-edu" onclick="switchAboutTab('education')" class="about-tab-btn font-label-bold text-label-bold uppercase pb-2 tracking-wider text-secondary hover:text-primary transition-all duration-200"><small>02</small>Education</button>
+            </div>
 
           <!-- Tab 1: Experience -->
-          <div id="about-exp-timeline" class="space-y-unit-lg">
-            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:0">
-              <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
-              <p class="font-label-bold uppercase text-secondary">CIBL &mdash; Feb 2026 &ndash; Present</p>
-              <p class="font-sans text-body-md text-secondary mt-1">
-                Developing secure, scalable production mobile banking solutions at CIBL including <strong>Premier Bank (Pmoney)</strong>, <strong>Meghna Bank (i-Banking)</strong>, <strong>Trust Bank (Trust-Money)</strong>, and <strong>National Bank Ltd. (NBL iPower)</strong> with complex fund transfers, NPSB/BEFTN/RTGS, card lifecycle management, and biometric security.
-              </p>
-            </div>
-            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:1">
-              <h3 class="font-sans font-bold uppercase text-headline-sm">Junior iOS Developer</h3>
-              <p class="font-label-bold uppercase text-secondary">AppExits &mdash; Jan 2025 &ndash; Jan 2026</p>
-              <p class="font-sans text-body-md text-secondary mt-1">
-                Math Solver, Momo, Summarise AI, Collage Studio.
-              </p>
-            </div>
-            <div class="stagger-item group pb-unit-lg" style="--i:2">
-              <h3 class="font-sans font-bold uppercase text-headline-sm">iOS Intern</h3>
-              <p class="font-label-bold uppercase text-secondary">AppExits &mdash; Jul 2024 &ndash; Dec 2024</p>
-              <p class="font-sans text-body-md text-secondary mt-1">
-                Demo apps: ChatBuddy, ExpanseX.
-              </p>
-            </div>
+          <div id="about-exp-timeline">
+            <ol class="xp-list">
+              <li class="xp-entry stagger-item" style="--i:0">
+                <div class="xp-side">
+                  <p class="xp-period">Feb 2026 &ndash; Present <span class="xp-badge">Now</span></p>
+                  <span class="xp-no" aria-hidden="true">01</span>
+                </div>
+                <div class="xp-main">
+                  <h3 class="xp-role">Junior iOS Developer</h3>
+                  <p class="xp-org">CIBL &middot; Dhaka Cantonment</p>
+                  <p class="xp-body">Developing secure, scalable production mobile banking solutions at CIBL including <strong>Premier Bank (Pmoney)</strong>, <strong>Meghna Bank (i-Banking)</strong>, <strong>Trust Bank (Trust-Money)</strong>, and <strong>National Bank Ltd. (NBL iPower)</strong> with complex fund transfers, NPSB/BEFTN/RTGS, card lifecycle management, and biometric security.</p>
+                  <ul class="xp-ships">
+                    <li class="xp-ship"><span class="xp-shipno">Shipped 01</span><span class="xp-shiplabel">Pmoney</span><span class="xp-shipdetail">Premier Bank mobile banking app, live on the App Store.</span></li>
+                    <li class="xp-ship"><span class="xp-shipno">Shipped 02</span><span class="xp-shiplabel">Banking rails</span><span class="xp-shipdetail">NPSB, BEFTN and RTGS fund transfers in production.</span></li>
+                    <li class="xp-ship"><span class="xp-shipno">Shipped 03</span><span class="xp-shiplabel">Security</span><span class="xp-shipdetail">Card lifecycle management and biometric login.</span></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="xp-entry stagger-item" style="--i:1">
+                <div class="xp-side">
+                  <p class="xp-period">Jan 2025 &ndash; Jan 2026</p>
+                  <span class="xp-no" aria-hidden="true">02</span>
+                </div>
+                <div class="xp-main">
+                  <h3 class="xp-role">Junior iOS Developer</h3>
+                  <p class="xp-org">AppExits</p>
+                  <p class="xp-body">Math Solver, Momo, Summarise AI, Collage Studio.</p>
+                  <ul class="xp-tags"><li>Math Solver</li><li>Momo</li><li>Summarise AI</li><li>Collage Studio</li></ul>
+                </div>
+              </li>
+              <li class="xp-entry stagger-item" style="--i:2">
+                <div class="xp-side">
+                  <p class="xp-period">Jul 2024 &ndash; Dec 2024</p>
+                  <span class="xp-no" aria-hidden="true">03</span>
+                </div>
+                <div class="xp-main">
+                  <h3 class="xp-role">iOS Intern</h3>
+                  <p class="xp-org">AppExits</p>
+                  <p class="xp-body">Demo apps: ChatBuddy, ExpanseX.</p>
+                  <ul class="xp-tags"><li>ChatBuddy</li><li>ExpanseX</li></ul>
+                </div>
+              </li>
+            </ol>
           </div>
 
           <!-- Tab 2: Education -->
-          <div id="about-edu-timeline" class="space-y-unit-lg hidden">
-            <div class="stagger-item group border-b border-surface-dim pb-unit-lg" style="--i:0">
-              <h3 class="font-sans font-bold uppercase text-headline-sm">BSc in CSE</h3>
-              <p class="font-label-bold uppercase text-secondary">Northern University of Bangladesh &mdash; June 2025 &ndash; Present</p>
-              <p class="font-sans text-body-md text-secondary mt-1">
-                Deepening knowledge of computer systems architecture, compiler engineering, and advanced networking.
-              </p>
-            </div>
-            <div class="stagger-item group pb-unit-lg" style="--i:1">
-              <h3 class="font-sans font-bold uppercase text-headline-sm">Diploma in CST (CGPA: 3.62)</h3>
-              <p class="font-label-bold uppercase text-secondary">Brahmanbaria Polytechnic Institute &mdash; 2020 &ndash; 2025</p>
-              <p class="font-sans text-body-md text-secondary mt-1">
-                Acquired fundamental skills in database management systems, OOP structures, and software engineering.
-              </p>
-            </div>
+          <div id="about-edu-timeline" class="hidden">
+            <ol class="xp-list">
+              <li class="xp-entry stagger-item" style="--i:0">
+                <div class="xp-side">
+                  <p class="xp-period">June 2025 &ndash; Present</p>
+                  <span class="xp-no" aria-hidden="true">01</span>
+                </div>
+                <div class="xp-main">
+                  <h3 class="xp-role">BSc in CSE</h3>
+                  <p class="xp-org">Northern University of Bangladesh</p>
+                  <p class="xp-body">Deepening knowledge of computer systems architecture, compiler engineering, and advanced networking.</p>
+                  <ul class="xp-tags"><li>Computer systems</li><li>Compilers</li><li>Networking</li></ul>
+                </div>
+              </li>
+              <li class="xp-entry stagger-item" style="--i:1">
+                <div class="xp-side">
+                  <p class="xp-period">2020 &ndash; 2025</p>
+                  <span class="xp-no" aria-hidden="true">02</span>
+                </div>
+                <div class="xp-main">
+                  <h3 class="xp-role">Diploma in CST <span class="text-primary">(CGPA: 3.62)</span></h3>
+                  <p class="xp-org">Brahmanbaria Polytechnic Institute</p>
+                  <p class="xp-body">Acquired fundamental skills in database management systems, OOP structures, and software engineering.</p>
+                  <ul class="xp-tags"><li>Database systems</li><li>OOP</li><li>Software engineering</li></ul>
+                </div>
+              </li>
+            </ol>
           </div>
 
+          </div>
         </div>
       </div>
     </section>

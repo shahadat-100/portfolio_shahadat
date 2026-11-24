@@ -682,6 +682,7 @@ revealHeadings.forEach(heading => {
     heading.querySelectorAll('.reveal-word').forEach(w => {
       w.style.transform = 'translateY(0)';
       w.style.opacity = '1';
+      if (w.parentElement) w.parentElement.style.overflow = 'visible';
     });
     return;
   }
@@ -689,9 +690,13 @@ revealHeadings.forEach(heading => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.reveal-word').forEach(word => {
+        entry.target.querySelectorAll('.reveal-word').forEach((word, i) => {
           word.style.transform = 'translateY(0)';
           word.style.opacity = '1';
+          // Once the slide-in is done, stop clipping tall glyphs (g, y, J, etc.)
+          setTimeout(() => {
+            if (word.parentElement) word.parentElement.style.overflow = 'visible';
+          }, 900 + i * 80);
         });
         observer.unobserve(entry.target);
       }
