@@ -1167,13 +1167,15 @@ function showFormAlert(message, bgColor) {
   }, 5000);
 }
 
-// Initialize Lottie
+// Initialize Lottie — swap this path to change the avatar
+// (e.g. 'Captain Deadpool.json' for the original).
+const AVATAR_JSON = 'Spider Man.json';
 lottie.loadAnimation({
   container: document.getElementById('lottie-avatar'),
   renderer: 'svg',
   loop: true,
   autoplay: true,
-  path: 'Captain Deadpool.json'
+  path: AVATAR_JSON
 });
 
 // ═══ PRELOADER — count 0→100, then wipe upward ═══
@@ -1332,20 +1334,20 @@ window.switchAboutTab = function (tab) {
   }
 };
 
-// ═══ INTERACTIVE DEADPOOL SPEECH BUBBLE ═══
-(function initDeadpoolSpeech() {
+// ═══ INTERACTIVE AVATAR SPEECH BUBBLE ═══
+(function initAvatarSpeech() {
   const avatar = document.getElementById('lottie-avatar');
   const bubble = document.getElementById('deadpool-bubble');
   const bubbleText = document.getElementById('deadpool-bubble-text');
   if (!avatar || !bubble) return;
 
   const quotes = [
-    "Hey there, bub! Yes, I build banking apps. No, I won't wire you a million bucks.",
-    "Swift is great, but have you tried Chimichangas? Highly recommend.",
-    "My banking code is 100% secure. My mouth? Not so much.",
+    "With great power comes great responsibility... and great compile times.",
+    "Just a friendly neighbourhood iOS developer. No web-slinging, just Swift.",
+    "I build banking apps. The only thing I'm swinging is Combine publishers.",
     "UIKit is awesome, but MVC stands for Massive Vexing Conflicts, right?",
     "I compile on the first try. Just kidding, I'm a developer, not a wizard.",
-    "Maximum Effort! (And by effort, I mean StackOverflow searches).",
+    "My spider-sense tingles when I see a force unwrap in production.",
     "Don't click me too hard, you'll scratch the suit!",
     "Yes, my code has zero force-unwraps. Don't check the git logs though.",
     "Bugs are just undocumented features I added for extra flavor."
