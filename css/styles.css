@@ -1862,7 +1862,12 @@ body.modal-open #cursor-glow {
 #loading-screen {
   position: fixed;
   inset: 0;
-  background: #0a0a0a;
+  background-color: #0a0a0a;
+  background-image: linear-gradient(rgba(10, 10, 10, 0.55), rgba(10, 10, 10, 0.55)),
+    url('../images/splash-bg.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   z-index: 999999;
   display: flex;
   align-items: flex-end;
