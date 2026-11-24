@@ -1168,8 +1168,8 @@ function showFormAlert(message, bgColor) {
 }
 
 // Initialize Lottie — swap this path to change the avatar
-// (e.g. 'Captain Deadpool.json' for the original).
-const AVATAR_JSON = 'Spider Man.json';
+// ('Spider Man.json' for the Spider-Man mask).
+const AVATAR_JSON = 'Captain Deadpool.json';
 lottie.loadAnimation({
   container: document.getElementById('lottie-avatar'),
   renderer: 'svg',
@@ -1334,20 +1334,20 @@ window.switchAboutTab = function (tab) {
   }
 };
 
-// ═══ INTERACTIVE AVATAR SPEECH BUBBLE ═══
-(function initAvatarSpeech() {
+// ═══ INTERACTIVE DEADPOOL SPEECH BUBBLE ═══
+(function initDeadpoolSpeech() {
   const avatar = document.getElementById('lottie-avatar');
   const bubble = document.getElementById('deadpool-bubble');
   const bubbleText = document.getElementById('deadpool-bubble-text');
   if (!avatar || !bubble) return;
 
   const quotes = [
-    "With great power comes great responsibility... and great compile times.",
-    "Just a friendly neighbourhood iOS developer. No web-slinging, just Swift.",
-    "I build banking apps. The only thing I'm swinging is Combine publishers.",
+    "Hey there, bub! Yes, I build banking apps. No, I won't wire you a million bucks.",
+    "Swift is great, but have you tried Chimichangas? Highly recommend.",
+    "My banking code is 100% secure. My mouth? Not so much.",
     "UIKit is awesome, but MVC stands for Massive Vexing Conflicts, right?",
     "I compile on the first try. Just kidding, I'm a developer, not a wizard.",
-    "My spider-sense tingles when I see a force unwrap in production.",
+    "Maximum Effort! (And by effort, I mean StackOverflow searches).",
     "Don't click me too hard, you'll scratch the suit!",
     "Yes, my code has zero force-unwraps. Don't check the git logs though.",
     "Bugs are just undocumented features I added for extra flavor."
