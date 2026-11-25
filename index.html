@@ -237,7 +237,7 @@
     </div>
 
     <!-- PROJECTS -->
-    <section id="projects" class="px-grid-margin py-unit-xxl border-b-2 border-on-surface bg-surface-container fade-in">
+    <section id="projects" class="px-grid-margin pt-unit-xxl pb-unit-lg border-b-2 border-on-surface bg-surface-container fade-in">
       <div class="max-w-[1440px] mx-auto">
         <header class="work-head">
           <span class="work-ghost" aria-hidden="true">02</span>
@@ -258,6 +258,65 @@
             class="proj-filter bg-background text-on-surface font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-on-surface hover:text-background transition-all">Banking &middot; Fintech</button>
           <button onclick="filterProj('creative',this)"
             class="proj-filter bg-background text-on-surface font-label-bold text-label-bold uppercase px-unit-lg py-unit-sm border-2 border-on-surface hover:bg-on-surface hover:text-background transition-all">Creative Apps</button>
+        </div>
+
+        <!-- BOOK SHELF — hover a volume to pull it out, click to open its case -->
+        <div class="book-shelf">
+          <div class="book-shelf__head">
+            <div class="book-shelf__intro">
+              <p class="book-shelf__title">Also on the shelf</p>
+              <p class="book-shelf__hint">Every project as a volume. <em>Pull one out.</em></p>
+            </div>
+            <div class="shelf">
+              <div class="shelf__row">
+              <span class="book-place">
+                <button class="book book--1" style="--t:2.3;--k:1;--s:1" onclick="openAppModal('pmoney')" aria-label="Open Pmoney">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">Pmoney</span><span class="book__no">01</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">01</span><span class="book__covertitle">Pmoney</span><span class="book__line">Premier Bank mobile banking</span><span class="book__foot">Live</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--2" style="--t:1.7;--k:0.9;--s:0.78" onclick="openAppModal('nbl')" aria-label="Open NBL iPower">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">NBL iPower</span><span class="book__no">02</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">02</span><span class="book__covertitle">NBL iPower</span><span class="book__line">National Bank utility payments</span><span class="book__foot">2026</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--3" style="--t:2.6;--k:0.96;--s:1" onclick="openAppModal('trust')" aria-label="Open Trust Money">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">Trust Money</span><span class="book__no">03</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">03</span><span class="book__covertitle">Trust Money</span><span class="book__line">Trust Bank banking app</span><span class="book__foot">Live</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--4" style="--t:1.9;--k:0.85;--s:1" onclick="openAppModal('meghna')" aria-label="Open i-Banking">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">i-Banking</span><span class="book__no">04</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">04</span><span class="book__covertitle">i-Banking</span><span class="book__line">Meghna Bank i-Banking</span><span class="book__foot">Live</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              <span class="book-place">
+                <button class="book book--5" style="--t:2.2;--k:1;--s:1" onclick="openAppModal('collage')" aria-label="Open Collage Studio">
+                  <span class="book__box">
+                    <span class="book__face book__spine"><span class="book__title">Collage Studio</span><span class="book__no">05</span></span>
+                    <span class="book__face book__cover"><span class="book__coverno">05</span><span class="book__covertitle">Collage Studio</span><span class="book__line">Photo collage creative app</span><span class="book__foot">App Store</span></span>
+                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
+                  </span>
+                </button>
+              </span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- WORK INDEX — red-focused archive rows. Click a row for the case study. -->
@@ -324,115 +383,66 @@
           </div>
 
         </div>
+      </div>
+    </section>
 
-        <!-- BOOK SHELF — hover a volume to pull it out, click to open its case -->
-        <div class="book-shelf">
-          <div class="book-shelf__head">
-            <div class="book-shelf__intro">
-              <p class="book-shelf__title">Also on the shelf</p>
-              <p class="book-shelf__hint">Every project as a volume. <em>Pull one out.</em></p>
-            </div>
-            <div class="shelf">
-              <div class="shelf__row">
-              <span class="book-place">
-                <button class="book book--1" style="--t:2.3;--k:1;--s:1" onclick="openAppModal('pmoney')" aria-label="Open Pmoney">
-                  <span class="book__box">
-                    <span class="book__face book__spine"><span class="book__title">Pmoney</span><span class="book__no">01</span></span>
-                    <span class="book__face book__cover"><span class="book__coverno">01</span><span class="book__covertitle">Pmoney</span><span class="book__line">Premier Bank mobile banking</span><span class="book__foot">Live</span></span>
-                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
-                  </span>
-                </button>
-              </span>
-              <span class="book-place">
-                <button class="book book--2" style="--t:1.7;--k:0.9;--s:0.78" onclick="openAppModal('nbl')" aria-label="Open NBL iPower">
-                  <span class="book__box">
-                    <span class="book__face book__spine"><span class="book__title">NBL iPower</span><span class="book__no">02</span></span>
-                    <span class="book__face book__cover"><span class="book__coverno">02</span><span class="book__covertitle">NBL iPower</span><span class="book__line">National Bank utility payments</span><span class="book__foot">2026</span></span>
-                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
-                  </span>
-                </button>
-              </span>
-              <span class="book-place">
-                <button class="book book--3" style="--t:2.6;--k:0.96;--s:1" onclick="openAppModal('trust')" aria-label="Open Trust Money">
-                  <span class="book__box">
-                    <span class="book__face book__spine"><span class="book__title">Trust Money</span><span class="book__no">03</span></span>
-                    <span class="book__face book__cover"><span class="book__coverno">03</span><span class="book__covertitle">Trust Money</span><span class="book__line">Trust Bank banking app</span><span class="book__foot">Live</span></span>
-                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
-                  </span>
-                </button>
-              </span>
-              <span class="book-place">
-                <button class="book book--4" style="--t:1.9;--k:0.85;--s:1" onclick="openAppModal('meghna')" aria-label="Open i-Banking">
-                  <span class="book__box">
-                    <span class="book__face book__spine"><span class="book__title">i-Banking</span><span class="book__no">04</span></span>
-                    <span class="book__face book__cover"><span class="book__coverno">04</span><span class="book__covertitle">i-Banking</span><span class="book__line">Meghna Bank i-Banking</span><span class="book__foot">Live</span></span>
-                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
-                  </span>
-                </button>
-              </span>
-              <span class="book-place">
-                <button class="book book--5" style="--t:2.2;--k:1;--s:1" onclick="openAppModal('collage')" aria-label="Open Collage Studio">
-                  <span class="book__box">
-                    <span class="book__face book__spine"><span class="book__title">Collage Studio</span><span class="book__no">05</span></span>
-                    <span class="book__face book__cover"><span class="book__coverno">05</span><span class="book__covertitle">Collage Studio</span><span class="book__line">Photo collage creative app</span><span class="book__foot">App Store</span></span>
-                    <span class="book__face book__side"></span><span class="book__face book__top"></span>
-                  </span>
-                </button>
-              </span>
-              </div>
-            </div>
+    <!-- MARQUEE RIBBONS 2 — pinned to the section 2 / 3 border -->
+    <div class="marquee-container marquee-container--zig select-none" aria-label="iOS skills ticker">
+      <div class="marquee-tape marquee-tape--paper">
+        <div class="marquee-row">
+          <div class="animate-marquee-left">
+            <span class="marquee-run">
+              <span class="marquee-item">Swift<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">SwiftUI<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">UIKit<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Combine<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">CoreData<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Alamofire<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">REST APIs<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Mobile Banking<span class="marquee-star" aria-hidden="true">✦</span></span>
+            </span>
+            <span class="marquee-run" aria-hidden="true">
+              <span class="marquee-item">Swift<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">SwiftUI<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">UIKit<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Combine<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">CoreData<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Alamofire<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">REST APIs<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Mobile Banking<span class="marquee-star">✦</span></span>
+            </span>
           </div>
         </div>
       </div>
-    </section>
+      <div class="marquee-tape marquee-tape--accent">
+        <div class="marquee-row">
+          <div class="animate-marquee-right">
+            <span class="marquee-run">
+              <span class="marquee-item">iOS Engineer<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">App Store Live<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Clean Architecture<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Fintech Apps<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">NPSB &middot; BEFTN &middot; RTGS<span class="marquee-star" aria-hidden="true">✦</span></span>
+              <span class="marquee-item">Biometrics<span class="marquee-star" aria-hidden="true">✦</span></span>
+            </span>
+            <span class="marquee-run" aria-hidden="true">
+              <span class="marquee-item">iOS Engineer<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">App Store Live<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Clean Architecture<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Fintech Apps<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">NPSB &middot; BEFTN &middot; RTGS<span class="marquee-star">✦</span></span>
+              <span class="marquee-item">Biometrics<span class="marquee-star">✦</span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- ═══════════════════════════════════════════
      STACK — scroll-sticking layers. Edit names/tech inside each
      .stack-layer; keep the --i value in ascending order.
-═══════════════════════════════════════════ -->
+    ═══════════════════════════════════════════ -->
     <section id="stack" class="stack-section border-b-2 border-on-surface" aria-labelledby="stack-title">
-      <!-- Second ribbon set — white + red zigzag, pinned to the section 2 / 3 border -->
-      <div class="marquee-container marquee-container--zig select-none" aria-hidden="true">
-        <div class="marquee-tape marquee-tape--paper">
-          <div class="marquee-row">
-            <div class="animate-marquee-left">
-              <span class="marquee-run">
-                <span class="marquee-item">Swift<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">UIKit<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">SwiftUI<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">Combine<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">CoreData<span class="marquee-star">✦</span></span>
-              </span>
-              <span class="marquee-run">
-                <span class="marquee-item">Swift<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">UIKit<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">SwiftUI<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">Combine<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">CoreData<span class="marquee-star">✦</span></span>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="marquee-tape marquee-tape--accent">
-          <div class="marquee-row">
-            <div class="animate-marquee-right">
-              <span class="marquee-run">
-                <span class="marquee-item">Full stack<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">No fluff<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">Real ship<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">Open to freelance<span class="marquee-star">✦</span></span>
-              </span>
-              <span class="marquee-run">
-                <span class="marquee-item">Full stack<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">No fluff<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">Real ship<span class="marquee-star">✦</span></span>
-                <span class="marquee-item">Open to freelance<span class="marquee-star">✦</span></span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="px-grid-margin pt-unit-xxl pb-unit-xl">
         <header class="stack-head">
           <p class="font-label-bold text-label-bold uppercase text-primary mb-unit-sm">03 <span class="text-background/40">//</span> Chapter 03 &mdash; The stack</p>
@@ -611,8 +621,8 @@
                   <p class="xp-body">Developing secure, scalable production mobile banking solutions at CIBL including <strong>Premier Bank (Pmoney)</strong>, <strong>Meghna Bank (i-Banking)</strong>, <strong>Trust Bank (Trust-Money)</strong>, and <strong>National Bank Ltd. (NBL iPower)</strong> with complex fund transfers, NPSB/BEFTN/RTGS, card lifecycle management, and biometric security.</p>
                   <ul class="xp-ships">
                     <li class="xp-ship"><span class="xp-shipno">Shipped 01</span><span class="xp-shiplabel">Pmoney</span><span class="xp-shipdetail">Premier Bank mobile banking app, live on the App Store.</span></li>
-                    <li class="xp-ship"><span class="xp-shipno">Shipped 02</span><span class="xp-shiplabel">Banking rails</span><span class="xp-shipdetail">NPSB, BEFTN and RTGS fund transfers in production.</span></li>
-                    <li class="xp-ship"><span class="xp-shipno">Shipped 03</span><span class="xp-shiplabel">Security</span><span class="xp-shipdetail">Card lifecycle management and biometric login.</span></li>
+                    <li class="xp-ship"><span class="xp-shipno">Shipped 02</span><span class="xp-shiplabel">Trust Money</span><span class="xp-shipdetail">Trust Bank flagship app &mdash; 50+ banking features in production.</span></li>
+                    <li class="xp-ship"><span class="xp-shipno">Shipped 03</span><span class="xp-shiplabel">NBL iPower</span><span class="xp-shipdetail">National Bank mobile banking with real-time NPSB &amp; biometric security.</span></li>
                   </ul>
                 </div>
               </li>
@@ -654,8 +664,8 @@
                 <div class="xp-main">
                   <h3 class="xp-role">BSc in CSE</h3>
                   <p class="xp-org">Northern University of Bangladesh</p>
-                  <p class="xp-body">Deepening knowledge of computer systems architecture, compiler engineering, and advanced networking.</p>
-                  <ul class="xp-tags"><li>Computer systems</li><li>Compilers</li><li>Networking</li></ul>
+                  <p class="xp-body">Undergraduate studies focused on software engineering, data structures &amp; algorithms, object-oriented programming, and mobile computing.</p>
+                  <ul class="xp-tags"><li>Data Structures</li><li>Algorithms</li><li>Software Engineering</li><li>OOP</li></ul>
                 </div>
               </li>
               <li class="xp-entry stagger-item" style="--i:1">
@@ -666,8 +676,8 @@
                 <div class="xp-main">
                   <h3 class="xp-role">Diploma in CST <span class="text-primary">(CGPA: 3.62)</span></h3>
                   <p class="xp-org">Brahmanbaria Polytechnic Institute</p>
-                  <p class="xp-body">Acquired fundamental skills in database management systems, OOP structures, and software engineering.</p>
-                  <ul class="xp-tags"><li>Database systems</li><li>OOP</li><li>Software engineering</li></ul>
+                  <p class="xp-body">Comprehensive foundation in computer technology, core programming in C/C++, database systems, and object-oriented development.</p>
+                  <ul class="xp-tags"><li>C / C++</li><li>OOP</li><li>Database Systems</li><li>Data Structures</li></ul>
                 </div>
               </li>
             </ol>
