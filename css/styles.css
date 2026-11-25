@@ -1864,7 +1864,7 @@ body.modal-open #cursor-glow {
   inset: 0;
   background-color: #0a0a0a;
   background-image: linear-gradient(rgba(10, 10, 10, 0.55), rgba(10, 10, 10, 0.55)),
-    url('../images/splash-bg.gif');
+    url('../images/splash.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
